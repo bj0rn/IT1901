@@ -73,9 +73,3 @@ public class HovedVindu extends QWidget {
     }
     
 }
-
-
-
-
-GitHub Links
-GitHub
