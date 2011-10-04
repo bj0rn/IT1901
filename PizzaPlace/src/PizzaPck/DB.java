@@ -186,12 +186,12 @@ public class DB {
 	
 
 	//TODO: Test
-	public LinkedList <Object> get_menu() {
+	public LinkedList <Object> get_menu() throws SQLException{
 		String query = "SELECT * FROM Meny";
 		ResultSet rs = connect.createStatement().executeQuery(query);
 		LinkedList <Object> list = new LinkedList <Object>();
 		while(!rs.wasNull()) {
-			list.add(new Meny(rs.getString(1), rs.getString(2), rs.getDouble(3)));
+			//list.add(new Meny(rs.getString(1), rs.getString(2), rs.getDouble(3)));
 			rs.next();
 		}
 		
@@ -200,7 +200,7 @@ public class DB {
 	
 	
 
-	public String[] SearchForUser(String SearchQuery) {
+	public void SearchForUser(String SearchQuery) throws SQLException {
 		String[] tokens = SearchQuery.split(" ");
 		String fornavn;
 		String etternavn;
@@ -213,10 +213,9 @@ public class DB {
 		ResultSet rs = connect.createStatement().executeQuery(query);
 		
 		//Skip id field or return if no information is found
-		if (!rs.next()){
-			ui.kunde_box.show();
-			return; 
-		}
+//		if (!rs.next()){
+//			return; 
+//		}
 		
 		String [] data = {
 				rs.getString(1), //fornavn
@@ -228,10 +227,11 @@ public class DB {
 		};
 		
 		//Display 
-		Kunde tmp = new Kunde(data);
-		tmp.displayInfo(ui);
+		//Kunde tmp = new Kunde(data);
+		//tmp.displayInfo(ui);
 		
 	}
+}
 	
 	//Combine Bestilling, bestilling overview and (meny is displayed ?)  
 	
