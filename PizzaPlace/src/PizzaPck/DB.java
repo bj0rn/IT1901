@@ -214,7 +214,6 @@ public class DB {
 		
 		//Skip id field or return if no information is found
 		if (!rs.next()){
-			ui.kunde_box.show();
 			return; 
 		}
 		
