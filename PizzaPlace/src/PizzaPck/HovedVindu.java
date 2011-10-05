@@ -27,6 +27,10 @@ public class HovedVindu extends QWidget {
 	 */
 	private void setUp(){
 
+		//Connect to database
+		DB db = new DB();
+		
+		
 		//oppretter layout og QtabWidget der vi kan plassere widgeter i hver fane
 		layout = new QGridLayout(this); 
 		tabMain = new QTabWidget();
@@ -40,13 +44,13 @@ public class HovedVindu extends QWidget {
 
 
 		//kunde
-		KundeWidget kunde = new KundeWidget();
+		KundeWidget kunde = new KundeWidget(db);
 		tabMain.addTab(kunde, null);
 		tabMain.addTab(kunde,"Kunde");
 
 
 		//Bestillingstab
-		OrderGUI tab2 = new OrderGUI();
+		OrderGUI tab2 = new OrderGUI(db);
 		tabMain.addTab(tab2, "Bestilling");
 
 

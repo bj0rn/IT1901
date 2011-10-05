@@ -24,79 +24,16 @@ public class DB {
 			Class.forName(driver);
 			connect = DriverManager.getConnection(host, user, pass);
 			
-//			//TODO:Finne en bedre løsning på dette
-//			try {
-//				//Create customer table
-//				connect.createStatement().execute("CREATE TABLE `Kunde` ("+
-//				"kundenr INT NOT NULL AUTO_INCREMENT, "+
-//						"fornavn varchar(255) NOT NULL, "+
-//				"etternavn varchar(255) NOT NULL, "+
-//						"addresse varchar(255) NOT NULL, "+
-//				"sted varchar(255) NOT NULL, "+
-//						"postkode varchar(255) NOT NULL, "+
-//				"telefonnr varchar(255) NOT NULL, "+
-//						"UNIQUE(kundenr), "+
-//				"FULLTEXT(fornavn, etternavn, sted, postkode, telefonnr))");
-//				
-//			}catch(SQLException sq) {
-//				System.out.println("Kunde pizza finnes allerede");
-//			}
-//			
-//			try {
-//				connect.createStatement().execute("CREATE TABLE bestiling ("+
-//			"ordrenr INT NOT NULL AUTO_INCREMENT, "+
-//						"bestillingstid varchar(255) NOT NULL, "+
-//			"leveringstid varchar(255), "+
-//						"levering BOOL, "+
-//			"`kundenr` INT NOT NULL, " +
-//			"UNIQUE(ordrenr))");
-//			
-//			} catch(SQLException sq) {
-//				System.out.println("Bestilling finnes allerede");
-//			}
-//			
-//			
-//			try {
-//				connect.createStatement().execute("CREATE TABLE meny ("+
-//			"menyid INT NOT NULL AUTO_INCREMENT, "+
-//						"navn varchar(255) NOT NULL, "+
-//			"innhold varchar(255) NOT NULL, "+
-//						"pris DOUBLE NOT NULL, "+
-//			"UNIQUE(menyid))");
-//			}catch(SQLException sq) {
-//				System.out.println("Meny finnes allerede");
-//			}
-//		
-//		
-		
-		}catch(SQLException sq) {
+			System.out.println("Sucessfully connected to db");
+
+		} catch(ClassNotFoundException err){
+			System.out.println("Failed to load driver");
+			err.printStackTrace();
+		} catch(SQLException sq) {
 			System.out.println("Failed to connect");
 			sq.printStackTrace();
-		
-		}catch(ClassNotFoundException err){
-			err.printStackTrace();
 		}
 	}
-	
-	
-	//Customer table and menu table
-	//NOTE: REFLECTION!!!
-	
-	
-//	public String [] helper(LinkedList <Object> list) {
-//		Iterator iter = (Iterator) list.iterator();
-//		while(iter.hasNext()) {
-//			Object obj = iter.next();
-//			Class <? extends Object> clazz = obj.getClass();
-//			Field[] field = clazz.getDeclaredFields();
-//			for (Field field : field) {
-//				field.setAccessible(true);
-//				Object value = field.get(obj);
-//				field.setAccessible(false);
-//			}
-//		}
-//		
-//	}
 	
 	
 	
@@ -162,7 +99,12 @@ public class DB {
 		return String.format("'%s'", value);
 	}
 	
-//	public void insertOrder(Object order){
+	
+	
+	
+	
+	
+	//	public void insertOrder(Object order){
 //		//We need to retrieve kunde nr from Kunde
 //		
 //		String query = "SELECT kundenr WHERE fornavn = "";" ;
@@ -186,54 +128,101 @@ public class DB {
 	
 
 	//TODO: Test
-	public LinkedList <Object> get_menu() throws SQLException{
-		String query = "SELECT * FROM Meny";
-		ResultSet rs = connect.createStatement().executeQuery(query);
-		LinkedList <Object> list = new LinkedList <Object>();
-		while(!rs.wasNull()) {
-			//list.add(new Meny(rs.getString(1), rs.getString(2), rs.getDouble(3)));
-			rs.next();
-		}
+	public LinkedList <String[]> getMenu(){
+		LinkedList <String[]> list = new LinkedList <String[]>();
+		try{
+			
+			String query = "SELECT * FROM Meny";
+		 	ResultSet rs = connect.createStatement().executeQuery(query);
+		 	
+			while(!rs.wasNull()) {
+				list.add(new String [] {rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)});
+				rs.next();
+			}
 		
+			return list;
+		
+		} catch(SQLException sq) {
+			System.out.println("MENU: Retrival failed!!");
+			
+		}
 		return list;
 	}
 	
 	
 
-	public void SearchForUser(String SearchQuery) throws SQLException {
+	public String[] Search(String SearchQuery, boolean key) {
 		String[] tokens = SearchQuery.split(" ");
-		String fornavn;
-		String etternavn;
+		//TODO: Error checking
+		
+		System.out.println("Search query "+SearchQuery+"");
+		
+		//TODO: Extend this to number search
 		
 		//Table lookup based on firstname and lastname 
-		String query = "SELECT fornavn, etternavn, addresse, sted, "+
-		"postkode, telefon FROM Kunde WHERE fornavn = '" + tokens[0] +"' and etternavn = '"+ tokens[1] +"'";
+		String query = "SELECT customerID, first_name, last_name, adress, city, "+
+		"zipcode, phone FROM customer WHERE first_name = '" + tokens[0] +"' and last_name = '"+ tokens[1] +"'";
 		
+		System.out.println(query);
 		
-		ResultSet rs = connect.createStatement().executeQuery(query);
+		try {
+			
+			ResultSet rs = connect.createStatement().executeQuery(query);
+			//System.out.println("Got data from db "+rs+"");
+			
+			if(key) {
+				rs.first();
+				System.out.println("Kommer aldri her ?");
+				String[] CustomerID = {rs.getString(1)};
+				System.out.println(CustomerID[0]);
+				return CustomerID;
+			}
+			
+			
+			//Skip id field or return if no information is found
+			if (!rs.next()){
+				return null; 
+			}
+			
+		String[] data = {
+					rs.getString(2), //fornavn
+					rs.getString(3), //etternavn
+					rs.getString(4), //addresse
+					rs.getString(5), //sted
+					rs.getString(6), // postkode
+					rs.getString(7) //telefon
+			};
+			
+			return data;
+			
+		} catch(SQLException sq) {
+			System.out.println("SEARCH: Query failed");
+			sq.printStackTrace();
+		}
 		
-		//Skip id field or return if no information is found
-//		if (!rs.next()){
-//			return; 
-//		}
+		return null;
+		}
+	
+	
+	//Update customer based on Customer id
+	public void Update(String[] customer, String [] CustomerID){
+		String query = "UPDATE customer SET first_name = '"+customer[0]+"'"+
+	", last_name = '"+customer[1]+"'"+
+				", adress = '"+customer[2]+"'"+
+	", city = '"+customer[3]+"'"+
+				" , zipcode = '"+customer[4]+"'"+
+	", phone = '"+customer[5]+"' WHERE customerID = '"+CustomerID[0]+"'";
 		
-		String [] data = {
-				rs.getString(1), //fornavn
-				rs.getString(2), //etternavn
-				rs.getString(3), //addresse
-				rs.getString(4), //sted
-				rs.getString(5), // postkode
-				rs.getString(6) //telefon
-		};
-		
-		//Display 
-		//Kunde tmp = new Kunde(data);
-		//tmp.displayInfo(ui);
-		
+		System.out.println(query);
+		try {
+			connect.createStatement().execute(query);
+		}catch(SQLException sq) {
+			System.out.println("UPDATE: Failed!!");
+			sq.printStackTrace();
+		}
 	}
 }
-	
-	//Combine Bestilling, bestilling overview and (meny is displayed ?)  
+	  
 	
 	
 	

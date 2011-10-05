@@ -19,12 +19,19 @@ public class KundeWidget extends QWidget {
 	private QLineEdit txtFornavn, txtEtternavn, txtAdresse, txtPoststed, txtPostkode, txtTelefonNr, txtSok;
 	private QLabel labFornavn, labEtternavn, labAdresse, labPostSted, labtPostKode, labTelefon, labSok;
 	private QGridLayout layout;
-
+	
+	//Database instance
+	private DB db;
+	
+	//Result from fields
+	//String data[];
+	private String[] tmpCustomer;
 	/**
 	 * 
 	 * @see : setUp()
 	 */
-	public KundeWidget() {
+	public KundeWidget(DB db) {
+		this.db = db;
 		setUp();
 	}
 
@@ -75,12 +82,16 @@ public class KundeWidget extends QWidget {
 		btnBestill = new QPushButton("Bestill");
 		btnLagre = new QPushButton("Lagre kunde");
 		btnOppdater = new QPushButton("Oppdater kunde");
-
+		
+		//Clicked
+		btnSok.clicked.connect(this, "findCustomer()");
+		btnLagre.clicked.connect(this, "insertCustomer()");
+		btnOppdater.clicked.connect(this, "updateUser()");
 
 		/*
 		 * plasserer knapper, labels og tekstfelt slik i layout
 		 */
-
+		
 
 		//oppsett av layout
 		layout.addWidget(txtSok, 0, 1);
@@ -110,6 +121,78 @@ public class KundeWidget extends QWidget {
 		layout.addWidget(btnBestill, 8, 2);
 
 	}
+	
+	//DATA IS PROTECTED!!! Wrapper functions are used to perform tasks on the gui
+	private void insertCustomer() {
+		//Get information from gui
+		String [] data = getFields();
+		//Remember the last customer
+		tmpCustomer = data;
+		
+		customer c = new customer(data);
+		
+		//Insert throws exception
+		try {
+			db.insert(c);
+		}catch(RuntimeException err) {
+			//TODO: Add message box ?
+			System.out.println("INSERT: Invalid input");
+			
+		}
+		clearFields();
+	}
+	
+	private void clearFields(){
+		txtFornavn.clear();
+		txtEtternavn.clear();
+		txtAdresse.clear();
+		txtPoststed.clear();
+		txtPostkode.clear();
+		txtTelefonNr.clear();
+		txtAdresse.clear();
+	}
+	
+	private void findCustomer() {
+		//Search after the given query and return information from kunde (table)
+		String res[] = db.Search(txtSok.text(), false);
+		//Remember last customer
+		tmpCustomer = res;
+		//Clear search field
+		txtSok.clear();
+		
+		//Display user
+		txtFornavn.setText(res[0]); 	//Fornavn
+		txtEtternavn.setText(res[1]); 	//Etternavn
+		txtAdresse.setText(res[2]);   	//Adresse
+		txtPoststed.setText(res[3]); 	//Sted
+		txtPostkode.setText(res[4]);	//Postkode
+		txtTelefonNr.setText(res[5]);	//Telefon 
+	}
+	
+	//Update user based on CustomerID
+	private void updateUser(){
+		String[] customer = getFields();
+		String SearchQuery = ""+tmpCustomer[0]+" "+tmpCustomer[1]+"";
+		
+		
+		//TODO: ARGH!!! FUCKINGS DRITT JAVA
+		db.Update(customer, db.Search(SearchQuery, true));
+	}
+	
+	//Return information from txtBoxes
+	private String[] getFields(){
+		String[] data =  {
+			txtFornavn.text(),
+			txtEtternavn.text(),
+			txtAdresse.text(),
+			txtPoststed.text(),
+			txtPostkode.text(),
+			txtTelefonNr.text()	
+		};
+		
+		return data;
+	}
+	
 
 
 
