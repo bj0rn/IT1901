@@ -136,7 +136,7 @@ public class DB {
 		 	ResultSet rs = connect.createStatement().executeQuery(query);
 		 	
 			while(!rs.wasNull()) {
-				list.add(new String [] {rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)});
+				list.add(new String [] {rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)});
 				rs.next();
 			}
 		

@@ -2,6 +2,7 @@ package PizzaPck;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.trolltech.qt.gui.QComboBox;
@@ -53,6 +54,7 @@ public class Pizza extends QWidget{
 	protected List<String> sizes;
 	protected QGroupBox box;
 	protected QLabel image_label;
+	
 	public Pizza(String pizza,double price,String ingridients, String image){
 		
 		this.image = new QPixmap(image);
@@ -74,6 +76,7 @@ public class Pizza extends QWidget{
 
 		
 	}
+	
 	
 	public void setup(){
 		//antall pizzaer er satt til aa vaere 0-20

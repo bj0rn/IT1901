@@ -2,22 +2,14 @@ package PizzaPck;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.trolltech.qt.core.Qt.ScrollBarPolicy;
 import com.trolltech.qt.gui.*;
 
 
-/*
- * 
- * @author: Susanne and Linn
- * 
- * 
- * 
- * 
- * 
- * 
- * */
+
 
 
 public class PizzaList extends QWidget implements Iterable<Pizza>{
@@ -29,12 +21,13 @@ public class PizzaList extends QWidget implements Iterable<Pizza>{
 	protected QScrollArea scrollarea;
 	
 	
-	public PizzaList(){
+	public PizzaList(DB db){
 		pizza_list = new ArrayList<Pizza>();
+		LinkedList<String[]> llProdukter;
+			llProdukter = db.getMenu();
+
+		System.out.println(llProdukter);
 		
-		for (int i = 0; i <10; i++) {
-			pizza_list.add(new Pizza("Pizza: "+"pepperoni",150.00, "Ingredienser: "+"annanas", null));
-		}
 		
 		lay = new QGridLayout();
 		v_box = new QVBoxLayout();

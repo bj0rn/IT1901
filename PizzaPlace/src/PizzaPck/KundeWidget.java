@@ -158,7 +158,7 @@ public class KundeWidget extends QWidget {
 		//Remember last customer
 		tmpCustomer = res;
 		//Clear search field
-		txtSok.clear();
+		//txtSok.clear();
 		
 		//Display user
 		txtFornavn.setText(res[0]); 	//Fornavn

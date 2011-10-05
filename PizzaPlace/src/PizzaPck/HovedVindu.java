@@ -53,11 +53,15 @@ public class HovedVindu extends QWidget {
 		OrderGUI tab2 = new OrderGUI(db);
 		tabMain.addTab(tab2, "Bestilling");
 
-
+		
+		//Settings
+		SettingsWidget sw = new SettingsWidget(db);
+		tabMain.addTab(sw, "Settings");
+		
 		/*
 		 * Viser og setter størrelsen på widgeten 
 		 */
-		this.setFixedSize(1024, 768);
+		this.setFixedSize(800, 600);
 		this.show();
 
 	}
