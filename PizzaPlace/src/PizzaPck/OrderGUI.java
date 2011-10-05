@@ -53,7 +53,7 @@ public class OrderGUI extends QWidget{
 	
 	protected QGridLayout main;
 
-	public OrderGUI(){
+	public OrderGUI(DB db){
 		
 		this.bottom_left = new QVBoxLayout();
 		this.bottom_right = new QVBoxLayout();
@@ -93,7 +93,7 @@ public class OrderGUI extends QWidget{
 		this.price_layout.addWidget(delivery_price, 2, 0);
 		this.price_layout.addWidget(total_price, 3, 0);
 		
-		order_list = new PizzaList();
+		order_list = new PizzaList(db);
 		order_list.addPizza(new Pizza("Pepperoni",150.00, "Annanas", null));
 		
 		main = new QGridLayout(this);
@@ -115,13 +115,5 @@ public class OrderGUI extends QWidget{
 		main.addLayout(bottom_right, 1, 1);
 		this.setFixedSize(800,600);
 	}
-	
-	 public static void main(String[] args) {
-       QApplication.initialize(args);
 
-       OrderGUI o = new OrderGUI();
-       o.show();
-
-       QApplication.exec();
-   }
 }
