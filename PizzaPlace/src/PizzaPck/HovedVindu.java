@@ -51,6 +51,7 @@ public class HovedVindu extends QWidget {
 
 		//Bestillingstab
 		OrderGUI tab2 = new OrderGUI(db);
+		PizzaList liste= new PizzaList(db);
 		tabMain.addTab(tab2, "Bestilling");
 
 		

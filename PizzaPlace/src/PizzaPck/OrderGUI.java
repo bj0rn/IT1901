@@ -5,6 +5,7 @@ import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QRadioButton;
+import com.trolltech.qt.gui.QScrollArea;
 import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QWidget;
 
@@ -94,7 +95,6 @@ public class OrderGUI extends QWidget{
 		this.price_layout.addWidget(total_price, 3, 0);
 		
 		order_list = new PizzaList(db);
-		order_list.addPizza(new Pizza("Pepperoni",150.00, "Annanas", null));
 		
 		main = new QGridLayout(this);
 		
@@ -114,6 +114,10 @@ public class OrderGUI extends QWidget{
 		main.addLayout(bottom_left, 1, 0);
 		main.addLayout(bottom_right, 1, 1);
 		this.setFixedSize(800,600);
+	}
+	
+	public void addPizzaList(PizzaList a){
+		order_list = a;
 	}
 
 }

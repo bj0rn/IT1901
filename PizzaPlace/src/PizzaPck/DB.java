@@ -132,14 +132,14 @@ public class DB {
 		LinkedList <String[]> list = new LinkedList <String[]>();
 		try{
 			
-			String query = "SELECT * FROM Meny";
+			String query = "SELECT * FROM product";
 		 	ResultSet rs = connect.createStatement().executeQuery(query);
-		 	
-			while(!rs.wasNull()) {
-				list.add(new String [] {rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)});
-				rs.next();
-			}
-		
+		 	rs.first();
+		 	boolean running = true;
+			while(running){
+				list.add(new String[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)});
+				running =rs.next();
+			}		
 			return list;
 		
 		} catch(SQLException sq) {

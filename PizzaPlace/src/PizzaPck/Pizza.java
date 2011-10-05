@@ -55,17 +55,16 @@ public class Pizza extends QWidget{
 	protected QGroupBox box;
 	protected QLabel image_label;
 	
-	public Pizza(String pizza,double price,String ingridients, String image){
-		
-		this.image = new QPixmap(image);
-		this.size = new QComboBox();
-		this.amount = new QComboBox();
-		this.start_price = price;
-		this.amount_label = new QLabel("Antall :");
-		this.size_label = new QLabel("St¿rrelse :");
-		this.pizza_name = new QLabel(pizza);
-		this.ingridients = new QLabel(ingridients);
-		this.grid = new QGridLayout(this);
+	public Pizza(String[] liste){
+		//image = new QPixmap(null);
+		size = new QComboBox();
+		amount = new QComboBox();
+		start_price = Double.parseDouble(liste[2]);
+		amount_label = new QLabel("Antall :");
+		size_label = new QLabel("St¿rrelse :");
+		pizza_name = new QLabel(liste[1]);
+		ingridients = new QLabel(liste[3]);
+		grid = new QGridLayout(this);
 		
 		this.price_format = new DecimalFormat("0.00");
 		
@@ -73,8 +72,6 @@ public class Pizza extends QWidget{
 		sizes = new ArrayList<String>();
 		
 		setup();
-
-		
 	}
 	
 	
@@ -132,3 +129,25 @@ public class Pizza extends QWidget{
 	}
 
 }
+
+//public Pizza(String pizza,double price,String ingridients, String image){
+//
+//this.image = new QPixmap(image);
+//this.size = new QComboBox();
+//this.amount = new QComboBox();
+//this.start_price = price;
+//this.amount_label = new QLabel("Antall :");
+//this.size_label = new QLabel("St¿rrelse :");
+//this.pizza_name = new QLabel(pizza);
+//this.ingridients = new QLabel(ingridients);
+//this.grid = new QGridLayout(this);
+//
+//this.price_format = new DecimalFormat("0.00");
+//
+//
+//sizes = new ArrayList<String>();
+//
+//setup();
+//
+//
+//}
