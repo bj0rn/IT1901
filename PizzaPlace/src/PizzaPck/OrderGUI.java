@@ -9,6 +9,7 @@ import com.trolltech.qt.gui.QScrollArea;
 import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QWidget;
 
+
 /*
  * The OrderGUI class, which connects all the parts of the orderFrame together
  * 
