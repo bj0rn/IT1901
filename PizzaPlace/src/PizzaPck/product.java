@@ -15,3 +15,4 @@ public class product {
 		pict = data[3];
 		}
 }
+
