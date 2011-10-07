@@ -28,6 +28,7 @@ public class SettingsWidget extends QWidget {
 	}
 	
 	public void insertIntoDB(){
+
 		String[] data ={
 				txtNavn.text(),txtPris.text(),txtInnhold.text()," "
 		};
