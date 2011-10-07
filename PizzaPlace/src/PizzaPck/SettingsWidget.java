@@ -19,14 +19,15 @@ public class SettingsWidget extends QWidget {
 	DB db;
 	
 	
+	//Signal handler
+	public Signal1 <Boolean> test = new Signal1<Boolean>();
+	
 	public SettingsWidget(DB db){
 		setUp();
 		this.db = db;
 	}
 	
 	public void insertIntoDB(){
-		
-		
 		String[] data ={
 				txtNavn.text(),txtPris.text(),txtInnhold.text()," "
 		};
@@ -37,6 +38,9 @@ public class SettingsWidget extends QWidget {
 			// TODO: handle exception
 			System.out.println("insert gikk til dundass");
 		}
+		//Send signal indicating change in DB 
+		System.out.println("Signal emited");
+		test.emit(true);
 	}
 	
 	public void setUp(){
@@ -46,7 +50,7 @@ public class SettingsWidget extends QWidget {
 		txtInnhold = new QLineEdit();
 		txtPris = new QLineEdit();
 		
-		labNavn = new QLabel("Navn på pizza:");
+		labNavn = new QLabel("Navn pï¿½ pizza:");
 		labInnhold = new QLabel("Ingredienser");
 		labPris = new QLabel("Pris");
 		

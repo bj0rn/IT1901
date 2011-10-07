@@ -59,8 +59,9 @@ public class HovedVindu extends QWidget {
 		SettingsWidget sw = new SettingsWidget(db);
 		tabMain.addTab(sw, "Settings");
 		
-		
+		//Connect Settingswidget to ordergui
 		System.out.println("Signal connection complete");
+		sw.test.connect(tab2, "hei()");
 		
 		/*
 		 * Viser og setter størrelsen på widgeten 

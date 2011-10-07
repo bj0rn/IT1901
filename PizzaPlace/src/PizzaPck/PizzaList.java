@@ -23,7 +23,19 @@ public class PizzaList extends QWidget implements Iterable<Pizza>{
 	private DB db;
 	
 	public PizzaList(DB db){
-		db=db;
+		this.db = db;
+		//Init 
+		fillList();
+		}
+	
+	
+	@Override
+	public Iterator<Pizza> iterator() {
+		// TODO Auto-generated method stub
+		return pizza_list.iterator();
+	}
+	
+	public void fillList() {
 		pizza_list = new ArrayList<Pizza>();
 		LinkedList<String[]> llProdukter;
 		llProdukter = db.getMenu();
@@ -33,15 +45,11 @@ public class PizzaList extends QWidget implements Iterable<Pizza>{
 			String[] a = iter.next();
 			pizza_list.add(new Pizza(a));
 		}
-		
-		
-		
+		v_box = new QVBoxLayout(); 
 		lay = new QGridLayout();
-		v_box = new QVBoxLayout();
 		
-		for (Pizza p: pizza_list) {
-			v_box.addWidget(p);
-		}
+		
+		
 		
 		main = new QWidget();
 		main.setLayout(v_box);
@@ -51,27 +59,19 @@ public class PizzaList extends QWidget implements Iterable<Pizza>{
 		scrollarea.setWidgetResizable(true);
 		scrollarea.setVerticalScrollBarPolicy(ScrollBarPolicy.ScrollBarAlwaysOn);
 		scrollarea.setWidget(main);
-		
+		//Update gui
+		for (Pizza p: pizza_list) {
+			v_box.addWidget(p);
+		}
 	}
-	
-	public void createlist(){
-
-	}
-	
-	@Override
-	public Iterator<Pizza> iterator() {
-		// TODO Auto-generated method stub
-		return pizza_list.iterator();
-	}
-	
 	
 	public void addPizza(Pizza pizza){
 		pizza_list.add(pizza);
 	}
 	
-	public void updateList(){
-		createlist();
-	}
+
+	
+	
 	
 	
 }

@@ -23,13 +23,14 @@ public class KundeWidget extends QWidget {
 	//Database instance
 	private DB db;
 	
-	//Result from fields
-	//String data[];
+	//Current customer
+	
 	private String[] tmpCustomer;
 	/**
 	 * 
 	 * @see : setUp()
 	 */
+	
 	public KundeWidget(DB db) {
 		this.db = db;
 		setUp();

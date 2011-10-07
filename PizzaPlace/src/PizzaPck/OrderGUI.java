@@ -54,8 +54,16 @@ public class OrderGUI extends QWidget{
 	protected QVBoxLayout pizza_layout;
 	
 	protected QGridLayout main;
+	
+	DB db;
+	
+	//Signal handler
+	public Signal1<Boolean> test = new Signal1<Boolean> ();
+	
 
 	public OrderGUI(DB db){
+		this.db = db;
+		
 		
 		this.bottom_left = new QVBoxLayout();
 		this.bottom_right = new QVBoxLayout();
@@ -119,6 +127,11 @@ public class OrderGUI extends QWidget{
 	
 	public void addPizzaList(PizzaList a){
 		order_list = a;
+	}
+	
+	public void hei() {
+		System.out.println("Fill list");
+		order_list.fillList();
 	}
 
 }
