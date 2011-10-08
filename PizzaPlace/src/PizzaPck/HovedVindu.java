@@ -1,6 +1,7 @@
 package PizzaPck;
 
 import com.trolltech.qt.gui.*;
+import com.trolltech.qt.gui.QSizePolicy.Policy;
 /**
  * Her opprettes widgeten som holder på fanene man vil legge til i programmet
  * 
@@ -13,8 +14,9 @@ public class HovedVindu extends QWidget {
 	private QGridLayout layout;
 	private QTabWidget tabMain;
 
+	
 	/**
-	 * Constructoren kaller @link KundeWidget
+	 * Constructoren kaller setUp()
 	 * @author Vegard 
 	 */
 	public HovedVindu(){
@@ -22,6 +24,7 @@ public class HovedVindu extends QWidget {
 	}	
 
 
+	
 	/**
 	 * Intern metode som setter opp fanene
 	 */
@@ -37,28 +40,30 @@ public class HovedVindu extends QWidget {
 		layout.addWidget(tabMain);
 
 
-
 		/*
 		 * Setter opp fanene, med navn og riktig widget
 		 */
 
 
-		//kunde
+		//adds customer widget to main window
 		KundeWidget kunde = new KundeWidget(db);
 		tabMain.addTab(kunde, null);
 		tabMain.addTab(kunde,"Kunde");
 
 
-		//Bestillingstab
+		//adds ordergui to main window
 		OrderGUI tab2 = new OrderGUI(db);
 		PizzaList liste= new PizzaList(db);
 		tabMain.addTab(tab2, "Bestilling");
 
+		//adds kitchen widget to main windows
+		Kitchen ki = new Kitchen(db);
+		tabMain.addTab(ki, "Kj�kken");
 		
-		//Settings
+		//adds settings widget to main window
 		SettingsWidget sw = new SettingsWidget(db);
 		tabMain.addTab(sw, "Settings");
-		
+	
 		//Connect Settingswidget to ordergui
 		System.out.println("Signal connection complete");
 		sw.test.connect(tab2, "hei()");
@@ -66,7 +71,8 @@ public class HovedVindu extends QWidget {
 		/*
 		 * Viser og setter størrelsen på widgeten 
 		 */
-		this.setFixedSize(800, 600);
+		this.setSizePolicy(Policy.Fixed, Policy.Maximum);
+		this.setWindowTitle("PizzaPlace");
 		this.show();
 
 	}
@@ -80,7 +86,7 @@ public class HovedVindu extends QWidget {
     public static void main(String[] args) {
     	
         QApplication.initialize(args);
-        new HovedVindu(); // oppretter seg selv og kjører setup();
+        new HovedVindu(); // oppretter seg selv og kjører setUp() gjennom constructoren;
         QApplication.exec();
        
     }

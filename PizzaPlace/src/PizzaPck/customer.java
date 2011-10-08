@@ -9,7 +9,10 @@ public class customer {
 	private String zipcode;
 	private String phone;
 	
-	//Constructor (table) 
+	/**
+	 * Takes a String array as input and then stores the indexes according to the customer class' fields
+	 * @param data
+	 */
 	public customer(String [] data) {
 		this.first_name = data[0];
 		this.last_name = data[1];

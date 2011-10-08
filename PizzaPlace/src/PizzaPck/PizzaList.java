@@ -10,9 +10,6 @@ import com.trolltech.qt.gui.*;
 
 
 
-
-
-
 public class PizzaList extends QWidget implements Iterable<Pizza>{
 	
 	protected QLayout lay;

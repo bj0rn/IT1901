@@ -9,8 +9,11 @@ import com.trolltech.qt.gui.QSizePolicy;
 import com.trolltech.qt.gui.QSizePolicy.Policy;
 import com.trolltech.qt.gui.QWidget;
 
-
-
+/**
+ * 
+ * @author Vegard
+ *
+ */
 public class KundeWidget extends QWidget {
 
 	private String fornavn, etternavn, adresse, poststed, postkode,telefonNr;
@@ -26,11 +29,11 @@ public class KundeWidget extends QWidget {
 	//Current customer
 	
 	private String[] tmpCustomer;
+	
+	
 	/**
 	 * 
-	 * @see : setUp()
 	 */
-	
 	public KundeWidget(DB db) {
 		this.db = db;
 		setUp();
@@ -123,7 +126,9 @@ public class KundeWidget extends QWidget {
 
 	}
 	
-	//DATA IS PROTECTED!!! Wrapper functions are used to perform tasks on the gui
+	/**
+	 * DATA IS PROTECTED!!! Wrapper functions are used to perform tasks on the gui
+	 */
 	private void insertCustomer() {
 		//Get information from gui
 		String [] data = getFields();
@@ -143,6 +148,9 @@ public class KundeWidget extends QWidget {
 		clearFields();
 	}
 	
+	/**
+	 * clear fields
+	 */
 	private void clearFields(){
 		txtFornavn.clear();
 		txtEtternavn.clear();
@@ -153,6 +161,9 @@ public class KundeWidget extends QWidget {
 		txtAdresse.clear();
 	}
 	
+	/**
+	 * finds the customer in the database
+	 */
 	private void findCustomer() {
 		//Search after the given query and return information from kunde (table)
 		String res[] = db.Search(txtSok.text(), false);
@@ -170,7 +181,9 @@ public class KundeWidget extends QWidget {
 		txtTelefonNr.setText(res[5]);	//Telefon 
 	}
 	
-	//Update user based on CustomerID
+	/**
+	 * Update user based on CustomerID
+	 */
 	private void updateUser(){
 		String[] customer = getFields();
 		String SearchQuery = ""+tmpCustomer[0]+" "+tmpCustomer[1]+"";
@@ -180,7 +193,10 @@ public class KundeWidget extends QWidget {
 		db.Update(customer, db.Search(SearchQuery, true));
 	}
 	
-	//Return information from txtBoxes
+	/**
+	 * Return information from txtBoxes
+	 * @return
+	 */
 	private String[] getFields(){
 		String[] data =  {
 			txtFornavn.text(),
