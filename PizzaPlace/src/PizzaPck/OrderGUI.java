@@ -25,7 +25,8 @@ import com.trolltech.qt.gui.QWidget;
 
 
 public class OrderGUI extends QWidget{
-
+	private int customerID; 
+	
 	protected QVBoxLayout bottom_right;
 	protected QVBoxLayout bottom_left;
 	protected QHBoxLayout top_left;
@@ -57,9 +58,9 @@ public class OrderGUI extends QWidget{
 	
 	DB db;
 	
-	//Signal handler
+	//Signal handlers
 	public Signal1<Boolean> test = new Signal1<Boolean> ();
-	
+	public Signal1<Integer> customer = new Signal1<Integer>();
 
 	public OrderGUI(DB db){
 		this.db = db;
@@ -77,10 +78,11 @@ public class OrderGUI extends QWidget{
 		this.pizza_layout = new QVBoxLayout();
 		
 		this.costumer= new QLabel("Kunde : ");
-		this.costumer_adress= new QLabel("Adresse: "+"Hekkveien 2");
-		this.costumer_name= new QLabel("Navn: "+"Kurt Olsen");
-		this.costumer_phone= new QLabel("Telefon: "+"12345678");
-		this.costumer_zip= new QLabel("Postnummer: "+"1234");
+		this.costumer_adress= new QLabel("Adresse: ");
+		this.costumer_name= new QLabel("Navn: ");
+		this.costumer_phone= new QLabel("Telefon: ");
+		this.costumer_zip= new QLabel("Postnummer: ");
+		
 		
 		this.costumer_layout.addWidget(costumer, 1,0);
 		this.costumer_layout.addWidget(costumer_name, 2,0);
@@ -123,6 +125,8 @@ public class OrderGUI extends QWidget{
 		main.addLayout(bottom_left, 1, 0);
 		main.addLayout(bottom_right, 1, 1);
 		this.setFixedSize(800,600);
+		
+		
 	}
 	
 	public void addPizzaList(PizzaList a){
@@ -132,6 +136,51 @@ public class OrderGUI extends QWidget{
 	public void hei() {
 		System.out.println("Fill list");
 		order_list.fillList();
+	}
+	
+	//Click sensitive
+	public void insertOrder() {
+		//Get information from gui 
+		String [] data = {
+				
+		};
+		
+		try {
+			db.insert(new order(data));
+		}catch(RuntimeException err) {
+			System.out.println("INSERT: insert order failed ");
+		}
+	}
+	
+	/**
+	 * 
+	 * @param customerID
+	 */
+	public void displayCustomer(int customerID) {
+		try {
+			this.customerID = customerID;
+			String query = Integer.toString(customerID);
+			System.out.println(query);
+			String[] data = db.Search(query, false, true);
+			
+			
+			costumer= new QLabel("Kunde : ");
+			costumer_adress= new QLabel("Adresse: "+data[2]+" "+data[3]+"");
+			costumer_name= new QLabel("Navn: "+data[0]+" "+data[1]+"");
+			costumer_phone= new QLabel("Telefon: "+data[5]+"");
+			costumer_zip= new QLabel("Postnummer: "+data[4]+"");
+			
+			costumer_layout.addWidget(costumer, 1,0);
+			costumer_layout.addWidget(costumer_name, 2,0);
+			costumer_layout.addWidget(costumer_adress, 3,0);
+			costumer_layout.addWidget(costumer_zip, 4,0);
+			costumer_layout.addWidget(costumer_phone, 5,0);
+			
+		
+		}catch(RuntimeException err) {
+			System.out.println("SEARCH: displayCustomer() failed");
+			err.printStackTrace();
+		}
 	}
 
 }

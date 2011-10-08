@@ -92,7 +92,7 @@ public class DB {
 
 
 	private Object parseValue(Object value) {
-		return String.format("'%s'", value);
+		return String.format("'%s'", value).toLowerCase();
 	}
 	
 	private String parseValue(String value) {
@@ -127,7 +127,6 @@ public class DB {
 //	}
 	
 
-	//TODO: Test
 	public LinkedList <String[]> getMenu(){
 		LinkedList <String[]> list = new LinkedList <String[]>();
 		try{
@@ -149,31 +148,33 @@ public class DB {
 		return list;
 	}
 	
-	
-	
 
-	public String[] Search(String SearchQuery, boolean key) {
-		String[] tokens = SearchQuery.split(" ");
-		//TODO: Error checking
+	public String[] Search(String SearchQuery, boolean key, boolean customer) {
 		
-		System.out.println("Search query "+SearchQuery+"");
+		String query = "";
 		
-		//TODO: Extend this to number search
+		if (customer) {
+			query = "SELECT customerID, first_name, last_name, adress, city, "+
+					"zipcode, phone FROM customer "+
+					"WHERE customerID = '"+SearchQuery+"'";
+			System.out.println(query);
+		}
+		else {
+			String[] tokens = SearchQuery.split(" ");
+			query = "SELECT customerID, first_name, last_name, adress, city, "+
+					"zipcode, phone FROM customer WHERE first_name = '" + tokens[0].toLowerCase() +"' and last_name = '"+ tokens[1].toLowerCase() +"'";
+		}
 		
-		//Table lookup based on firstname and lastname 
-		String query = "SELECT customerID, first_name, last_name, adress, city, "+
-		"zipcode, phone FROM customer WHERE first_name = '" + tokens[0] +"' and last_name = '"+ tokens[1] +"'";
-		
-		System.out.println(query);
 		
 		try {
 			
 			ResultSet rs = connect.createStatement().executeQuery(query);
 			//System.out.println("Got data from db "+rs+"");
 			
+			
+			//Return customer key 
 			if(key) {
 				rs.first();
-				System.out.println("Kommer aldri her ?");
 				String[] CustomerID = {rs.getString(1)};
 				System.out.println(CustomerID[0]);
 				return CustomerID;
@@ -196,13 +197,12 @@ public class DB {
 			
 			return data;
 			
-		} catch(SQLException sq) {
-			System.out.println("SEARCH: Query failed");
-			sq.printStackTrace();
+		} catch(Exception e) {
+			throw new RuntimeException(e);
 		}
 		
-		return null;
-		}
+	}
+
 	
 	
 	//Update customer based on Customer id
@@ -222,7 +222,70 @@ public class DB {
 			sq.printStackTrace();
 		}
 	}
+
+
+	public LinkedList <String[]> getOrders() {
+		String query = "SELECT * FROM order";
+		LinkedList<String[]> list = new LinkedList<String[]>();
+		boolean running = true;
+		try {
+			ResultSet rs = connect.createStatement().executeQuery(query);
+			rs.first();
+			while(running) {
+				list.add(new String[] {rs.getString(1), rs.getString(2)});
+				running = rs.next();
+				}
+			
+		
+		}catch(SQLException sq) {
+			System.out.println("getOrders() failed");
+		}finally {
+			return list;
+		}
+		
+	}
+	
+	public LinkedList <String[]> displayOrders(String orderNr){
+		List <String[]> aList = new ArrayList<String[]>();
+		
+		//LinkedList<String[]> list = new LinkedList<String[]>();
+		java.util.Iterator<String[]> iter = aList.iterator();
+		String query = "SELECT * FROM receipt WHERE order = '"+orderNr+"'";
+		boolean running = true;
+		
+		try {
+			ResultSet rs = connect.createStatement().executeQuery(query);
+			rs.first();
+			
+			while(running) {
+				//adding pizzaID, pizza name and comment
+				aList.add(new String[]{rs.getString(2),"", rs.getString(3)});
+			}
+			
+			while(iter.hasNext()) {
+				String[] tmp = iter.next();
+				String tmpQuery = "SELECT * FROM product WHERE orderID = '"+tmp[0]+"'";
+				rs = connect.createStatement().executeQuery(query);
+				tmp[2] = rs.getString(1);
+				aList.set(tmp, tmp);
+				
+				
+			}
+			
+			
+			
+			
+		}catch (SQLException sq) {
+			System.out.println("diplayOrder() failed");
+		}
+	}
+	
+	public void delete(Object del) {
+		
+	}
 }
+
+
 	  
 	
 	

@@ -58,7 +58,7 @@ public class HovedVindu extends QWidget {
 
 		//adds kitchen widget to main windows
 		Kitchen ki = new Kitchen(db);
-		tabMain.addTab(ki, "Kj�kken");
+		tabMain.addTab(ki, "Kj�kken");
 		
 		//adds settings widget to main window
 		SettingsWidget sw = new SettingsWidget(db);
@@ -67,6 +67,8 @@ public class HovedVindu extends QWidget {
 		//Connect Settingswidget to ordergui
 		System.out.println("Signal connection complete");
 		sw.test.connect(tab2, "hei()");
+		//kunde.customer.connect(tab2, "insertOrder(int)");
+		kunde.customer.connect(tab2, "displayCustomer(int)");
 		
 		/*
 		 * Viser og setter størrelsen på widgeten 

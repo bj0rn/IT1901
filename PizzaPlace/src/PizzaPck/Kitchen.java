@@ -1,10 +1,14 @@
 package PizzaPck;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+
 import com.trolltech.qt.core.QDateTime;
 import com.trolltech.qt.core.QTime;
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QListWidget;
+import com.trolltech.qt.gui.QListWidgetItem;
 import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QTextBrowser;
 import com.trolltech.qt.gui.QWidget;
@@ -41,29 +45,65 @@ public class Kitchen extends QWidget{
 		layout = new QGridLayout(this);
 		
 		
-		String tekst = "Her har jeg planer om at det skal vises liste over alt som skal lages med kommentarer. <br><br> Knappen nederst fullfører orderen for den markerte orderen i listen til venstre <br><br> dette er bare en idé på hvordan det kan løses. er bare å skrike ut om det er noe som ikke stemmer";
+		String tekst = "Her har jeg planer om at det skal vises liste over alt som skal lages med kommentarer. <br><br> Knappen nederst fullfï¿½rer orderen for den markerte orderen i listen til venstre <br><br> dette er bare en idï¿½ pï¿½ hvordan det kan lï¿½ses. er bare ï¿½ skrike ut om det er noe som ikke stemmer";
 		order = new QTextBrowser();
 		order.setText(tekst);
 		
-		String[] txtorder = {"Her bør man kunne trykke på en ordre,", "deretter få opp hva som skal lages i textEditen til høyre.", "Her trenger man egentlig bare å vise ordrenummeret og klokkeslett når den skal være ferdig"};
+		String[] txtorder = {"Her bï¿½r man kunne trykke pï¿½ en ordre,", "deretter fï¿½ opp hva som skal lages i textEditen til hï¿½yre.", "Her trenger man egentlig bare ï¿½ vise ordrenummeret og klokkeslett nï¿½r den skal vï¿½re ferdig"};
 		orderList = new QListWidget();
 		
 		orderList.addItem(txtorder[0]);
 		orderList.addItem(txtorder[1]);
 		orderList.addItem(txtorder[2]);
 		
-		//TODO: klokka må fikses. må også legge til en i ordergui.
+		//TODO: klokka mï¿½ fikses. mï¿½ ogsï¿½ legge til en i ordergui.
 		dateTime = new QDateTime(QDateTime.currentDateTime());
 		dateTime.setTime(QTime.currentTime());
 		
-		//knappen som fullfører en ordre
-		btnFinish = new QPushButton("Fullfør ordre");
+		//knappen som fullfï¿½rer en ordre
+		btnFinish = new QPushButton("Fullfï¿½r ordre");
 		
 		layout.addWidget(new QLabel(dateTime.toString()),0,0);
 		layout.addWidget(order, 1, 1);
 		layout.addWidget(orderList, 1, 0);
 		layout.addWidget(btnFinish,2,1);
-	
+		
+		orderList.clicked.connect(this, "hei()");
 		
 	}
+	
+	public void hei() {
+		int row = orderList.currentIndex().row();
+		QListWidgetItem test = orderList.item(row);
+		
+		System.out.println(test.text());
+	}
+	
+	public void getOrders() {
+		LinkedList<String[]> list = db.getOrders();
+		Iterator <String[]> iter = list.iterator();
+		StringBuilder sb = new StringBuilder();
+		
+		String[] tmp;
+		
+		String[] displayTmp = new String[list.size()];
+		for(int i = 0; i <= list.size(); i++) {
+			tmp = iter.next();
+			sb.append(tmp[0]); sb.append(", ");sb.append(tmp[1]);
+			displayTmp[i] = sb.toString();
+		}
+		
+	}
+	
+	public void displayOrders() {
+		int row = orderList.currentIndex().row();
+		QListWidgetItem item = orderList.item(row);
+		String delimiters = " ,";
+		String tmp = item.toString();
+		String[] orderTmp = tmp.split(delimiters);
+		
+		
+		
+	}
+	
 }

@@ -27,9 +27,10 @@ public class KundeWidget extends QWidget {
 	private DB db;
 	
 	//Current customer
-	
 	private String[] tmpCustomer;
 	
+	//Signal handler
+	public Signal1<Integer> customer = new Signal1<Integer>();
 	
 	/**
 	 * 
@@ -91,7 +92,7 @@ public class KundeWidget extends QWidget {
 		btnSok.clicked.connect(this, "findCustomer()");
 		btnLagre.clicked.connect(this, "insertCustomer()");
 		btnOppdater.clicked.connect(this, "updateUser()");
-
+		btnBestill.clicked.connect(this, "sendCustomer()");
 		/*
 		 * plasserer knapper, labels og tekstfelt slik i layout
 		 */
@@ -166,31 +167,34 @@ public class KundeWidget extends QWidget {
 	 */
 	private void findCustomer() {
 		//Search after the given query and return information from kunde (table)
-		String res[] = db.Search(txtSok.text(), false);
-		//Remember last customer
-		tmpCustomer = res;
-		//Clear search field
-		//txtSok.clear();
+		try {
+			String res[] = db.Search(txtSok.text(), false, false);
+			//Save current customer
+			tmpCustomer = res;
+			txtFornavn.setText(res[0]); 	//Fornavn
+			txtEtternavn.setText(res[1]); 	//Etternavn
+			txtAdresse.setText(res[2]);   	//Adresse
+			txtPoststed.setText(res[3]); 	//Sted
+			txtPostkode.setText(res[4]);	//Postkode
+			txtTelefonNr.setText(res[5]);	//Telefon 
 		
-		//Display user
-		txtFornavn.setText(res[0]); 	//Fornavn
-		txtEtternavn.setText(res[1]); 	//Etternavn
-		txtAdresse.setText(res[2]);   	//Adresse
-		txtPoststed.setText(res[3]); 	//Sted
-		txtPostkode.setText(res[4]);	//Postkode
-		txtTelefonNr.setText(res[5]);	//Telefon 
+		}catch(RuntimeException err) {
+			System.out.println("SEARCH: findCustomer() failed");
+		}
+		
 	}
 	
 	/**
 	 * Update user based on CustomerID
 	 */
 	private void updateUser(){
-		String[] customer = getFields();
-		String SearchQuery = ""+tmpCustomer[0]+" "+tmpCustomer[1]+"";
-		
-		
-		//TODO: ARGH!!! FUCKINGS DRITT JAVA
-		db.Update(customer, db.Search(SearchQuery, true));
+		try {
+			String[] customer = getFields();
+			String SearchQuery = ""+tmpCustomer[0]+" "+tmpCustomer[1]+"";
+			db.Update(customer, db.Search(SearchQuery, true, false));
+		}catch(RuntimeException err) {
+			System.out.println("SEARCH: updateUser() failed");
+		}
 	}
 	
 	/**
@@ -210,7 +214,21 @@ public class KundeWidget extends QWidget {
 		return data;
 	}
 	
-
+	private void sendCustomer() {
+		if(tmpCustomer == null) {
+			System.out.println("No customer");
+			return;
+		}
+		
+		try {
+			String SearchQuery = ""+tmpCustomer[0]+" "+tmpCustomer[1]+"";
+			String[]tmp = db.Search(SearchQuery, true, false);
+			int customerID = Integer.parseInt(tmp[0]);
+			customer.emit(customerID);
+		}catch(RuntimeException err) {
+			System.out.println("sendCustomer() failed");
+		}
+	}
 
 
 
