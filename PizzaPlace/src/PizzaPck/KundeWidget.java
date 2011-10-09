@@ -9,8 +9,11 @@ import com.trolltech.qt.gui.QSizePolicy;
 import com.trolltech.qt.gui.QSizePolicy.Policy;
 import com.trolltech.qt.gui.QWidget;
 
-
-
+/**
+ * 
+ * @author Vegard
+ *
+ */
 public class KundeWidget extends QWidget {
 
 	private String fornavn, etternavn, adresse, poststed, postkode,telefonNr;
@@ -24,13 +27,14 @@ public class KundeWidget extends QWidget {
 	private DB db;
 	
 	//Current customer
-	
 	private String[] tmpCustomer;
+	
+	//Signal handler
+	public Signal1<Integer> signalCustomer = new Signal1<Integer>();
+	
 	/**
 	 * 
-	 * @see : setUp()
 	 */
-	
 	public KundeWidget(DB db) {
 		this.db = db;
 		setUp();
@@ -88,7 +92,7 @@ public class KundeWidget extends QWidget {
 		btnSok.clicked.connect(this, "findCustomer()");
 		btnLagre.clicked.connect(this, "insertCustomer()");
 		btnOppdater.clicked.connect(this, "updateUser()");
-
+		btnBestill.clicked.connect(this, "sendCustomer()");
 		/*
 		 * plasserer knapper, labels og tekstfelt slik i layout
 		 */
@@ -123,7 +127,9 @@ public class KundeWidget extends QWidget {
 
 	}
 	
-	//DATA IS PROTECTED!!! Wrapper functions are used to perform tasks on the gui
+	/**
+	 * DATA IS PROTECTED!!! Wrapper functions are used to perform tasks on the gui
+	 */
 	private void insertCustomer() {
 		//Get information from gui
 		String [] data = getFields();
@@ -143,6 +149,9 @@ public class KundeWidget extends QWidget {
 		clearFields();
 	}
 	
+	/**
+	 * clear fields
+	 */
 	private void clearFields(){
 		txtFornavn.clear();
 		txtEtternavn.clear();
@@ -153,34 +162,45 @@ public class KundeWidget extends QWidget {
 		txtAdresse.clear();
 	}
 	
+	/**
+	 * finds the customer in the database
+	 */
 	private void findCustomer() {
 		//Search after the given query and return information from kunde (table)
-		String res[] = db.Search(txtSok.text(), false);
-		//Remember last customer
-		tmpCustomer = res;
-		//Clear search field
-		//txtSok.clear();
+		try {
+			String res[] = db.Search(txtSok.text(), false, false);
+			//Save current customer
+			tmpCustomer = res;
+			txtFornavn.setText(res[0]); 	//Fornavn
+			txtEtternavn.setText(res[1]); 	//Etternavn
+			txtAdresse.setText(res[2]);   	//Adresse
+			txtPoststed.setText(res[3]); 	//Sted
+			txtPostkode.setText(res[4]);	//Postkode
+			txtTelefonNr.setText(res[5]);	//Telefon 
 		
-		//Display user
-		txtFornavn.setText(res[0]); 	//Fornavn
-		txtEtternavn.setText(res[1]); 	//Etternavn
-		txtAdresse.setText(res[2]);   	//Adresse
-		txtPoststed.setText(res[3]); 	//Sted
-		txtPostkode.setText(res[4]);	//Postkode
-		txtTelefonNr.setText(res[5]);	//Telefon 
+		}catch(RuntimeException err) {
+			System.out.println("SEARCH: findCustomer() failed");
+		}
+		
 	}
 	
-	//Update user based on CustomerID
+	/**
+	 * Update user based on CustomerID
+	 */
 	private void updateUser(){
-		String[] customer = getFields();
-		String SearchQuery = ""+tmpCustomer[0]+" "+tmpCustomer[1]+"";
-		
-		
-		//TODO: ARGH!!! FUCKINGS DRITT JAVA
-		db.Update(customer, db.Search(SearchQuery, true));
+		try {
+			String[] customer = getFields();
+			String SearchQuery = ""+tmpCustomer[0]+" "+tmpCustomer[1]+"";
+			db.Update(customer, db.Search(SearchQuery, true, false));
+		}catch(RuntimeException err) {
+			System.out.println("SEARCH: updateUser() failed");
+		}
 	}
 	
-	//Return information from txtBoxes
+	/**
+	 * Return information from txtBoxes
+	 * @return
+	 */
 	private String[] getFields(){
 		String[] data =  {
 			txtFornavn.text(),
@@ -194,7 +214,21 @@ public class KundeWidget extends QWidget {
 		return data;
 	}
 	
-
+	private void sendCustomer() {
+		if(tmpCustomer == null) {
+			System.out.println("No customer");
+			return;
+		}
+		
+		try {
+			String SearchQuery = ""+tmpCustomer[0]+" "+tmpCustomer[1]+"";
+			String[]tmp = db.Search(SearchQuery, true, false);
+			int customerID = Integer.parseInt(tmp[0]);
+			signalCustomer.emit(customerID);
+		}catch(RuntimeException err) {
+			System.out.println("sendCustomer() failed");
+		}
+	}
 
 
 

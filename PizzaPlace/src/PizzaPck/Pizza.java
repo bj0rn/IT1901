@@ -9,10 +9,12 @@ import com.trolltech.qt.gui.QComboBox;
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QGroupBox;
 import com.trolltech.qt.gui.QLabel;
+import com.trolltech.qt.gui.QLineEdit;
 import com.trolltech.qt.gui.QPixmap;
+import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QWidget;
 
-/*
+/**
  * 
  * Lager pizza objekter som kan legges i en liste
  * paa OrderGUI
@@ -37,8 +39,7 @@ import com.trolltech.qt.gui.QWidget;
  * 
  * */
 
-
-public class Pizza extends QWidget{
+ class Pizza extends QWidget{
 	
 	protected QPixmap image;
 	protected QComboBox amount;
@@ -54,6 +55,10 @@ public class Pizza extends QWidget{
 	protected List<String> sizes;
 	protected QGroupBox box;
 	protected QLabel image_label;
+	protected QLineEdit comments;
+	protected QLabel labComments;
+	public QPushButton btnAdd;
+	
 	
 	public Pizza(String[] liste){
 		//image = new QPixmap(null);
@@ -65,25 +70,19 @@ public class Pizza extends QWidget{
 		pizza_name = new QLabel(liste[1]);
 		ingridients = new QLabel(liste[3]);
 		grid = new QGridLayout(this);
-		
+		comments = new QLineEdit();
+		labComments = new QLabel("Kommentar: ");
+		btnAdd = new QPushButton("Legg til");
 		this.price_format = new DecimalFormat("0.00");
 		
-		
 		sizes = new ArrayList<String>();
+		
 		
 		setup();
 	}
 	
 	
 	public void setup(){
-		//antall pizzaer er satt til aa vaere 0-20
-		
-		List<String> l = new ArrayList<String>();
-		for (int i = 0; i <=20; i++) {
-			l.add(""+i);
-		}
-		amount.addItems(l);
-		
 		
 		//Man kan valge mellom liten og stor pizza
 		sizes.add("Liten");
@@ -109,11 +108,15 @@ public class Pizza extends QWidget{
 		this.grid.addWidget(size_label,3,2);
 		this.grid.addWidget(amount,2,3);
 		this.grid.addWidget(size,3,3);
-		this.grid.addWidget(price_label,3,0);	
+		this.grid.addWidget(price_label,3,0);
+		this.grid.addWidget(labComments, 4, 0);
+		this.grid.addWidget(comments, 4, 1);
+		this.grid.addWidget(btnAdd, 4, 3);
 		
 	}
 
 	//hvis size blir endret sŒ mŒ prisen ogsŒ bli endret
+	
 	public void pizzaSizeChanged(String newSize){
 		double newPrice = start_price;
 		if (newSize.equals("Stor")) {
@@ -123,10 +126,9 @@ public class Pizza extends QWidget{
 	}
 	
 	
+	
 	//mŒ endre antallet pizza og endre pris iforhold til det
-	public void amountChanged(int newAmount){
-		
-	}
+
 
 }
 

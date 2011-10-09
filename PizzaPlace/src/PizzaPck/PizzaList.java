@@ -7,9 +7,7 @@ import java.util.List;
 
 import com.trolltech.qt.core.Qt.ScrollBarPolicy;
 import com.trolltech.qt.gui.*;
-
-
-
+import com.trolltech.qt.gui.QSizePolicy.Policy;
 
 
 
@@ -59,19 +57,11 @@ public class PizzaList extends QWidget implements Iterable<Pizza>{
 		scrollarea.setWidgetResizable(true);
 		scrollarea.setVerticalScrollBarPolicy(ScrollBarPolicy.ScrollBarAlwaysOn);
 		scrollarea.setWidget(main);
+		scrollarea.setSizePolicy(Policy.Fixed, Policy.Fixed);
 		//Update gui
 		for (Pizza p: pizza_list) {
 			v_box.addWidget(p);
 		}
 	}
-	
-	public void addPizza(Pizza pizza){
-		pizza_list.add(pizza);
-	}
-	
 
-	
-	
-	
-	
 }
