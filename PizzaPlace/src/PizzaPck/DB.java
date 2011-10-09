@@ -275,6 +275,7 @@ public class DB {
 			
 			return (ArrayList<String[]>) aList;
 			
+			
 		}catch (SQLException sq) {
 			System.out.println("diplayOrder() failed");
 		}

@@ -15,7 +15,7 @@ public class OrderGUI extends QWidget{
 
 	private DB db;
 	private int customerID;
-	
+		
 	public Signal1<Boolean> test = new Signal1<Boolean>();
 	public Signal1<Integer> signalCustomer = new Signal1<Integer>();
 	
@@ -27,6 +27,7 @@ public class OrderGUI extends QWidget{
 	
 	private QListWidget listProducts;
 	private QTextBrowser textCustomer;
+	
 	public OrderGUI(DB db){
 		this.db = db;
 		
@@ -73,27 +74,27 @@ public class OrderGUI extends QWidget{
 		main.addWidget(btnConfirm, 2, 1);
 		main.addWidget(btnDelete, 2, 0);
 
-
 	}
 
 	public void hei() {
 		System.out.println("Fill list");
 		order_list.fillList();
 	}
-
+	
 	//Click sensitive
 	public void insertOrder() {
-		//Get information from gui
+		//Get information from gui 
 		String [] data = {
-
+				
 		};
-
+		
 		try {
 			db.insert(new order(data));
 		}catch(RuntimeException err) {
 			System.out.println("INSERT: insert order failed ");
 		}
 	}
+
 
 	/**
 	 *

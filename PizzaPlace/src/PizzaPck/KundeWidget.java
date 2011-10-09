@@ -31,6 +31,7 @@ public class KundeWidget extends QWidget {
 	
 	//Signal handler
 	public Signal1<Integer> signalCustomer = new Signal1<Integer>();
+
 	
 	/**
 	 * 

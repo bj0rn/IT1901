@@ -69,6 +69,7 @@ public class HovedVindu extends QWidget {
 		sw.test.connect(tab2, "hei()");
 		//kunde.customer.connect(tab2, "insertOrder(int)");
 		kunde.signalCustomer.connect(tab2, "displayCustomer(int)");
+
 		
 		/*
 		 * Viser og setter størrelsen på widgeten 
