@@ -2,7 +2,6 @@ package PizzaPck;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import com.trolltech.qt.gui.QComboBox;
@@ -35,7 +34,7 @@ import com.trolltech.qt.gui.QWidget;
  * 
  * @author Linn, Susanne
  * 
- * 	
+ * 	MÃ¥ renskrives!!!!
  * 
  * */
 
@@ -66,7 +65,7 @@ import com.trolltech.qt.gui.QWidget;
 		amount = new QComboBox();
 		start_price = Double.parseDouble(liste[2]);
 		amount_label = new QLabel("Antall :");
-		size_label = new QLabel("St¿rrelse :");
+		size_label = new QLabel("Stï¿½rrelse :");
 		pizza_name = new QLabel(liste[1]);
 		ingridients = new QLabel(liste[3]);
 		grid = new QGridLayout(this);
@@ -115,7 +114,7 @@ import com.trolltech.qt.gui.QWidget;
 		
 	}
 
-	//hvis size blir endret sŒ mŒ prisen ogsŒ bli endret
+	//hvis size blir endret sï¿½ mï¿½ prisen ogsï¿½ bli endret
 	
 	public void pizzaSizeChanged(String newSize){
 		double newPrice = start_price;
@@ -127,7 +126,7 @@ import com.trolltech.qt.gui.QWidget;
 	
 	
 	
-	//mŒ endre antallet pizza og endre pris iforhold til det
+	//mï¿½ endre antallet pizza og endre pris iforhold til det
 
 
 }
@@ -139,7 +138,7 @@ import com.trolltech.qt.gui.QWidget;
 //this.amount = new QComboBox();
 //this.start_price = price;
 //this.amount_label = new QLabel("Antall :");
-//this.size_label = new QLabel("St¿rrelse :");
+//this.size_label = new QLabel("Stï¿½rrelse :");
 //this.pizza_name = new QLabel(pizza);
 //this.ingridients = new QLabel(ingridients);
 //this.grid = new QGridLayout(this);

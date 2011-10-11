@@ -58,7 +58,10 @@ public class HovedVindu extends QWidget {
 
 		//adds kitchen widget to main windows
 		Kitchen ki = new Kitchen(db);
-		tabMain.addTab(ki, "Kj�kken");
+		tabMain.addTab(ki, "Kjøkken");
+		
+		Delivery delivery = new Delivery(db);
+		tabMain.addTab(delivery,"Levering");
 		
 		//adds settings widget to main window
 		SettingsWidget sw = new SettingsWidget(db);
@@ -91,6 +94,7 @@ public class HovedVindu extends QWidget {
         QApplication.initialize(args);
         new HovedVindu(); // oppretter seg selv og kjører setUp() gjennom constructoren;
         QApplication.exec();
+        
        
     }
     

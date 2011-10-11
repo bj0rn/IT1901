@@ -10,7 +10,11 @@ import com.trolltech.qt.gui.QTextBrowser;
 import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QWidget;
 import com.trolltech.qt.gui.QSizePolicy.Policy;
-
+/**
+ * 
+ * 
+ *
+ */
 public class OrderGUI extends QWidget{
 
 	private DB db;
@@ -28,10 +32,14 @@ public class OrderGUI extends QWidget{
 	private QListWidget listProducts;
 	private QTextBrowser textCustomer;
 	
+	/**
+	 * Lager order GUI
+	 * @param db
+	 */
 	public OrderGUI(DB db){
 		this.db = db;
 		
-		// alt som har med venstre widget å gjøre
+		// alt som har med venstre widget ï¿½ gjï¿½re
 		QGroupBox boxLeft = new QGroupBox();
 		boxLeft.setFixedWidth(300);
 		QVBoxLayout layoutLeft = new QVBoxLayout();
@@ -49,7 +57,7 @@ public class OrderGUI extends QWidget{
 		
 
 
-		//øverste widgeten ikke så viktig med det første
+		//ï¿½verste widgeten ikke sï¿½ viktig med det fï¿½rste
 
 		delivery = new QRadioButton("Levering");
 		delivery.toggled.emit(true);
@@ -81,7 +89,9 @@ public class OrderGUI extends QWidget{
 		order_list.fillList();
 	}
 	
-	//Click sensitive
+	/**
+	 * click sensitive
+	 */
 	public void insertOrder() {
 		//Get information from gui 
 		String [] data = {

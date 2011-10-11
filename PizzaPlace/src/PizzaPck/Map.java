@@ -1,42 +1,66 @@
 package PizzaPck;
 
 import java.awt.image.BufferedImage;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 
 import com.trolltech.qt.core.QUrl;
 import com.trolltech.qt.webkit.QWebView;
 
-
+/**
+ * Klassen som for fram map og viser tag mellom to adresser
+ * @author Linn
+ *
+ */
 public class Map extends QWebView{
-	
-	protected QUrl url;
+	private final QUrl url; 
 	protected BufferedImage map;
 	
+
 	public Map(){
+		url = new QUrl("http://maps.googleapis.com/maps/api/staticmap?center=Trondheim,NO&size=460x460&markers=color:blue|"+encodeUTF8("Elgseter Gate 1 7039 Trondheim")+"&path=color:red|weight:1&maptype=roadmap&sensor=false");
+		loadMap(url);
+		this.setFixedSize(460,460);
 	}
 	
-	public void loadMap(){
-		url = new QUrl("http://maps.googleapis.com/maps/api/staticmap?center=Trondheim,NO&zoom=14&size=400x400&maptype=roadmap&sensor=false");
+	/**
+	 * loader map
+	 */
+	public void loadMap(QUrl url){
 		this.setUrl(url);
-	}
-	public String setAdressLocation(String from, String to){
-		
-		return null;
 	}
 	
 	public BufferedImage getMap(){
 		return map;
 	}
 	
-	public String getMapUrl( double longitude,
-			double latitude, int zoom){
-		
-		return"http://maps.google.com/staticmap?center="+latitude+","+longitude+"&format"
-				+BufferedImage.TYPE_INT_RGB+"&zoom="+zoom+"&size="+512+"X"+512;
-		
+	/**
+	 * Henter et kart med adressene markert på 
+	 * @param addressFrom
+	 * @param addressTo
+	 * @param zoom
+	 * @return
+	 */
+	public QUrl getMap(String addressFrom, String addressTo, int zoom){
+		return new QUrl("http://maps.googleapis.com/maps/api/staticmap?center=Trondheim,NO&size=460x460&markers=color:blue|"+encodeUTF8(addressFrom)+"|"+encodeUTF8(addressTo)+"&path=color:red|weight:1&maptype=roadmap&sensor=false");
 	}
 	
-	public String getGeocode(){
-		return "http://maps.google.com/staticmap?geo?q=";
+	/**
+	 * Decoder adresser
+	 * @param adress
+	 * @return
+	 */
+	public String decodeUTF8(String adress) {
+	    return URLDecoder.decode(adress);
+	}
+	
+	/**
+	 * Encoder adresser
+	 * @param adress
+	 * @return
+	 */
+	public String encodeUTF8(String adress) {
+	    return URLEncoder.encode(adress);
 	}
 	
 }
