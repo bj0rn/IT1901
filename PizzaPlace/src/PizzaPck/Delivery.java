@@ -45,7 +45,7 @@ public class Delivery extends QWidget{
 	 */
 	protected void setup(){
 		layout = new QGridLayout(this);
-		String[] txtorder = {""+URLEncoder.encode("volvo 51")+"",""+URLDecoder.decode(URLEncoder.encode("volvo 51"))+ "","Her trenger man egentlig bare � vise ordrenummeret og klokkeslett n�r den skal v�re ferdig"};
+		String[] txtorder = {"Pizzalevering til kunde nr. 1","Pizzalevering til kunde nr.2","Her trenger man egentlig bare å vise ordrenummeret og klokkeslett når leveransen skal levers"};
 		orderList = new QListWidget();
 		
 		

@@ -1,5 +1,7 @@
 package PizzaPck;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,11 +63,18 @@ import com.trolltech.qt.gui.QWidget;
 	
 	public Pizza(String[] liste){
 		//image = new QPixmap(null);
+		String storrelse = "Størrelse";
+		try {
+			URLEncoder.encode(storrelse,"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		size = new QComboBox();
 		amount = new QComboBox();
 		start_price = Double.parseDouble(liste[2]);
 		amount_label = new QLabel("Antall :");
-		size_label = new QLabel("St�rrelse :");
+		size_label = new QLabel(storrelse+" :");
 		pizza_name = new QLabel(liste[1]);
 		ingridients = new QLabel(liste[3]);
 		grid = new QGridLayout(this);
