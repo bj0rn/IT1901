@@ -105,6 +105,9 @@ public class OrderGUI extends QWidget{
 	}
 	
 	//Click sensitive
+	
+	
+	//lol da
 	public void insertOrder() {
 		//Get information from gui 
 		String [] data = {
