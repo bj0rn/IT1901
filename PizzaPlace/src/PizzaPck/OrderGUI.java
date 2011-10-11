@@ -108,6 +108,8 @@ public class OrderGUI extends QWidget{
 	
 	
 	//lol da
+	
+	// men i føkkings helevete da
 	public void insertOrder() {
 		//Get information from gui 
 		String [] data = {

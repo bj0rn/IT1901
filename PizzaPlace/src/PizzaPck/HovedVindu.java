@@ -13,8 +13,13 @@ public class HovedVindu extends QWidget {
 
 	private QGridLayout layout;
 	private QTabWidget tabMain;
-
 	
+	private OrderGUI tab2;
+	private PizzaList liste;
+	private Kitchen ki;
+	private SettingsWidget sw;
+	
+	public Signal1<Boolean> changeTab = new Signal1<Boolean>();
 	/**
 	 * Constructoren kaller setUp()
 	 * @author Vegard 
@@ -49,29 +54,32 @@ public class HovedVindu extends QWidget {
 		KundeWidget kunde = new KundeWidget(db);
 		tabMain.addTab(kunde, null);
 		tabMain.addTab(kunde,"Kunde");
+		
 
 
 		//adds ordergui to main window
-		OrderGUI tab2 = new OrderGUI(db);
-		PizzaList liste= new PizzaList(db);
+		tab2 = new OrderGUI(db);
+		liste= new PizzaList(db);
 		tabMain.addTab(tab2, "Bestilling");
-
-		//adds kitchen widget to main windows
-		Kitchen ki = new Kitchen(db);
-		tabMain.addTab(ki, "Kjøkken");
+		tab2.setDisabled(true);
 		
-		Delivery delivery = new Delivery(db);
-		tabMain.addTab(delivery,"Levering");
+		//adds kitchen widget to main windows
+		ki = new Kitchen(db);
+		tabMain.addTab(ki, "Kj�kken");
 		
 		//adds settings widget to main window
-		SettingsWidget sw = new SettingsWidget(db);
+		sw = new SettingsWidget(db);
 		tabMain.addTab(sw, "Settings");
 	
+		
+		
 		//Connect Settingswidget to ordergui
 		System.out.println("Signal connection complete");
 		sw.test.connect(tab2, "hei()");
 		//kunde.customer.connect(tab2, "insertOrder(int)");
 		kunde.signalCustomer.connect(tab2, "displayCustomer(int)");
+		kunde.changeTab.connect(this, "setCurrentTab()");
+		
 
 		
 		/*
@@ -84,6 +92,10 @@ public class HovedVindu extends QWidget {
 	}
 
 
+	public void setCurrentTab (){
+		tabMain.setCurrentIndex(1);
+		tab2.setDisabled(false);
+	}
 
 	/**
 	 * Setter opp og kjører programmet
@@ -94,7 +106,6 @@ public class HovedVindu extends QWidget {
         QApplication.initialize(args);
         new HovedVindu(); // oppretter seg selv og kjører setUp() gjennom constructoren;
         QApplication.exec();
-        
        
     }
     

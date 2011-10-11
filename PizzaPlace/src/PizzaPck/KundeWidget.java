@@ -31,6 +31,7 @@ public class KundeWidget extends QWidget {
 	
 	//Signal handler
 	public Signal1<Integer> signalCustomer = new Signal1<Integer>();
+	public Signal1<Boolean> changeTab = new Signal1<Boolean>();
 
 	
 	/**
@@ -226,6 +227,8 @@ public class KundeWidget extends QWidget {
 			String[]tmp = db.Search(SearchQuery, true, false);
 			int customerID = Integer.parseInt(tmp[0]);
 			signalCustomer.emit(customerID);
+			changeTab.emit(true);
+			
 		}catch(RuntimeException err) {
 			System.out.println("sendCustomer() failed");
 		}
