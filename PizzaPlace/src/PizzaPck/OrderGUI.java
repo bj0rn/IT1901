@@ -1,20 +1,21 @@
 package PizzaPck;
 
+import javax.xml.crypto.Data;
+
+import com.trolltech.qt.core.QDateTime;
+import com.trolltech.qt.gui.QDateTimeEdit;
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QGroupBox;
-import com.trolltech.qt.gui.QLabel;
+import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QListWidget;
+import com.trolltech.qt.gui.QListWidgetItem;
 import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QRadioButton;
 import com.trolltech.qt.gui.QTextBrowser;
 import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QWidget;
 import com.trolltech.qt.gui.QSizePolicy.Policy;
-/**
- * 
- * 
- *
- */
+
 public class OrderGUI extends QWidget{
 
 	private DB db;
@@ -32,14 +33,10 @@ public class OrderGUI extends QWidget{
 	private QListWidget listProducts;
 	private QTextBrowser textCustomer;
 	
-	/**
-	 * Lager order GUI
-	 * @param db
-	 */
 	public OrderGUI(DB db){
 		this.db = db;
 		
-		// alt som har med venstre widget ï¿½ gjï¿½re
+		// alt som har med venstre widget å gjøre
 		QGroupBox boxLeft = new QGroupBox();
 		boxLeft.setFixedWidth(300);
 		QVBoxLayout layoutLeft = new QVBoxLayout();
@@ -52,17 +49,28 @@ public class OrderGUI extends QWidget{
 		listProducts = new QListWidget();
 		listProducts.setSizePolicy(Policy.Maximum, Policy.Maximum);
 
+		QListWidgetItem a = new QListWidgetItem("lololl");
+		listProducts.addItem(a);
 		
+		listProducts.removeItemWidget(a);
+		
+		listProducts.takeItem(0);
 		layoutLeft.addWidget(listProducts);
 		
+		
 
-
-		//ï¿½verste widgeten ikke sï¿½ viktig med det fï¿½rste
+		//øverste widgeten ikke så viktig med det første
 
 		delivery = new QRadioButton("Levering");
-		delivery.toggled.emit(true);
+		delivery.setChecked(true);
 		pickup = new QRadioButton("Hente selv");
 
+		//the clock
+		 QDateTimeEdit dateAndTime = new QDateTimeEdit();
+		 dateAndTime.setDateTime(QDateTime.currentDateTime());
+		
+		
+		//layouter
 		QVBoxLayout layoutRight= new QVBoxLayout();
 		QGroupBox boxRight = new QGroupBox();
 		boxRight.setFixedWidth(600);
@@ -77,11 +85,18 @@ public class OrderGUI extends QWidget{
 		//setter tingen inn i base widget
 		main = new QGridLayout(this);
 
-		main.addWidget(boxLeft, 0, 0);
-		main.addWidget(boxRight, 0, 1);
+		QHBoxLayout top = new QHBoxLayout();
+		top.addWidget(delivery);
+		top.addWidget(pickup);
+		top.addWidget(dateAndTime);
+		main.addLayout(top, 0, 0);
+		main.addWidget(boxLeft, 1, 0);
+		main.addWidget(boxRight, 1, 1);
 		main.addWidget(btnConfirm, 2, 1);
 		main.addWidget(btnDelete, 2, 0);
 
+
+		
 	}
 
 	public void hei() {
@@ -89,9 +104,7 @@ public class OrderGUI extends QWidget{
 		order_list.fillList();
 	}
 	
-	/**
-	 * click sensitive
-	 */
+	//Click sensitive
 	public void insertOrder() {
 		//Get information from gui 
 		String [] data = {
