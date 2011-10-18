@@ -18,8 +18,8 @@ import com.trolltech.qt.gui.QWidget;
 public class SettingsWidget extends QWidget {
 	
 	//knapper, tekstfelt og labels
-	private QLineEdit txtNavn, txtInnhold, txtPris;
-	private QLabel labNavn,labInnhold,labPris;
+	private QLineEdit txtName, txtContents, txtPrice;
+	private QLabel labName,labContents,labPrice;
 	private QGridLayout pizzaLayout;
 	private QPushButton btnAddpizza;
 	private QGroupBox groupBoxPizza;
@@ -47,7 +47,7 @@ public class SettingsWidget extends QWidget {
 	public void insertIntoDB(){
 
 		String[] data ={
-				txtNavn.text(),txtPris.text(),txtInnhold.text()," "
+				txtName.text(),txtPrice.text(),txtContents.text()," "
 		};
 		
 		try{
@@ -78,24 +78,24 @@ public class SettingsWidget extends QWidget {
 		
 		btnAddpizza = new QPushButton("Legg til pizza i DB");
 		
-		txtNavn = new QLineEdit();
-		txtInnhold = new QLineEdit();
-		txtPris = new QLineEdit();
+		txtName = new QLineEdit();
+		txtContents = new QLineEdit();
+		txtPrice = new QLineEdit();
 		
-		labNavn = new QLabel("Navn p� pizza:");
-		labInnhold = new QLabel("Ingredienser");
-		labPris = new QLabel("Pris");
+		labName = new QLabel("Navn p� pizza:");
+		labContents = new QLabel("Ingredienser");
+		labPrice = new QLabel("Pris");
 		
 		
 		//add buttons, labels and lineedits to pizzalayout
-		pizzaLayout.addWidget(labNavn, 0, 0);
-		pizzaLayout.addWidget(txtNavn, 0, 1);
+		pizzaLayout.addWidget(labName, 0, 0);
+		pizzaLayout.addWidget(txtName, 0, 1);
 		
-		pizzaLayout.addWidget(labInnhold, 1, 0);
-		pizzaLayout.addWidget(txtInnhold, 1, 1);
+		pizzaLayout.addWidget(labContents, 1, 0);
+		pizzaLayout.addWidget(txtContents, 1, 1);
 		
-		pizzaLayout.addWidget(labPris, 2, 0);
-		pizzaLayout.addWidget(txtPris, 2, 1);
+		pizzaLayout.addWidget(labPrice, 2, 0);
+		pizzaLayout.addWidget(txtPrice, 2, 1);
 		
 		pizzaLayout.addWidget(btnAddpizza, 3, 2);
 		
