@@ -1,5 +1,11 @@
 package PizzaPck;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+
 import com.trolltech.qt.core.QDate;
 import com.trolltech.qt.core.QTime;
 import com.trolltech.qt.gui.QDateEdit;
@@ -8,6 +14,7 @@ import com.trolltech.qt.gui.QGroupBox;
 import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QListWidget;
+import com.trolltech.qt.gui.QListWidgetItem;
 import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QRadioButton;
 import com.trolltech.qt.gui.QTextBrowser;
@@ -23,8 +30,14 @@ public class OrderGUI extends QWidget{
 
 	public Signal1<Boolean> test = new Signal1<Boolean>();
 	public Signal1<Integer> signalCustomer = new Signal1<Integer>();
-
-
+	public Signal1<String[]> signalBridge = new Signal1<String[]>();
+	public Signal1<Boolean> signalKitchen = new Signal1<Boolean>();
+	//Mirror all the element contained in listProducts
+	public List<String[]> listProductsMirror;
+	
+	//Not used at the moment 
+	//public Signal1<String[]> customerInfo = new Signal1<String[]>(); 
+	
 	protected PizzaList order_list;
 	protected QRadioButton delivery;
 	protected QRadioButton pickup;
@@ -36,7 +49,9 @@ public class OrderGUI extends QWidget{
 	public OrderGUI(DB db){
 		this.db = db;
 
-		// alt som har med venstre widget å gjøre
+		listProductsMirror = new ArrayList<String[]>();
+		
+		// alt som har med venstre widget ï¿½ gjï¿½re
 		QGroupBox boxLeft = new QGroupBox();
 		boxLeft.setFixedWidth(270);
 		QVBoxLayout layoutLeft = new QVBoxLayout();
@@ -53,7 +68,7 @@ public class OrderGUI extends QWidget{
 
 
 
-		//øverste widgeten ikke så viktig med det første
+		//ï¿½verste widgeten ikke sï¿½ viktig med det fï¿½rste
 
 		delivery = new QRadioButton("Levering");
 		delivery.setChecked(true);
@@ -97,34 +112,66 @@ public class OrderGUI extends QWidget{
 		main.addWidget(btnConfirm, 2, 1);
 		main.addWidget(btnDelete, 2, 0);
 
-
+		//Test function 
+		//HelperTest();
+		//insertOrder();
+		
+		
+		//Get signal from pizzaList
+		order_list.signalBridge.connect(this, "handleListProducts(String[])");
+		listProducts.doubleClicked.connect(this, "removeFromLists()");
+		btnConfirm.clicked.connect(this, ("confirmOrders()"));
 
 	}
-
+	
+	//Not part of the program. Used for testing only
+	@SuppressWarnings("deprecation")
+	public void HelperTest() {
+		System.out.println(delivery.isChecked());
+		System.out.println(new Timestamp(new Date().getTime()));
+		int val = delivery.isChecked()? 1 : 0;
+		System.out.println(val);
+}
+	
+	
 	public void hei() {
 		System.out.println("Fill list");
 		order_list.fillList();
 	}
 
-	//Click sensitive
-
-
-	//lol da
-
-	// men i føkkings helevete da
 	public void insertOrder() {
-		//Get information from gui 
+		String currentTime = new java.sql.Timestamp(new java.util.Date().getTime()).toString();
+		Timestamp time = new java.sql.Timestamp(new java.util.Date().getTime());
+		int h = time.getHours();
+		time.setHours(h +1);
+		String del = delivery.isChecked()? "1":"0";
+		
+		String test = "0";
+		String test1 = "0";
+		
+		System.out.println("CustomerID "+customerID+"");
+		
 		String [] data = {
-
+				Integer.toString(customerID),
+				del,
+				"0",
+				"0",
+				time.toString(),
+				currentTime
 		};
-
 		try {
-			db.insert(new order(data));
+			db.insert(new orders(data));
 		}catch(RuntimeException err) {
 			System.out.println("INSERT: insert order failed ");
+			err.printStackTrace();
 		}
 	}
-
+	
+	
+	public void test() {
+		int index = listProducts.currentRow();
+		
+	}
 
 	/**
 	 *
@@ -142,11 +189,71 @@ public class OrderGUI extends QWidget{
 				build.append(fields[i]+ data[i]+"\n");
 			}
 			textCustomer.setText(build.toString());
+			
+			insertOrder();
 
 		}catch(RuntimeException err) {
 			System.out.println("SEARCH: displayCustomer() failed");
 			err.printStackTrace();
 		}
 	}
+	
+	public void handleListProducts(String[] data) {
+		System.out.println("Insert completed");
+		listProductsMirror.add(data);
+		//Iterator<String[]> iter = listProductsMirror.iterator();
+		String tmp = format(data);
+		listProducts.addItem(tmp);
+		
+		
+//		while(iter.hasNext()) {
+//			tmp = format(iter.next());
+//			listProducts.addItem(tmp);
+//		}
+		System.out.println("StÃ¸rrelsen pÃ¥ mirror list"+listProductsMirror.size()+"");
+	}
+	
+	public void removeFromLists() {
+		int row = listProducts.currentIndex().row();
+		listProducts.takeItem(row);
+		listProductsMirror.remove(row);
+		System.out.println("StÃ¸rrelse pÃ¥ listen"+listProductsMirror.size()+"");
+	}
+	
+	//Pizza_name
+	//size 
+	//Amount
+	//Price
+	//ingridients
+	//comments
+	public String format(String[] data) {
+		StringBuilder sb = new StringBuilder();
+		for(int i = 0; i < 4; i++) {
+			sb.append(data[i]);
+			sb.append("  ");
+		}
+		
+		return sb.toString();
+	}
+	
+	public void confirmOrders() {
+		Iterator<String[]> iter = listProductsMirror.iterator();
+		while(iter.hasNext()) {
+			String[] tmp = iter.next();
+			String [] data = {
+					db.getOrderID(),
+					db.getPizzaID(tmp[0]),
+					tmp[5]
+			};
+			
+			db.insert(new receipt(data));
+			System.out.println(db.getPizzaID(tmp[0]));
+			System.out.println(db.getOrderID());
+			
+			
+		}
+	}
+	
 }
+
 

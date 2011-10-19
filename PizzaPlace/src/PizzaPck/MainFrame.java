@@ -62,7 +62,7 @@ public class MainFrame extends QWidget {
 		tab2 = new OrderGUI(db);
 		liste= new PizzaList(db);
 		tabMain.addTab(tab2, "Bestilling");
-		tab2.setDisabled(true);
+		//tab2.setDisabled(true);
 		
 		//adds kitchen widget to main windows
 		ki = new Kitchen(db);

@@ -32,6 +32,9 @@ public class KundeWidget extends QWidget {
 	//Signal handler
 	public Signal1<Integer> signalCustomer = new Signal1<Integer>();
 	public Signal1<Boolean> changeTab = new Signal1<Boolean>();
+	//Not used at the moment
+	//public Signal1<String[]> customerInfo = new Signal1<String[]>();
+	
 
 	
 	/**
@@ -95,6 +98,9 @@ public class KundeWidget extends QWidget {
 		btnLagre.clicked.connect(this, "insertCustomer()");
 		btnOppdater.clicked.connect(this, "updateUser()");
 		btnBestill.clicked.connect(this, "sendCustomer()");
+		//btnBestill.clicked.connect(this, "sendCustomer()");
+		
+		
 		/*
 		 * plasserer knapper, labels og tekstfelt slik i layout
 		 */

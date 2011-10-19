@@ -60,13 +60,16 @@ import com.trolltech.qt.gui.QWidget;
 	public QPushButton btnAdd;
 	
 	
+	//Send pizza information to pizzalist
+	public Signal1<String[]> signalPizza = new Signal1<String[]>();
+	
 	public Pizza(String[] liste){
 		//image = new QPixmap(null);
 		size = new QComboBox();
 		amount = new QComboBox();
 		start_price = Double.parseDouble(liste[2]);
 		amount_label = new QLabel("Antall :");
-		size_label = new QLabel("St¿rrelse :");
+		size_label = new QLabel("Stï¿½rrelse :");
 		pizza_name = new QLabel(liste[1]);
 		ingridients = new QLabel(liste[3]);
 		grid = new QGridLayout(this);
@@ -77,6 +80,7 @@ import com.trolltech.qt.gui.QWidget;
 		
 		sizes = new ArrayList<String>();
 		
+		btnAdd.clicked.connect(this, "signalBtnAdd()");
 		
 		setup();
 	}
@@ -115,7 +119,7 @@ import com.trolltech.qt.gui.QWidget;
 		
 	}
 
-	//hvis size blir endret sŒ mŒ prisen ogsŒ bli endret
+	//hvis size blir endret sï¿½ mï¿½ prisen ogsï¿½ bli endret
 	
 	public void pizzaSizeChanged(String newSize){
 		double newPrice = start_price;
@@ -125,9 +129,24 @@ import com.trolltech.qt.gui.QWidget;
 		price_label.setText("Pris: "+price_format.format(newPrice));
 	}
 	
+	public void signalBtnAdd() {
+		String [] data = {
+			pizza_name.text(),       //Pizza name
+			size.currentText(),		//Size
+			amount.currentText(),	//Amount
+			Double.toString(start_price),//start_prize
+			ingridients.text(), //ingridients
+			comments.text() // comments
+		};
+		//Send data
+		System.out.println("Signal sendt from pizza ");
+		signalPizza.emit(data);
+		
+		
+	}
 	
 	
-	//mŒ endre antallet pizza og endre pris iforhold til det
+	//mï¿½ endre antallet pizza og endre pris iforhold til det
 
 
 }
@@ -139,7 +158,7 @@ import com.trolltech.qt.gui.QWidget;
 //this.amount = new QComboBox();
 //this.start_price = price;
 //this.amount_label = new QLabel("Antall :");
-//this.size_label = new QLabel("St¿rrelse :");
+//this.size_label = new QLabel("Stï¿½rrelse :");
 //this.pizza_name = new QLabel(pizza);
 //this.ingridients = new QLabel(ingridients);
 //this.grid = new QGridLayout(this);

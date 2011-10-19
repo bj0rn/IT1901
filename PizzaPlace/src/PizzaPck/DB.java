@@ -100,32 +100,6 @@ public class DB {
 	}
 	
 	
-	
-	
-	
-	
-	//	public void insertOrder(Object order){
-//		//We need to retrieve kunde nr from Kunde
-//		
-//		String query = "SELECT kundenr WHERE fornavn = "";" ;
-//		
-//		ResultSet rs  = connect.createStatement().executeQuery(query);
-//		int kundenr = rs.getInt(1);
-//		
-//		//Just use the generic insert function
-//		insert(new Bestilling(ui, kundenr));
-//		
-//		}
-	
-	
-//	public void cart() {
-//		String query = "SELECT MAX(ordrenr) FROM Bestilling";
-//		ResultSet rs = connect.createStatement().executeQuery(query);
-//		int menyid = 0;
-//		
-//		insert(new Bestilling_session(ui, menyid, rs.getInt(0)));
-//	}
-	
 
 	public LinkedList <String[]> getMenu(){
 		LinkedList <String[]> list = new LinkedList <String[]>();
@@ -224,24 +198,33 @@ public class DB {
 	}
 
 
-	public LinkedList <String[]> getOrders() {
-		String query = "SELECT * FROM order";
-		LinkedList<String[]> list = new LinkedList<String[]>();
+	public ArrayList <String[]> getAllOrders() {
+		String query = "SELECT * FROM orders";
+		ArrayList<String[]> list = new ArrayList<String[]>();
 		boolean running = true;
 		try {
 			ResultSet rs = connect.createStatement().executeQuery(query);
 			rs.first();
 			while(running) {
-				list.add(new String[] {rs.getString(1), rs.getString(2)});
+				String[] data = {
+						rs.getString(1), //OrderID
+						rs.getString(2), //customerID
+						rs.getString(3), //delivery
+						rs.getString(4), //finish
+						rs.getString(5), //delivered
+						rs.getString(5), //time
+						rs.getString(6)  //currentTime
+				};
+				
+				list.add(data);
 				running = rs.next();
 				}
-			
+			return list;
 		
 		}catch(SQLException sq) {
 			System.out.println("getOrders() failed");
-		}finally {
-			return list;
 		}
+		return null;
 		
 	}
 	
@@ -286,7 +269,34 @@ public class DB {
 	public void delete(Object del) {
 		
 	}
+	
+	public String getPizzaID(String PizzaName) {
+		String  query = "SELECT productID FROM product WHERE name = '"+PizzaName+"'";
+		try {
+			ResultSet rs = connect.createStatement().executeQuery(query);
+			rs.first();
+			return rs.getString(1);
+		}catch(SQLException sq) {
+			System.out.println("ERROR: getPizzaID()");
+			sq.printStackTrace();
+		}
+		return "";
+	}
+	
+	public String getOrderID() {
+		String query = "SELECT MAX(orderid) FROM orders";
+		try {
+			ResultSet rs = connect.createStatement().executeQuery(query);
+			rs.first();
+			return rs.getString(1);
+		}catch(SQLException sq) {
+			System.out.println("ERROR: getOrderID()");
+			sq.printStackTrace();
+		}
+		return "";
+	}
 }
+
 
 
 	  

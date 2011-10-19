@@ -24,7 +24,13 @@ public class PizzaList extends QWidget implements Iterable<Pizza>{
 		this.db = db;
 		//Init 
 		fillList();
+		
+	
 		}
+	
+	
+	public Signal1<String[]> signalPizza = new Signal1<String[]>();
+	public Signal1<String[]> signalBridge = new Signal1<String[]>();
 	
 	
 	@Override
@@ -41,7 +47,9 @@ public class PizzaList extends QWidget implements Iterable<Pizza>{
 		System.out.println(llProdukter);
 		while(iter.hasNext()){
 			String[] a = iter.next();
-			pizza_list.add(new Pizza(a));
+			Pizza p = new Pizza(a);
+			p.signalPizza.connect(this, "signalBridge(String[])");
+			pizza_list.add(p);
 		}
 		v_box = new QVBoxLayout(); 
 		lay = new QGridLayout();
@@ -62,6 +70,11 @@ public class PizzaList extends QWidget implements Iterable<Pizza>{
 		for (Pizza p: pizza_list) {
 			v_box.addWidget(p);
 		}
+	}
+	
+	public void signalBridge(String [] data) {
+		System.out.println("Signal forwared from pizza list");
+		signalBridge.emit(data);
 	}
 
 }

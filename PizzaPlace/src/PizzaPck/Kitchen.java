@@ -1,5 +1,6 @@
 package PizzaPck;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -27,6 +28,9 @@ public class Kitchen extends QWidget{
 	private QGridLayout layout;
 	private QDateTime dateTime;
 	private QPushButton btnFinish;
+	
+	public Signal1<Boolean> signalKitchen = new Signal1<Boolean>();
+	
 	
 	/**
 	 * takes at DB as input and stores the reference to the databasehandler
@@ -80,18 +84,18 @@ public class Kitchen extends QWidget{
 	}
 	
 	public void getOrders() {
-		LinkedList<String[]> list = db.getOrders();
-		Iterator <String[]> iter = list.iterator();
+		ArrayList<String[]> list = db.getAllOrders();
 		StringBuilder sb = new StringBuilder();
-		
 		String[] tmp;
-		
-		String[] displayTmp = new String[list.size()];
 		for(int i = 0; i <= list.size(); i++) {
-			tmp = iter.next();
-			sb.append(tmp[0]); sb.append(", ");sb.append(tmp[1]);
-			displayTmp[i] = sb.toString();
+			tmp = list.get(i);
+			orderList.addItem(format(tmp[0], tmp[5]));
 		}
+		
+	}
+	
+	private String format(String orderID, String time) {
+		return ""+orderID+" "+time+"";
 		
 	}
 	
