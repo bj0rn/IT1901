@@ -90,8 +90,10 @@ public class OrderGUI extends QWidget{
 
 		order_list = new PizzaList(db);
 		order_list.setContentsMargins(1, 1, 1, 1);
+		//order_list.setFixedWidth(600);
+		order_list.scrollarea.setFixedWidth(600);
 		layoutRight.addWidget(order_list);
-
+		
 		QPushButton btnConfirm = new QPushButton("Bekreft");
 		QPushButton btnDelete = new QPushButton("Slett");
 

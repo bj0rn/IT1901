@@ -55,8 +55,14 @@ public class Map extends QWebView{
 	 * @param adress
 	 * @return
 	 */
-	public String decodeUTF8(String adress) {
-	    return URLDecoder.decode(adress);
+	public String decodeUTF8(String adress)  {
+		try {
+			return URLDecoder.decode(adress);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return e.getMessage();
+		}
+	   
 	}
 	
 	/**
@@ -65,7 +71,13 @@ public class Map extends QWebView{
 	 * @return
 	 */
 	public String encodeUTF8(String adress) {
-	    return URLEncoder.encode(adress);
+		try {
+			return URLEncoder.encode(adress);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return e.getMessage();
+		}
+	    
 	}
 	
 }

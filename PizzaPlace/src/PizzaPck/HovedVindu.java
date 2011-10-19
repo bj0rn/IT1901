@@ -18,6 +18,7 @@ public class HovedVindu extends QWidget {
 	private PizzaList liste;
 	private Kitchen ki;
 	private SettingsWidget sw;
+	private Delivery delivery;
 	
 	public Signal1<Boolean> changeTab = new Signal1<Boolean>();
 	/**
@@ -67,6 +68,10 @@ public class HovedVindu extends QWidget {
 		ki = new Kitchen(db);
 		tabMain.addTab(ki, "Kj�kken");
 		
+		//adds the delivery widget to the main window
+		delivery = new Delivery(db);
+		tabMain.addTab(delivery,"Levering");
+		
 		//adds settings widget to main window
 		sw = new SettingsWidget(db);
 		tabMain.addTab(sw, "Settings");
@@ -104,7 +109,8 @@ public class HovedVindu extends QWidget {
     public static void main(String[] args) {
     	
         QApplication.initialize(args);
-        new HovedVindu(); // oppretter seg selv og kjører setUp() gjennom constructoren;
+        new HovedVindu();// oppretter seg selv og kjører setUp() gjennom constructoren;
+        
         QApplication.exec();
        
     }
