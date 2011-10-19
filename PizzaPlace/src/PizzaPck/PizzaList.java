@@ -20,6 +20,11 @@ public class PizzaList extends QWidget implements Iterable<Pizza>{
 	protected QScrollArea scrollarea;
 	private DB db;
 	
+	/**
+	 * 
+	 * @param db
+	 * @see fillList
+	 */
 	public PizzaList(DB db){
 		this.db = db;
 		//Init 
@@ -39,6 +44,9 @@ public class PizzaList extends QWidget implements Iterable<Pizza>{
 		return pizza_list.iterator();
 	}
 	
+	/**
+	 * This method fills the list with pizzas from the database
+	 */
 	public void fillList() {
 		pizza_list = new ArrayList<Pizza>();
 		LinkedList<String[]> llProdukter;
@@ -63,15 +71,21 @@ public class PizzaList extends QWidget implements Iterable<Pizza>{
 		
 		scrollarea = new QScrollArea(this);
 		scrollarea.setWidgetResizable(true);
+		
 		scrollarea.setVerticalScrollBarPolicy(ScrollBarPolicy.ScrollBarAlwaysOn);
 		scrollarea.setWidget(main);
-		scrollarea.setSizePolicy(Policy.Fixed, Policy.Fixed);
+		
+		//scrollarea.setSizePolicy(Policy.Fixed, Policy.Fixed);
 		//Update gui
 		for (Pizza p: pizza_list) {
 			v_box.addWidget(p);
 		}
 	}
 	
+	/**
+	 * 
+	 * @param data
+	 */
 	public void signalBridge(String [] data) {
 		System.out.println("Signal forwared from pizza list");
 		signalBridge.emit(data);

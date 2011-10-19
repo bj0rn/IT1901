@@ -19,19 +19,6 @@ import com.trolltech.qt.gui.QWidget;
  * Lager pizza objekter som kan legges i en liste
  * paa OrderGUI
  * 
- * @parameter QPixmap image
- * @parameter QComboBox amount
- * @parameter QComboBox size
- * @parameter QLabel amount_label
- * @parameter QLabel size_label
- * @parameter QLabel price_label
- * @parameter QLabel pizza_name
- * @parameter QLabel ingridients
- * @parameter QGridLayout grid
- * @parameter DecimalFormat price_format
- * @parameter List<String> sizes
- * @parameter QGroupBox box
- * @parameter QLabel image_label
  * 
  * @author Linn, Susanne
  * 
@@ -70,7 +57,7 @@ import com.trolltech.qt.gui.QWidget;
 		amount = new QComboBox();
 		start_price = Double.parseDouble(liste[2]);
 		amount_label = new QLabel("Antall :");
-		size_label = new QLabel("St�rrelse :");
+		size_label = new QLabel("Størrelse :");
 		pizza_name = new QLabel(liste[1]);
 		ingridients = new QLabel(liste[3]);
 		grid = new QGridLayout(this);
@@ -109,7 +96,7 @@ import com.trolltech.qt.gui.QWidget;
 		//Sender signal om at antallet pizzaer er endret
 		//amount.valueChanged.connect(this,"amountValueChanged(int)");
 		price_label = new QLabel("Pris: "+start_price);
-		
+		this.grid.setMargin(1);
 		
 		//legge til de forskjellige tingene til griden
 		this.grid.addWidget(pizza_name,1,0);

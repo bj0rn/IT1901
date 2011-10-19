@@ -89,6 +89,7 @@ public class OrderGUI extends QWidget{
 		boxRight.setLayout(layoutRight);
 
 		order_list = new PizzaList(db);
+		order_list.setContentsMargins(1, 1, 1, 1);
 		layoutRight.addWidget(order_list);
 
 		QPushButton btnConfirm = new QPushButton("Bekreft");
@@ -246,7 +247,7 @@ public class OrderGUI extends QWidget{
 					tmp[5]
 			};
 			
-			db.insert(new receipt(data));
+			db.insert(new Receipt(data));
 			System.out.println(db.getPizzaID(tmp[0]));
 			System.out.println(db.getOrderID());
 			
