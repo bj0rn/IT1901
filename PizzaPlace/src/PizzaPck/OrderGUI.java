@@ -247,7 +247,7 @@ public class OrderGUI extends QWidget{
 					tmp[5]
 			};
 			
-			db.insert(new Receipt(data));
+			db.insert(new receipt(data));
 			System.out.println(db.getPizzaID(tmp[0]));
 			System.out.println(db.getOrderID());
 			
