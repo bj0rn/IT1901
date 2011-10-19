@@ -96,7 +96,7 @@ public class OrderGUI extends QWidget{
 		
 		QPushButton btnConfirm = new QPushButton("Bekreft");
 		QPushButton btnDelete = new QPushButton("Slett");
-
+		QPushButton update = new QPushButton("Oppdater");
 		//setter tingen inn i base widget
 		main = new QGridLayout(this);
 
@@ -107,6 +107,7 @@ public class OrderGUI extends QWidget{
 		top.addWidget(changeDate);
 		top.addWidget(new QLabel("Tid for levering:"));
 		top.addWidget(changeTime);
+		top.addWidget(update);
 		
 		
 		main.addLayout(top, 0, 0, 1, 0);
