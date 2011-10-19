@@ -53,6 +53,7 @@ import com.trolltech.qt.gui.QWidget;
 	protected DecimalFormat price_format;
 	protected double start_price;
 	protected List<String> sizes;
+	protected List<String> amountList;
 	protected QGroupBox box;
 	protected QLabel image_label;
 	protected QLineEdit comments;
@@ -77,7 +78,11 @@ import com.trolltech.qt.gui.QWidget;
 		
 		sizes = new ArrayList<String>();
 		
+		amountList = new ArrayList<String>();
 		
+		for (int i = 1; i < 21; i++) {
+			amountList.add(""+i);
+		}
 		setup();
 	}
 	
@@ -88,7 +93,7 @@ import com.trolltech.qt.gui.QWidget;
 		sizes.add("Liten");
 		sizes.add("Stor");
 		size.addItems(sizes);
-		
+		amount.addItems(amountList);
 		
 		
 		//sender signal om at size er endret
@@ -97,7 +102,6 @@ import com.trolltech.qt.gui.QWidget;
 		//Sender signal om at antallet pizzaer er endret
 		//amount.valueChanged.connect(this,"amountValueChanged(int)");
 		price_label = new QLabel("Pris: "+start_price);
-		
 		
 		
 		//legge til de forskjellige tingene til griden
