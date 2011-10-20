@@ -14,14 +14,13 @@ import com.trolltech.qt.gui.QGroupBox;
 import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QListWidget;
-import com.trolltech.qt.gui.QListWidgetItem;
 import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QRadioButton;
+import com.trolltech.qt.gui.QSizePolicy.Policy;
 import com.trolltech.qt.gui.QTextBrowser;
 import com.trolltech.qt.gui.QTimeEdit;
 import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QWidget;
-import com.trolltech.qt.gui.QSizePolicy.Policy;
 
 public class OrderGUI extends QWidget{
 
@@ -91,7 +90,7 @@ public class OrderGUI extends QWidget{
 		order_list = new PizzaList(db);
 		order_list.setContentsMargins(1, 1, 1, 1);
 		//order_list.setFixedWidth(600);
-		order_list.scrollarea.setFixedWidth(600);
+		order_list.scrollarea.setFixedWidth(550);
 		layoutRight.addWidget(order_list);
 		
 		QPushButton btnConfirm = new QPushButton("Bekreft");

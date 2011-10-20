@@ -16,7 +16,10 @@ public class Map extends QWebView{
 	private final QUrl url; 
 	protected BufferedImage map;
 	
-
+	/**
+	 * Setting a default map over Trondheim in the beginning,
+	 * and setting it to be 460x460 pixels i size
+	 */
 	public Map(){
 		url = new QUrl("http://maps.googleapis.com/maps/api/staticmap?center=Trondheim,NO"+
 	"&size=460x460&scale=3&markers=color:blue|"
@@ -26,7 +29,8 @@ public class Map extends QWebView{
 	}
 	
 	/**
-	 * loader map
+	 * Loading the new map
+	 * @param url
 	 */
 	public void loadMap(QUrl url){
 		this.setUrl(url);
@@ -37,7 +41,9 @@ public class Map extends QWebView{
 	}
 	
 	/**
-	 * Henter et kart med adressene markert på 
+	 * Getting a new map which have markers on the start address,
+	 * and the delivery address
+	 * 
 	 * @param addressFrom
 	 * @param addressTo
 	 * @param zoom
@@ -51,7 +57,7 @@ public class Map extends QWebView{
 	}
 	
 	/**
-	 * Decoder adresser
+	 * Decoding an address
 	 * @param adress
 	 * @return
 	 */
@@ -66,7 +72,7 @@ public class Map extends QWebView{
 	}
 	
 	/**
-	 * Encoder adresser
+	 * Encoding an address
 	 * @param adress
 	 * @return
 	 */

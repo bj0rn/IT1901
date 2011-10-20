@@ -2,7 +2,6 @@ package PizzaPck;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import com.trolltech.qt.gui.QComboBox;
@@ -14,7 +13,6 @@ import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QLineEdit;
 import com.trolltech.qt.gui.QPixmap;
 import com.trolltech.qt.gui.QPushButton;
-import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QWidget;
 
 /**
@@ -65,6 +63,8 @@ import com.trolltech.qt.gui.QWidget;
 		
 		setup();
 	}
+	
+	
 	public void setup(){
 		
 		comments = new QLineEdit();
@@ -72,7 +72,7 @@ import com.trolltech.qt.gui.QWidget;
 		labComments = new QLabel("Kommentar:");
 		labComments.setFixedWidth(100);
 		
-		price_format = new DecimalFormat("0.00");
+		price_format = new DecimalFormat("00");
 		price_format.format(start_price);
 		price_label = new QLabel("Pris: "+start_price);
 		
@@ -92,16 +92,17 @@ import com.trolltech.qt.gui.QWidget;
 		amount_label = new QLabel("Antall :");
 		amountList = new ArrayList<String>();
 
+		//for å legge til nummer i antal pizza man kan velge
 		for (int i = 1; i < 21; i++) {
 			amountList.add(""+i);
 		}
 		amount.addItems(amountList);
 		
-		ingridients.setFont(new QFont("Veranda",11));
+		ingridients.setFont(new QFont("Verdana",11));
 		ingridients.setWordWrap(true);
 		labComments.setWordWrap(true);
 		
-		pizza_name.setFont(new QFont("Arial",14,QFont.Weight.Bold.value()));
+		pizza_name.setFont(new QFont("Arial",13,QFont.Weight.Bold.value()));
 		pizza_name.setWordWrap(true);
 		price_label.setWordWrap(true);
 		
@@ -133,8 +134,10 @@ import com.trolltech.qt.gui.QWidget;
 		
 	}
 
-	//hvis size blir endret s� m� prisen ogs� bli endret
-	
+	/**
+	 * This method changes the price on the order pizza if the size is changed
+	 * @param newSize
+	 */
 	public void pizzaSizeChanged(String newSize){
 		double newPrice = start_price;
 		if (newSize.equals("Stor")) {
@@ -143,6 +146,10 @@ import com.trolltech.qt.gui.QWidget;
 		price_label.setText("Pris: "+price_format.format(newPrice));
 	}
 	
+	/**
+	 * This method is activated when the user push the add button,
+	 * and adds a pizza order to the orderlist.
+	 */
 	public void signalBtnAdd() {
 		String [] data = {
 			pizza_name.text(),       //Pizza name
