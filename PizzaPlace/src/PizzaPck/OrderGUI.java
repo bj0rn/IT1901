@@ -192,7 +192,7 @@ public class OrderGUI extends QWidget{
 				build.append(fields[i]+ data[i]+"\n");
 			}
 			textCustomer.setText(build.toString());
-			
+		
 			insertOrder();
 
 		}catch(RuntimeException err) {
@@ -200,6 +200,7 @@ public class OrderGUI extends QWidget{
 			err.printStackTrace();
 		}
 	}
+	
 	
 	public void handleListProducts(String[] data) {
 		System.out.println("Insert completed");

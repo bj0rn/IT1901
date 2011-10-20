@@ -16,8 +16,11 @@ public class DB {
 	Connection connect;
 
 	
-	//Constructor 
-	//Connect
+	/**
+	 * Create new connection
+	 * @throws SQLException
+	 * @Throws {@link ClassNotFoundException}
+	 */
 	public DB() {
 		try {
 			//Load driver and connect
@@ -38,7 +41,13 @@ public class DB {
 	
 	
 	
-	
+	/**
+	 * Generic insert function for the database. Uses instances of objects
+	 * to build insert queries. The fields and data present in the object is
+	 * used as a template. 
+	 * @throws RuntimeException
+	 * @param obj
+	 */
 	public void insert(Object obj){
 		try{
 		
@@ -49,6 +58,7 @@ public class DB {
 			StringBuilder sb = new StringBuilder();
 			sb.append("INSERT INTO "+ classname +"(");
 		
+			//Get field names
 			Field[] fields = clazz.getDeclaredFields();
 			boolean commaAdded = false;
 			for (Field field : fields) {
@@ -63,6 +73,7 @@ public class DB {
 			sb.append(") VALUES(");
 			
 			commaAdded = false;
+			//Get field data
 			for(Field field : fields) {
 				String fieldName = field.getName();
 				field.setAccessible(true);
@@ -90,17 +101,33 @@ public class DB {
 		
 	}
 
-
+	/**
+	 * Create a String object of a inserted Object. Used by the generic
+	 * insert function to manipulate data.
+	 * @param value
+	 * @return
+	 */
 	private Object parseValue(Object value) {
 		return String.format("'%s'", value).toLowerCase();
 	}
-	
+	/**
+	 * C
+	 * @param value
+	 * @return
+	 */
 	private String parseValue(String value) {
 		return String.format("'%s'", value);
 	}
 	
 	
-
+/**
+ * Retrieve all rows from table products. The data retrieved are packed inside a list of
+ * string arrays. Each string array contain productID, name, price and 
+ * Ingredients, in the given order. 
+ * @throws SQLException
+ *
+ * @return {@link LinkedList}
+ */
 	public LinkedList <String[]> getMenu(){
 		LinkedList <String[]> list = new LinkedList <String[]>();
 		try{
@@ -122,7 +149,14 @@ public class DB {
 		return list;
 	}
 	
-
+	/**
+	 * Multi purpose search function for the customer table. 
+	 * @param SearchQuery
+	 * @param key Boolean
+	 * @param customer Boolean
+	 * @return String[]
+	 * @Throws {@link SQLException}
+	 */
 	public String[] Search(String SearchQuery, boolean key, boolean customer) {
 		
 		String query = "";
@@ -178,8 +212,13 @@ public class DB {
 	}
 
 	
-	
-	//Update customer based on Customer id
+	/**
+	 * Updates a customer in the customer table by using the customerID.
+	 * 
+	 * @param customer the new customer
+	 * @param CustomerID the old customer(customer id is located at first position)
+	 * @throws SQLException
+	 */
 	public void Update(String[] customer, String [] CustomerID){
 		String query = "UPDATE customer SET first_name = '"+customer[0]+"'"+
 	", last_name = '"+customer[1]+"'"+
@@ -197,7 +236,14 @@ public class DB {
 		}
 	}
 
-
+	/**
+	 * Retrive all orders from the orders table. The data retrieved are packed
+	 * inside string arrays. Each string array contains orderID, customerID,
+	 * delivery, finish, delivered, time and currentTime, in the given order. 
+	 * 
+	 * @return ArrayList<String[]>
+	 * @throws SQLException
+	 */
 	public ArrayList <String[]> getAllOrders() {
 		String query = "SELECT * FROM orders";
 		ArrayList<String[]> list = new ArrayList<String[]>();
@@ -211,11 +257,7 @@ public class DB {
 			}
 			
 			while(running) {
-				String test = rs.getTimestamp(6).toString();
-				//System.out.println(test);
-				
-				//System.out.println(rs.getTimestamp(7));
-				
+				//Encapsulate retrieved data 
 				String[] data = {
 						rs.getString(1), //OrderID
 						rs.getString(2), //customerID
@@ -225,9 +267,8 @@ public class DB {
 						rs.getTimestamp(6).toString(),//time
 						rs.getTimestamp(7).toString()  //currentTime
 				};
-				
-				
 				list.add(data);
+				//Handle next row
 				running = rs.next();
 				}
 			return list;
@@ -239,6 +280,16 @@ public class DB {
 		return null;
 		
 	}
+	//TODO: Skrive om denne kommentaren 
+	/**
+	 * Retrieves all rows in table receipt where orderID == orderNr. The data
+	 * Retrieved are packed inside string arrays. Each string array contain orderID, 
+	 * productID, comment, size,amount, pizza name, and ingredients. Pizza name and ingridents are
+	 * Retrieved by performing an additional query, and retrieving the name and ingridents from
+	 * products where productID == productID
+	 * @param orderNr
+	 * @return ArrayList<String[]>
+	 */
 	
 	public ArrayList<String[]> displayOrders(String orderNr){
 		ArrayList <String[]> aList = new ArrayList<String[]>();
@@ -250,11 +301,13 @@ public class DB {
 			rs.first();
 			while(running) {
 				String[] data = {
-					rs.getString(1), //OrderID
-					rs.getString(2), //ProductID
-					rs.getString(3), //Comment 
-					"",				 //Pizza navn
-					""				//ingridienser
+					rs.getString(1), 	//OrderID
+					rs.getString(2), 	//ProductID
+					rs.getString(3), 	//Comment
+					rs.getString(4),	//Size
+					rs.getString(5),	//Amount					
+					"",			 		//Pizza name
+					""					//Ingredients
 				};
 				aList.add(data);
 				running = rs.next();
@@ -266,24 +319,14 @@ public class DB {
 				try {
 					query = "SELECT * FROM product WHERE productID = '"+strings[1]+"' ";
 					ResultSet fu = connect.createStatement().executeQuery(query);
-					if(fu.first() == false) {
-						System.out.println("FU!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-					}
-					strings[3] = fu.getString(2);	//name
-					strings[4] = fu.getString(4);	//ingridents
+					strings[5] = fu.getString(2);	//name
+					strings[6] = fu.getString(4);	//Ingredients
 				}catch(SQLException sq) {
 					System.out.println("FU!!!");
 					sq.printStackTrace();
 				}
-				
 			}
-				
-			
-			
 			return aList;
-			
-			
-			
 		}catch (SQLException sq) {
 			System.out.println("diplayOrder() failed");
 			sq.printStackTrace();
@@ -296,6 +339,12 @@ public class DB {
 		
 	}
 	
+	/**
+	 * Retrieve productID from product where PizzaName == name. 
+	 * 
+	 * @param string PizzaName
+	 * @return String
+	 */
 	public String getPizzaID(String PizzaName) {
 		String  query = "SELECT productID FROM product WHERE name = '"+PizzaName+"'";
 		try {
@@ -309,6 +358,10 @@ public class DB {
 		return "";
 	}
 	
+	/**
+	 * Retrieve the last inserted orderID from table orders
+	 * @return String
+	 */
 	public String getOrderID() {
 		String query = "SELECT MAX(orderid) FROM orders";
 		try {
