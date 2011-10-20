@@ -56,8 +56,8 @@ public class PizzaList extends QWidget implements Iterable<Pizza>{
 		while(iter.hasNext()){
 			String[] a = iter.next();
 			Pizza p = new Pizza(a);
-			p.setFixedWidth(550);
-			p.setContentsMargins(1,1,1,1);
+			p.setFixedWidth(500);
+			//p.setContentsMargins(0,1,1,1);
 			p.signalPizza.connect(this, "signalBridge(String[])");
 			pizza_list.add(p);
 		}
