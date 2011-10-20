@@ -14,14 +14,13 @@ import com.trolltech.qt.gui.QGroupBox;
 import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QListWidget;
-import com.trolltech.qt.gui.QListWidgetItem;
 import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QRadioButton;
+import com.trolltech.qt.gui.QSizePolicy.Policy;
 import com.trolltech.qt.gui.QTextBrowser;
 import com.trolltech.qt.gui.QTimeEdit;
 import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QWidget;
-import com.trolltech.qt.gui.QSizePolicy.Policy;
 
 public class OrderGUI extends QWidget{
 
@@ -89,11 +88,14 @@ public class OrderGUI extends QWidget{
 		boxRight.setLayout(layoutRight);
 
 		order_list = new PizzaList(db);
+		order_list.setContentsMargins(1, 1, 1, 1);
+		//order_list.setFixedWidth(600);
+		order_list.scrollarea.setFixedWidth(550);
 		layoutRight.addWidget(order_list);
-
+		
 		QPushButton btnConfirm = new QPushButton("Bekreft");
 		QPushButton btnDelete = new QPushButton("Slett");
-
+		QPushButton update = new QPushButton("Oppdater");
 		//setter tingen inn i base widget
 		main = new QGridLayout(this);
 
@@ -104,6 +106,7 @@ public class OrderGUI extends QWidget{
 		top.addWidget(changeDate);
 		top.addWidget(new QLabel("Tid for levering:"));
 		top.addWidget(changeTime);
+		top.addWidget(update);
 		
 		
 		main.addLayout(top, 0, 0, 1, 0);

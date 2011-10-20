@@ -6,8 +6,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.trolltech.qt.core.Qt.ScrollBarPolicy;
-import com.trolltech.qt.gui.*;
-import com.trolltech.qt.gui.QSizePolicy.Policy;
+import com.trolltech.qt.gui.QGridLayout;
+import com.trolltech.qt.gui.QLayout;
+import com.trolltech.qt.gui.QScrollArea;
+import com.trolltech.qt.gui.QVBoxLayout;
+import com.trolltech.qt.gui.QWidget;
 
 
 
@@ -20,6 +23,11 @@ public class PizzaList extends QWidget implements Iterable<Pizza>{
 	protected QScrollArea scrollarea;
 	private DB db;
 	
+	/**
+	 * 
+	 * @param db
+	 * @see fillList
+	 */
 	public PizzaList(DB db){
 		this.db = db;
 		//Init 
@@ -39,6 +47,9 @@ public class PizzaList extends QWidget implements Iterable<Pizza>{
 		return pizza_list.iterator();
 	}
 	
+	/**
+	 * This method fills the list with pizzas from the database
+	 */
 	public void fillList() {
 		pizza_list = new ArrayList<Pizza>();
 		LinkedList<String[]> llProdukter;
@@ -48,30 +59,39 @@ public class PizzaList extends QWidget implements Iterable<Pizza>{
 		while(iter.hasNext()){
 			String[] a = iter.next();
 			Pizza p = new Pizza(a);
+			p.setFixedWidth(500);
+			//p.setContentsMargins(0,1,1,1);
 			p.signalPizza.connect(this, "signalBridge(String[])");
 			pizza_list.add(p);
 		}
 		v_box = new QVBoxLayout(); 
 		lay = new QGridLayout();
-		
+		v_box.setContentsMargins(1,1,1,1);
 		
 		
 		
 		main = new QWidget();
 		main.setLayout(v_box);
+		this.setContentsMargins(1, 1, 1, 2);
 		//main.setBaseSize(pizza_list.get(0).width()+10, pizza_list.get(0).height()*6);
-		
 		scrollarea = new QScrollArea(this);
 		scrollarea.setWidgetResizable(true);
+		
 		scrollarea.setVerticalScrollBarPolicy(ScrollBarPolicy.ScrollBarAlwaysOn);
+		
 		scrollarea.setWidget(main);
-		scrollarea.setSizePolicy(Policy.Fixed, Policy.Fixed);
+		
+		//scrollarea.setSizePolicy(Policy.Fixed, Policy.Fixed);
 		//Update gui
 		for (Pizza p: pizza_list) {
 			v_box.addWidget(p);
 		}
 	}
 	
+	/**
+	 * 
+	 * @param data
+	 */
 	public void signalBridge(String [] data) {
 		System.out.println("Signal forwared from pizza list");
 		signalBridge.emit(data);

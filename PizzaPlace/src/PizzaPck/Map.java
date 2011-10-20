@@ -16,17 +16,21 @@ public class Map extends QWebView{
 	private final QUrl url; 
 	protected BufferedImage map;
 	
-
+	/**
+	 * Setting a default map over Trondheim in the beginning,
+	 * and setting it to be 460x460 pixels i size
+	 */
 	public Map(){
 		url = new QUrl("http://maps.googleapis.com/maps/api/staticmap?center=Trondheim,NO"+
-	"&size=460x460&markers=color:blue|"
+	"&size=460x460&scale=3&markers=color:blue|"
 	+encodeUTF8("Elgseter Gate 1 7039 Trondheim")+"&maptype=roadmap&sensor=false");
 		loadMap(url);
 		this.setFixedSize(460,460);
 	}
 	
 	/**
-	 * loader map
+	 * Loading the new map
+	 * @param url
 	 */
 	public void loadMap(QUrl url){
 		this.setUrl(url);
@@ -37,7 +41,9 @@ public class Map extends QWebView{
 	}
 	
 	/**
-	 * Henter et kart med adressene markert på 
+	 * Getting a new map which have markers on the start address,
+	 * and the delivery address
+	 * 
 	 * @param addressFrom
 	 * @param addressTo
 	 * @param zoom
@@ -45,27 +51,39 @@ public class Map extends QWebView{
 	 */
 	public QUrl getMap(String addressFrom, String addressTo, int zoom){
 		return new QUrl("http://maps.googleapis.com/maps/api/staticmap?center=Trondheim,NO"+
-	"&size=460x460&markers=color:blue|"+encodeUTF8(addressFrom)+"|"+encodeUTF8(addressTo)+
+	"&size=460x460&scale=3&markers=color:blue|"+encodeUTF8(addressFrom)+"|"+encodeUTF8(addressTo)+
 	"&path=color:red|weight:3|"+encodeUTF8(addressFrom)+"|"
 	+encodeUTF8(addressTo)+"&maptype=roadmap&sensor=false");
 	}
 	
 	/**
-	 * Decoder adresser
+	 * Decoding an address
 	 * @param adress
 	 * @return
 	 */
-	public String decodeUTF8(String adress) {
-	    return URLDecoder.decode(adress);
+	public String decodeUTF8(String adress)  {
+		try {
+			return URLDecoder.decode(adress);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return e.getMessage();
+		}
+	   
 	}
 	
 	/**
-	 * Encoder adresser
+	 * Encoding an address
 	 * @param adress
 	 * @return
 	 */
 	public String encodeUTF8(String adress) {
-	    return URLEncoder.encode(adress);
+		try {
+			return URLEncoder.encode(adress);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return e.getMessage();
+		}
+	    
 	}
 	
 }
