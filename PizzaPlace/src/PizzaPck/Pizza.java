@@ -97,7 +97,7 @@ import com.trolltech.qt.gui.QWidget;
 			amountList.add(""+i);
 		}
 		amount.addItems(amountList);
-		
+		amount.setCurrentIndex(0);
 		ingridients.setFont(new QFont("Verdana",11));
 		ingridients.setWordWrap(true);
 		labComments.setWordWrap(true);

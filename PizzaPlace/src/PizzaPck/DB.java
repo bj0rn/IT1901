@@ -253,6 +253,8 @@ public class DB {
 					rs.getString(1), //OrderID
 					rs.getString(2), //ProductID
 					rs.getString(3), //Comment 
+					rs.getString(4), //size
+					rs.getString(5), //amount
 					"",				 //Pizza navn
 					""				//ingridienser
 				};
@@ -269,8 +271,8 @@ public class DB {
 					if(fu.first() == false) {
 						System.out.println("FU!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 					}
-					strings[3] = fu.getString(2);	//name
-					strings[4] = fu.getString(4);	//ingridents
+					strings[5] = fu.getString(2);	//name
+					strings[6] = fu.getString(4);	//ingridents
 				}catch(SQLException sq) {
 					System.out.println("FU!!!");
 					sq.printStackTrace();

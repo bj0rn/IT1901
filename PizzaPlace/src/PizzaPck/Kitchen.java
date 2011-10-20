@@ -95,18 +95,33 @@ public class Kitchen extends QWidget{
 		ArrayList  <String[]> list = db.displayOrders(tmp[0]);
 		System.out.println("Hello");
 		for (String[] strings : list) {
+			for (int i = 0; i< strings.length; i++){
+				System.out.println(strings[i]);
+			}
+			sb.append(strings[4] + " stk. ");
+			if (strings[3].equals("1")){
+				sb.append("Stor ");
+			}
+			else{
+				sb.append("Liten ");
+			}
+			sb.append(strings[5]);
+			sb.append("\n");
+			sb.append("  -");
+			sb.append(strings[6]);
+			sb.append("\n");
+			sb.append("  -");
 			sb.append(strings[2]);
-			sb.append(" ");
-			sb.append(strings[3]);
-			sb.append(" ");
-			sb.append(strings[4]);
-			sb.append(" ");
+			sb.append("\n");
+			sb.append("-----------------------------");
 			sb.append("\n");
 			
 		}
 		order.setText(sb.toString());
 		
 	}
+	
+	
 	
 	
 	
