@@ -24,12 +24,13 @@ public class Kitchen extends QWidget{
 	private DB db;
 	
 	private QTextBrowser order;
-	private QListWidget orderList;
+
 	private QGridLayout layout;
 	private QDateTime dateTime;
 	private QPushButton btnFinish;
-	
+	private ArrayList<String[]> mirrorOrderList; 
 	public Signal1<Boolean> signalKitchen = new Signal1<Boolean>();
+	private QListWidget orderList;
 	
 	
 	/**
@@ -49,16 +50,13 @@ public class Kitchen extends QWidget{
 		layout = new QGridLayout(this);
 		
 		
-		String tekst = "Her har jeg planer om at det skal vises liste over alt som skal lages med kommentarer. <br><br> Knappen nederst fullf�rer orderen for den markerte orderen i listen til venstre <br><br> dette er bare en id� p� hvordan det kan l�ses. er bare � skrike ut om det er noe som ikke stemmer";
+	
 		order = new QTextBrowser();
-		order.setText(tekst);
-		
-		String[] txtorder = {"Her b�r man kunne trykke p� en ordre,", "deretter f� opp hva som skal lages i textEditen til h�yre.", "Her trenger man egentlig bare � vise ordrenummeret og klokkeslett n�r den skal v�re ferdig"};
 		orderList = new QListWidget();
 		
-		orderList.addItem(txtorder[0]);
-		orderList.addItem(txtorder[1]);
-		orderList.addItem(txtorder[2]);
+		mirrorOrderList = new ArrayList<String[]>();
+		
+		
 		
 		//TODO: klokka m� fikses. m� ogs� legge til en i ordergui.
 		dateTime = new QDateTime(QDateTime.currentDateTime());
@@ -69,10 +67,11 @@ public class Kitchen extends QWidget{
 		
 		layout.addWidget(new QLabel(dateTime.toString()),0,0);
 		layout.addWidget(order, 1, 1);
-		layout.addWidget(orderList, 1, 0);
-		layout.addWidget(btnFinish,2,1);
 		
-		orderList.clicked.connect(this, "hei()");
+		layout.addWidget(btnFinish,2,1);
+		getOrders();
+		
+		
 		
 	}
 	
@@ -83,19 +82,58 @@ public class Kitchen extends QWidget{
 		System.out.println(test.text());
 	}
 	
-	public void getOrders() {
-		ArrayList<String[]> list = db.getAllOrders();
-		StringBuilder sb = new StringBuilder();
-		String[] tmp;
-		for(int i = 0; i <= list.size(); i++) {
-			tmp = list.get(i);
-			orderList.addItem(format(tmp[0], tmp[5]));
+	public void showOrder() {
+		order.clear();
+		if(orderList == null) {
+			return;
 		}
+		
+		StringBuilder sb = new StringBuilder();
+		int row = orderList.currentIndex().row();
+		
+		String[] tmp = mirrorOrderList.get(row);
+		ArrayList  <String[]> list = db.displayOrders(tmp[0]);
+		System.out.println("Hello");
+		for (String[] strings : list) {
+			sb.append(strings[2]);
+			sb.append(" ");
+			sb.append(strings[3]);
+			sb.append(" ");
+			sb.append(strings[4]);
+			sb.append(" ");
+			sb.append("\n");
+			
+		}
+		order.setText(sb.toString());
 		
 	}
 	
-	private String format(String orderID, String time) {
-		return ""+orderID+" "+time+"";
+	
+	
+	public void getOrders() {
+		orderList = new QListWidget();
+		layout.addWidget(orderList, 1, 0);
+		ArrayList<String[]> list = db.getAllOrders();
+		if(list == null) {
+			return;
+		}
+		StringBuilder sb = new StringBuilder();
+		String[] tmp;
+		for(int i = 0; i <= list.size()-1; i++) {
+			//tmp = list.get(i);
+			orderList.addItem(format(list.get(i)));
+			mirrorOrderList.add(list.get(i));
+		}
+		orderList.clicked.connect(this, "showOrder()");
+	}
+	
+	private String format(String[] data) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < data.length; i++) {
+			sb.append(data[i]);
+			sb.append(" ");
+		}
+		return sb.toString();
 		
 	}
 	
@@ -108,6 +146,11 @@ public class Kitchen extends QWidget{
 		
 		
 		
+	}
+	
+	public void updateKitchen(Boolean bool) {
+			System.out.println("Hello world");
+			getOrders();
 	}
 	
 }

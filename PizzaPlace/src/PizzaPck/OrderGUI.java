@@ -250,6 +250,8 @@ public class OrderGUI extends QWidget{
 			System.out.println(db.getPizzaID(tmp[0]));
 			System.out.println(db.getOrderID());
 			
+			signalKitchen.emit(true);
+			
 			
 		}
 	}

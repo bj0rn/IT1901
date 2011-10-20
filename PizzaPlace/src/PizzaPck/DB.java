@@ -204,17 +204,28 @@ public class DB {
 		boolean running = true;
 		try {
 			ResultSet rs = connect.createStatement().executeQuery(query);
-			rs.first();
+			
+			
+			if(!rs.first()) {
+				return null;
+			}
+			
 			while(running) {
+				String test = rs.getTimestamp(6).toString();
+				//System.out.println(test);
+				
+				//System.out.println(rs.getTimestamp(7));
+				
 				String[] data = {
 						rs.getString(1), //OrderID
 						rs.getString(2), //customerID
 						rs.getString(3), //delivery
 						rs.getString(4), //finish
 						rs.getString(5), //delivered
-						rs.getString(5), //time
-						rs.getString(6)  //currentTime
+						rs.getTimestamp(6).toString(),//time
+						rs.getTimestamp(7).toString()  //currentTime
 				};
+				
 				
 				list.add(data);
 				running = rs.next();
@@ -222,45 +233,60 @@ public class DB {
 			return list;
 		
 		}catch(SQLException sq) {
-			System.out.println("getOrders() failed");
+			System.out.println("getAllOrders() failed");
+			sq.printStackTrace();
 		}
 		return null;
 		
 	}
 	
 	public ArrayList<String[]> displayOrders(String orderNr){
-		List <String[]> aList = new ArrayList<String[]>();
-		
-		//LinkedList<String[]> list = new LinkedList<String[]>();
-		java.util.Iterator<String[]> iter = aList.iterator();
-		String query = "SELECT * FROM receipt WHERE order = '"+orderNr+"'";
+		ArrayList <String[]> aList = new ArrayList<String[]>();
+		String query = "SELECT * FROM receipt WHERE orderID = '"+orderNr+"'";
 		boolean running = true;
 		
 		try {
 			ResultSet rs = connect.createStatement().executeQuery(query);
 			rs.first();
-			
 			while(running) {
-				//adding pizzaID, pizza name and comment
-				aList.add(new String[]{rs.getString(2),"", rs.getString(3)});
+				String[] data = {
+					rs.getString(1), //OrderID
+					rs.getString(2), //ProductID
+					rs.getString(3), //Comment 
+					"",				 //Pizza navn
+					""				//ingridienser
+				};
+				aList.add(data);
+				running = rs.next();
 			}
-			int i = 0;
-			while(iter.hasNext()) {
-				String[] tmp = iter.next();
-				String tmpQuery = "SELECT * FROM product WHERE orderID = '"+tmp[0]+"'";
-				rs = connect.createStatement().executeQuery(query);
-				tmp[2] = rs.getString(1);
-				aList.set(i, tmp);
-				i++;
+			
+			
+			
+			for (String[] strings : aList) {
+				try {
+					query = "SELECT * FROM product WHERE productID = '"+strings[1]+"' ";
+					ResultSet fu = connect.createStatement().executeQuery(query);
+					if(fu.first() == false) {
+						System.out.println("FU!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+					}
+					strings[3] = fu.getString(2);	//name
+					strings[4] = fu.getString(4);	//ingridents
+				}catch(SQLException sq) {
+					System.out.println("FU!!!");
+					sq.printStackTrace();
+				}
 				
 			}
+				
 			
 			
-			return (ArrayList<String[]>) aList;
+			return aList;
+			
 			
 			
 		}catch (SQLException sq) {
 			System.out.println("diplayOrder() failed");
+			sq.printStackTrace();
 		}
 		
 		return null;

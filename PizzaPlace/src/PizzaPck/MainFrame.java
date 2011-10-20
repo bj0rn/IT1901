@@ -14,7 +14,7 @@ public class MainFrame extends QWidget {
 	private QGridLayout layout;
 	private QTabWidget tabMain;
 	
-	private OrderGUI tab2;
+	private OrderGUI orderGui;
 	private PizzaList liste;
 	private Kitchen ki;
 	private SettingsWidget sw;
@@ -59,9 +59,9 @@ public class MainFrame extends QWidget {
 
 
 		//adds ordergui to main window
-		tab2 = new OrderGUI(db);
+		orderGui = new OrderGUI(db);
 		liste= new PizzaList(db);
-		tabMain.addTab(tab2, "Bestilling");
+		tabMain.addTab(orderGui, "Bestilling");
 		//tab2.setDisabled(true);
 		
 		//adds kitchen widget to main windows
@@ -80,11 +80,12 @@ public class MainFrame extends QWidget {
 		
 		//Connect Settingswidget to ordergui
 		System.out.println("Signal connection complete");
-		sw.test.connect(tab2, "hei()");
+		sw.test.connect(orderGui, "hei()");
 		//kunde.customer.connect(tab2, "insertOrder(int)");
-		kunde.signalCustomer.connect(tab2, "displayCustomer(int)");
+		kunde.signalCustomer.connect(orderGui, "displayCustomer(int)");
 		kunde.changeTab.connect(this, "setCurrentTab()");
 		
+		orderGui.signalKitchen.connect(ki, "updateKitchen(Boolean)");
 
 		
 		/*
@@ -99,7 +100,7 @@ public class MainFrame extends QWidget {
 
 	public void setCurrentTab (){
 		tabMain.setCurrentIndex(1);
-		tab2.setDisabled(false);
+		orderGui.setDisabled(false);
 	}
 
 	/**
