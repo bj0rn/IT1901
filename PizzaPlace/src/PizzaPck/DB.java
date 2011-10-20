@@ -301,13 +301,14 @@ public class DB {
 			rs.first();
 			while(running) {
 				String[] data = {
-					rs.getString(1), 	//OrderID
-					rs.getString(2), 	//ProductID
-					rs.getString(3), 	//Comment
-					rs.getString(4),	//Size
-					rs.getString(5),	//Amount					
-					"",			 		//Pizza name
-					""					//Ingredients
+
+					rs.getString(1), //OrderID
+					rs.getString(2), //ProductID
+					rs.getString(3), //Comment 
+					rs.getString(4), //size
+					rs.getString(5), //amount
+					"",				 //Pizza navn
+					""				//ingridienser
 				};
 				aList.add(data);
 				running = rs.next();
@@ -319,8 +320,11 @@ public class DB {
 				try {
 					query = "SELECT * FROM product WHERE productID = '"+strings[1]+"' ";
 					ResultSet fu = connect.createStatement().executeQuery(query);
+					if(fu.first() == false) {
+						System.out.println("FU!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+					}
 					strings[5] = fu.getString(2);	//name
-					strings[6] = fu.getString(4);	//Ingredients
+					strings[6] = fu.getString(4);	//ingridents
 				}catch(SQLException sq) {
 					System.out.println("FU!!!");
 					sq.printStackTrace();

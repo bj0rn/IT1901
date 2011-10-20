@@ -244,10 +244,19 @@ public class OrderGUI extends QWidget{
 		Iterator<String[]> iter = listProductsMirror.iterator();
 		while(iter.hasNext()) {
 			String[] tmp = iter.next();
+			String size;
+			if (tmp[1].equals("Stor")){
+				size = "1";
+			}
+			else{
+				size = "0";
+			}
 			String [] data = {
 					db.getOrderID(),
 					db.getPizzaID(tmp[0]),
-					tmp[5]
+					tmp[5],
+					size,
+					tmp[2]
 			};
 			
 			db.insert(new receipt(data));
