@@ -123,10 +123,6 @@ import com.trolltech.qt.gui.QWidget;
 		this.grid.addWidget(pizza_name,1,0);
 		
 		this.grid.addWidget(ingridients,2,0);
-		//this.grid.addWidget(amount_label,2,4);
-		//this.grid.addWidget(size_label,3,4);
-		//this.grid.addWidget(amount,2,5);
-		//this.grid.addWidget(size,3,5);
 		this.grid.addLayout(amount_layout, 2, 5);
 		this.grid.addLayout(size_layout, 3, 5);
 		this.grid.addWidget(price_label,3,0);
