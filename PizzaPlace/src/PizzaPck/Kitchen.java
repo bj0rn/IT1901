@@ -31,6 +31,7 @@ public class Kitchen extends QWidget{
 	private ArrayList<String[]> mirrorOrderList; 
 	public Signal1<Boolean> signalKitchen = new Signal1<Boolean>();
 	private QListWidget orderList;
+	private int row;
 	
 	
 	/**
@@ -70,6 +71,7 @@ public class Kitchen extends QWidget{
 		
 		layout.addWidget(btnFinish,2,1);
 		getOrders();
+		btnFinish.clicked.connect(this, "finishOrder()");
 		
 		
 		
@@ -93,11 +95,8 @@ public class Kitchen extends QWidget{
 		
 		String[] tmp = mirrorOrderList.get(row);
 		ArrayList  <String[]> list = db.displayOrders(tmp[0]);
-		System.out.println("Hello");
+		//System.out.println("Hello");
 		for (String[] strings : list) {
-			for (int i = 0; i< strings.length; i++){
-				System.out.println(strings[i]);
-			}
 			sb.append(strings[4] + " stk. ");
 			if (strings[3].equals("1")){
 				sb.append("Stor ");
@@ -127,6 +126,7 @@ public class Kitchen extends QWidget{
 	
 	public void getOrders() {
 		orderList = new QListWidget();
+		mirrorOrderList = new ArrayList<String[]>();
 		layout.addWidget(orderList, 1, 0);
 		ArrayList<String[]> list = db.getAllOrders();
 		if(list == null) {
@@ -134,6 +134,7 @@ public class Kitchen extends QWidget{
 		}
 		StringBuilder sb = new StringBuilder();
 		String[] tmp;
+		sortOrders(list);
 		for(int i = 0; i <= list.size()-1; i++) {
 			//tmp = list.get(i);
 			orderList.addItem(format(list.get(i)));
@@ -153,7 +154,7 @@ public class Kitchen extends QWidget{
 	}
 	
 	public void displayOrders() {
-		int row = orderList.currentIndex().row();
+		row = orderList.currentIndex().row();
 		QListWidgetItem item = orderList.item(row);
 		String delimiters = " ,";
 		String tmp = item.toString();
@@ -161,6 +162,25 @@ public class Kitchen extends QWidget{
 		
 		
 		
+	}
+	
+	public void finishOrder(){
+		String[] tmp = mirrorOrderList.get(row);
+		String orderID = tmp[0];
+		System.out.println(orderID);
+		db.updateFinishStatus(orderID);
+		getOrders();
+		order.clear();
+	}
+	
+	public void sortOrders(ArrayList<String[]> list ){
+		for (int i = 1; i < list.size(); i++){
+			String key = list.get(i-1)[6];
+			if(list.get(i)[6].compareTo(key)< 0){
+				list.get(i-1)[6] = list.get(i)[6];
+				list.get(i)[6] = key;
+			}
+		}
 	}
 	
 	public void updateKitchen(Boolean bool) {

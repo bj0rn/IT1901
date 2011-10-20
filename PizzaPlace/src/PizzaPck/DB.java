@@ -245,7 +245,7 @@ public class DB {
 	 * @throws SQLException
 	 */
 	public ArrayList <String[]> getAllOrders() {
-		String query = "SELECT * FROM orders";
+		String query = "SELECT * FROM orders WHERE finish = '0'";
 		ArrayList<String[]> list = new ArrayList<String[]>();
 		boolean running = true;
 		try {
@@ -361,6 +361,20 @@ public class DB {
 		}
 		return "";
 	}
+	
+	public void updateFinishStatus(String orderID){
+		String query = "UPDATE orders SET finish = '1' WHERE orderID = '"+orderID+"'";
+		try{
+			connect.createStatement().execute(query);
+		}
+		catch (SQLException e) {
+			// TODO: handle exception
+			System.out.println(e);
+		}
+		
+			
+		}
+	
 	
 	/**
 	 * Retrieve the last inserted orderID from table orders
