@@ -77,20 +77,6 @@ public class Kitchen extends QWidget{
 		
 	}
 	
-	
-	public void sortOrders(ArrayList<String[]> mList){
-
-		for (int i = 1; i < mList.size(); i++) {
-				String key = mList.get(i-1)[6];
-				if( mList.get(i)[6].compareTo(key)<0){
-					mList.get(i-1)[6] = mList.get(i)[6];
-					mList.get(i)[6] = key;
-				}
-		}
-			
-	
-	}
-	
 	public void hei() {
 		int row = orderList.currentIndex().row();
 		QListWidgetItem test = orderList.item(row);
@@ -190,10 +176,14 @@ public class Kitchen extends QWidget{
 	
 	public void sortOrders(ArrayList<String[]> list ){
 		for (int i = 1; i < list.size(); i++){
+			
 			String key = list.get(i-1)[6];
+			System.out.println("element i  "+ list.get(i)[6] + " key "+ key);
 			if(list.get(i)[6].compareTo(key)< 0){
 				list.get(i-1)[6] = list.get(i)[6];
 				list.get(i)[6] = key;
+				
+				System.out.println(list.get(i)[6] + "  lololo forrige" + list.get(i-1)[6]);
 			}
 		}
 	}
