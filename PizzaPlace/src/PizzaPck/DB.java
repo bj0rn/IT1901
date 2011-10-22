@@ -245,7 +245,7 @@ public class DB {
 	 * @throws SQLException
 	 */
 	public ArrayList <String[]> getAllOrders() {
-		String query = "SELECT * FROM orders WHERE finish = '0'";
+		String query = "SELECT * FROM orders WHERE finish = '0' ORDER BY orderID DESC";
 		ArrayList<String[]> list = new ArrayList<String[]>();
 		boolean running = true;
 		try {

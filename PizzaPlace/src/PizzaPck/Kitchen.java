@@ -188,16 +188,6 @@ public class Kitchen extends QWidget{
 		order.clear();
 	}
 	
-	public void sortOrders(ArrayList<String[]> list ){
-		for (int i = 1; i < list.size(); i++){
-			String key = list.get(i-1)[6];
-			if(list.get(i)[6].compareTo(key)< 0){
-				list.get(i-1)[6] = list.get(i)[6];
-				list.get(i)[6] = key;
-			}
-		}
-	}
-	
 	public void updateKitchen(Boolean bool) {
 			System.out.println("Hello world");
 			getOrders();
