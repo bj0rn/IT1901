@@ -135,7 +135,7 @@ public class Kitchen extends QWidget{
 		}
 		StringBuilder sb = new StringBuilder();
 		String[] tmp;
-		sortOrders(list);
+		//sortOrders(list);
 		for(int i = 0; i <= list.size()-1; i++) {
 			//tmp = list.get(i);
 			orderList.addItem(format(list.get(i)));
