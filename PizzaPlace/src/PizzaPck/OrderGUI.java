@@ -129,7 +129,7 @@ public class OrderGUI extends QWidget{
 		
 		
 		//Get signal from pizzaList
-//		order_list.signalBridge.connect(this, "handleListProducts(String[])");
+		order_list.signalBridge.connect(this, "handleListProducts(String[])");
 		listProducts.doubleClicked.connect(this, "removeFromLists()");
 		btnConfirm.clicked.connect(this, ("confirmOrders()"));
 
