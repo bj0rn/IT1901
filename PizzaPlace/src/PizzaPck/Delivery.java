@@ -109,10 +109,14 @@ public class Delivery extends QWidget{
 	
 	private String format(String[] data) {
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < data.length; i++) {
-			sb.append(data[i]);
-			sb.append(" ");
-		}
+			sb.append(data[0]+":  ");
+			sb.append(data[8]+" ");
+			sb.append(data[9]+" ");
+			sb.append(data[5]+"\n");
+			sb.append(data[10]+", ");
+			sb.append(data[11]+" ");
+			sb.append(data[12]+", ");
+			sb.append(data[13]+"\n");
 		return sb.toString();
 	}
 	

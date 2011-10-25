@@ -5,6 +5,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 import com.trolltech.qt.core.QUrl;
+import com.trolltech.qt.gui.QListWidget;
 import com.trolltech.qt.webkit.QWebView;
 
 /**
@@ -25,7 +26,7 @@ public class Map extends QWebView{
 	"&size=460x460&scale=3&markers=color:blue|"
 	+encodeUTF8("Elgseter Gate 1 7039 Trondheim")+"&maptype=roadmap&sensor=false");
 		loadMap(url);
-		this.setFixedSize(460,460);
+		this.setFixedSize(460,470);
 	}
 	
 	/**
@@ -36,6 +37,9 @@ public class Map extends QWebView{
 		this.setUrl(url);
 	}
 	
+	public void setSize(QListWidget listWidget){
+		this.setFixedSize(listWidget.width(),listWidget.height());
+	}
 	public BufferedImage getMap(){
 		return map;
 	}
