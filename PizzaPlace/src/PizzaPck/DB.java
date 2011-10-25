@@ -470,6 +470,25 @@ public class DB {
 		}
 		return "";
 	}
+	
+	/**
+	 * 
+	 * @param time
+	 * @param delivery
+	 * @param orderID
+	 */
+	public void updateTime(Timestamp time, int delivery, String orderID) {
+		String query = "UPDATE orders SET time = '"time+"'"+
+				", delivery = '"+delivery+"'  WHERE orderID = '"+orderID+"'";
+		
+		try {
+			connect.createStatement().execute(query);
+			
+		}catch(SQLException sq) {
+			System.out.println("updateTime() failed!!");
+			sq.printStackTrace();
+		}
+	}
 }
 
 
