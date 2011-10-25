@@ -35,10 +35,10 @@ public class OrderGUI extends QWidget{
 	public Signal1<Boolean> signalKitchen = new Signal1<Boolean>();
 	//Mirror all the element contained in listProducts
 	public List<String[]> listProductsMirror;
-	
+
 	//Not used at the moment 
 	//public Signal1<String[]> customerInfo = new Signal1<String[]>(); 
-	
+
 	protected PizzaList order_list;
 	protected QRadioButton delivery;
 	protected QRadioButton pickup;
@@ -53,7 +53,7 @@ public class OrderGUI extends QWidget{
 		this.db = db;
 
 		listProductsMirror = new ArrayList<String[]>();
-		
+
 		// alt som har med venstre widget � gj�re
 		QGroupBox boxLeft = new QGroupBox();
 		boxLeft.setFixedWidth(270);
@@ -68,7 +68,7 @@ public class OrderGUI extends QWidget{
 		listProducts.setSizePolicy(Policy.Maximum, Policy.Maximum);
 
 		layoutLeft.addWidget(listProducts);
-		
+
 
 
 
@@ -84,11 +84,11 @@ public class OrderGUI extends QWidget{
 
 		changeTime = new QTimeEdit();
 		changeTime.setTime(QTime.currentTime());
-		
-		
+
+
 		//Timestamp test = new Timestamp(, month, date, hour, minute, second, nano);
-		
-		
+
+
 		//layouter
 		QVBoxLayout layoutRight= new QVBoxLayout();
 		QGroupBox boxRight = new QGroupBox();
@@ -100,7 +100,7 @@ public class OrderGUI extends QWidget{
 		//order_list.setFixedWidth(600);
 		order_list.scrollarea.setFixedWidth(550);
 		layoutRight.addWidget(order_list);
-		
+
 		QPushButton btnConfirm = new QPushButton("Bekreft");
 		QPushButton btnDelete = new QPushButton("Slett");
 		QPushButton update = new QPushButton("Oppdater");
@@ -115,8 +115,8 @@ public class OrderGUI extends QWidget{
 		top.addWidget(changeDate);
 
 		top.addWidget(update);
-		
-		
+
+
 		main.addLayout(top, 0, 0, 1, 0);
 		main.addWidget(boxLeft, 1, 0);
 		main.addWidget(boxRight, 1, 1);
@@ -126,15 +126,15 @@ public class OrderGUI extends QWidget{
 		//Test function 
 		//HelperTest();
 		//insertOrder();
-		
-		
+
+
 		//Get signal from pizzaList
-		order_list.signalBridge.connect(this, "handleListProducts(String[])");
+		//		order_list.signalBridge.connect(this, "handleListProducts(String[])");
 		listProducts.doubleClicked.connect(this, "removeFromLists()");
 		btnConfirm.clicked.connect(this, ("confirmOrders()"));
-
+		update.clicked.connect(this,"updateOrder()");
 	}
-	
+
 	//Not part of the program. Used for testing only
 	@SuppressWarnings("deprecation")
 	public void HelperTest() {
@@ -142,13 +142,13 @@ public class OrderGUI extends QWidget{
 		System.out.println(new Timestamp(new Date().getTime()));
 		int val = delivery.isChecked()? 1 : 0;
 		System.out.println(val);
-}
+	}
 	public Signal1<Boolean> signalConfirm = new Signal1<Boolean>();
 	public void confirmOrder(){
 		signalConfirm.emit(true);
 	}
-	
-	
+
+
 	public void hei() {
 		System.out.println("Fill list");
 		order_list.fillList();
@@ -160,12 +160,12 @@ public class OrderGUI extends QWidget{
 		int h = time.getHours();
 		time.setHours(h +1);
 		String del = delivery.isChecked()? "1":"0";
-		
+
 		String test = "0";
 		String test1 = "0";
-		
+
 		System.out.println("CustomerID "+customerID+"");
-		
+
 		String [] data = {
 				Integer.toString(customerID),
 				del,
@@ -181,11 +181,11 @@ public class OrderGUI extends QWidget{
 			err.printStackTrace();
 		}
 	}
-	
-	
+
+
 	public void test() {
 		int index = listProducts.currentRow();
-		
+
 	}
 
 	/**
@@ -204,7 +204,7 @@ public class OrderGUI extends QWidget{
 				build.append(fields[i]+ data[i]+"\n");
 			}
 			textCustomer.setText(build.toString());
-		
+
 			insertOrder();
 
 		}catch(RuntimeException err) {
@@ -212,30 +212,30 @@ public class OrderGUI extends QWidget{
 			err.printStackTrace();
 		}
 	}
-	
-	
+
+
 	public void handleListProducts(String[] data) {
 		System.out.println("Insert completed");
 		listProductsMirror.add(data);
 		//Iterator<String[]> iter = listProductsMirror.iterator();
 		String tmp = format(data);
 		listProducts.addItem(tmp);
-		
-		
-//		while(iter.hasNext()) {
-//			tmp = format(iter.next());
-//			listProducts.addItem(tmp);
-//		}
+
+
+		//		while(iter.hasNext()) {
+		//			tmp = format(iter.next());
+		//			listProducts.addItem(tmp);
+		//		}
 		System.out.println("Størrelsen på mirror list"+listProductsMirror.size()+"");
 	}
-	
+
 	public void removeFromLists() {
 		int row = listProducts.currentIndex().row();
 		listProducts.takeItem(row);
 		listProductsMirror.remove(row);
 		System.out.println("Størrelse på listen"+listProductsMirror.size()+"");
 	}
-	
+
 	//Pizza_name
 	//size 
 	//Amount
@@ -248,10 +248,10 @@ public class OrderGUI extends QWidget{
 			sb.append(data[i]);
 			sb.append("  ");
 		}
-		
+
 		return sb.toString();
 	}
-	
+
 	public void confirmOrders() {
 		Iterator<String[]> iter = listProductsMirror.iterator();
 		while(iter.hasNext()) {
@@ -270,21 +270,31 @@ public class OrderGUI extends QWidget{
 					size,
 					tmp[2]
 			};
-			
+
 			db.insert(new receipt(data));
 			System.out.println(db.getPizzaID(tmp[0]));
 			System.out.println(db.getOrderID());
-			
+
 			signalKitchen.emit(true);
-			
-			
+
+
 		}
-	
+
 	}
-public void updateOrder() {
+	
+	public void updateOrder() {
+		int date = changeDate.date().day();
+		int month = changeDate.date().month();
+		int year = changeDate.date().year()-1900;
+		int hour = changeTime.time().hour()-1;
+		int minute = changeTime.time().minute();
+		int seconds = changeTime.time().second();
+		int nano = 0;
+		Timestamp time = new java.sql.Timestamp(year, month, date, hour, minute, seconds, nano);
+		db.updateTime(time,delivery.isChecked()? 1 : 0 , db.getOrderID());
 		
 	}
-	
+
 }
 
 
