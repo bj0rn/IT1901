@@ -49,7 +49,7 @@ public class Map extends QWebView{
 	 * @param zoom
 	 * @return
 	 */
-	public QUrl getMap(String addressFrom, String addressTo, int zoom){
+	public QUrl getMap(String addressFrom, String addressTo){
 		return new QUrl("http://maps.googleapis.com/maps/api/staticmap?center=Trondheim,NO"+
 	"&size=460x460&scale=3&markers=color:blue|"+encodeUTF8(addressFrom)+"|"+encodeUTF8(addressTo)+
 	"&path=color:red|weight:3|"+encodeUTF8(addressFrom)+"|"

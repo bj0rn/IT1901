@@ -49,8 +49,6 @@ public class Kitchen extends QWidget{
 	private void setUp() {
 		
 		layout = new QGridLayout(this);
-		
-		
 	
 		order = new QTextBrowser();
 		orderList = new QListWidget();
@@ -126,8 +124,8 @@ public class Kitchen extends QWidget{
 	
 	public void getOrders() {
 		orderList = new QListWidget();
-		mirrorOrderList = new ArrayList<String[]>();
 		layout.addWidget(orderList, 1, 0);
+		mirrorOrderList = new ArrayList<String[]>();
 		ArrayList<String[]> list = db.getAllOrders();
 		
 		if(list == null) {
@@ -151,7 +149,6 @@ public class Kitchen extends QWidget{
 			sb.append(" ");
 		}
 		return sb.toString();
-		
 	}
 	
 	public void displayOrders() {
@@ -174,20 +171,7 @@ public class Kitchen extends QWidget{
 		order.clear();
 	}
 	
-	public void sortOrders(ArrayList<String[]> list ){
-		for (int i = 1; i < list.size(); i++){
-			
-			String key = list.get(i-1)[6];
-			System.out.println("element i  "+ list.get(i)[6] + " key "+ key);
-			if(list.get(i)[6].compareTo(key)< 0){
-				list.get(i-1)[6] = list.get(i)[6];
-				list.get(i)[6] = key;
-				
-				System.out.println(list.get(i)[6] + "  lololo forrige" + list.get(i-1)[6]);
-			}
-		}
-	}
-	
+
 	public void updateKitchen(Boolean bool) {
 			System.out.println("Hello world");
 			getOrders();
