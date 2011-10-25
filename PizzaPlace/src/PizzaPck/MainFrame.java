@@ -86,6 +86,7 @@ public class MainFrame extends QWidget {
 		kunde.changeTab.connect(this, "setCurrentTab()");
 		
 		orderGui.signalKitchen.connect(ki, "updateKitchen(Boolean)");
+		orderGui.signalConfirm.connect(ki, "getOrders()");
 
 		
 		/*

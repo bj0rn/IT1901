@@ -68,6 +68,7 @@ public class OrderGUI extends QWidget{
 		listProducts.setSizePolicy(Policy.Maximum, Policy.Maximum);
 
 		layoutLeft.addWidget(listProducts);
+		
 
 
 
@@ -142,6 +143,10 @@ public class OrderGUI extends QWidget{
 		int val = delivery.isChecked()? 1 : 0;
 		System.out.println(val);
 }
+	public Signal1<Boolean> signalConfirm = new Signal1<Boolean>();
+	public void confirmOrder(){
+		signalConfirm.emit(true);
+	}
 	
 	
 	public void hei() {
