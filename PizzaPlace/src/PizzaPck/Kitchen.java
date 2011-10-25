@@ -30,6 +30,7 @@ public class Kitchen extends QWidget{
 	private QPushButton btnFinish;
 	private ArrayList<String[]> mirrorOrderList; 
 	public Signal1<Boolean> signalKitchen = new Signal1<Boolean>();
+	public Signal1<Boolean> signalDelivery = new Signal1<Boolean>();
 	private QListWidget orderList;
 	private int row;
 	
@@ -169,6 +170,7 @@ public class Kitchen extends QWidget{
 		db.updateFinishStatus(orderID);
 		getOrders();
 		order.clear();
+		signalDelivery.emit(true);
 	}
 	
 
