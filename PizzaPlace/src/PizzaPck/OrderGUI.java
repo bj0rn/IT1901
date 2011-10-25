@@ -7,8 +7,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.trolltech.qt.core.QDate;
+import com.trolltech.qt.core.QDateTime;
 import com.trolltech.qt.core.QTime;
 import com.trolltech.qt.gui.QDateEdit;
+import com.trolltech.qt.gui.QDateTimeEdit;
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QGroupBox;
 import com.trolltech.qt.gui.QHBoxLayout;
@@ -41,6 +43,8 @@ public class OrderGUI extends QWidget{
 	protected QRadioButton delivery;
 	protected QRadioButton pickup;
 	protected QGridLayout main;
+	protected QTimeEdit changeTime;
+	protected QDateEdit changeDate;
 
 	private QListWidget listProducts;
 	private QTextBrowser textCustomer;
@@ -74,11 +78,14 @@ public class OrderGUI extends QWidget{
 		pickup = new QRadioButton("Hente selv");
 
 		//the clock
-		QDateEdit changeDate = new QDateEdit();
+		changeDate = new QDateEdit();
 		changeDate.setDate(QDate.currentDate());
 
-		QTimeEdit changeTime = new QTimeEdit();
+		changeTime = new QTimeEdit();
 		changeTime.setTime(QTime.currentTime());
+		
+		
+		//Timestamp test = new Timestamp(, month, date, hour, minute, second, nano);
 		
 		
 		//layouter
@@ -103,9 +110,9 @@ public class OrderGUI extends QWidget{
 		top.addWidget(delivery);
 		top.addWidget(pickup);
 		top.addWidget(new QLabel("Dato for levering:"));
-		top.addWidget(changeDate);
-		top.addWidget(new QLabel("Tid for levering:"));
 		top.addWidget(changeTime);
+		top.addWidget(changeDate);
+
 		top.addWidget(update);
 		
 		
@@ -267,6 +274,10 @@ public class OrderGUI extends QWidget{
 			
 			
 		}
+	
+	}
+public void updateOrder() {
+		
 	}
 	
 }
