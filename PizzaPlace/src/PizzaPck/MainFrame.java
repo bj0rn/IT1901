@@ -15,10 +15,9 @@ public class MainFrame extends QWidget {
 	private QTabWidget tabMain;
 	
 	private OrderGUI orderGui;
-	private PizzaList liste;
-	private Kitchen ki;
-	private SettingsWidget sw;
-	private Delivery dl;
+	private Kitchen kitchenWidget;
+	private SettingsWidget settingWidget;
+	private Delivery deliveryWidget;
 	
 	public Signal1<Boolean> changeTab = new Signal1<Boolean>();
 	/**
@@ -60,33 +59,35 @@ public class MainFrame extends QWidget {
 
 		//adds ordergui to main window
 		orderGui = new OrderGUI(db);
-		liste= new PizzaList(db);
+		
 		tabMain.addTab(orderGui, "Bestilling");
 		//tab2.setDisabled(true);
 		
 		//adds kitchen widget to main windows
-		ki = new Kitchen(db);
-		tabMain.addTab(ki, "Kj�kken");
+		kitchenWidget = new Kitchen(db);
+		tabMain.addTab(kitchenWidget, "Kj�kken");
 		
 		//adds map
-		dl = new Delivery(db);
-		tabMain.addTab(dl, "Kartet");
+		deliveryWidget = new Delivery(db);
+		tabMain.addTab(deliveryWidget, "Kartet");
 		
 		//adds settings widget to main window
-		sw = new SettingsWidget(db);
-		tabMain.addTab(sw, "Settings");
+		settingWidget = new SettingsWidget(db);
+		tabMain.addTab(settingWidget, "Settings");
 	
 		
 		
 		//Connect Settingswidget to ordergui
 		System.out.println("Signal connection complete");
-		sw.test.connect(orderGui, "hei()");
+		settingWidget.test.connect(orderGui, "hei()");
 		//kunde.customer.connect(tab2, "insertOrder(int)");
 		kunde.signalCustomer.connect(orderGui, "displayCustomer(int)");
 		kunde.changeTab.connect(this, "setCurrentTab()");
 		
-		orderGui.signalKitchen.connect(ki, "updateKitchen(Boolean)");
-		orderGui.signalConfirm.connect(ki, "getOrders()");
+		orderGui.signalKitchen.connect(kitchenWidget, "updateKitchen(Boolean)");
+		kitchenWidget.signalDelivery.connect(deliveryWidget, "getDeliveries()");
+		orderGui.signalConfirm.connect(kitchenWidget, "getOrders()");
+		
 
 		
 		/*
