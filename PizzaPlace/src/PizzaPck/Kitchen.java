@@ -24,13 +24,14 @@ public class Kitchen extends QWidget{
 	private DB db;
 
 	private QTextBrowser order;
-
+	private PrintReceipt print;
 	private QGridLayout layout;
 	private QDateTime dateTime;
 	private QPushButton btnFinish;
 	private ArrayList<String[]> mirrorOrderList;
 	public Signal1<Boolean> signalKitchen = new Signal1<Boolean>();
 	public Signal1<Boolean> signalDelivery = new Signal1<Boolean>();
+	public Signal1<Boolean> signalPrintReceipt = new Signal1<Boolean>();
 	private QListWidget orderList;
 	private int row;
 
@@ -48,7 +49,9 @@ public class Kitchen extends QWidget{
 	 * creates the kitchen gui
 	 */
 	private void setUp() {
-
+		
+		print = new PrintReceipt();
+		
 		layout = new QGridLayout(this);
 
 		order = new QTextBrowser();
@@ -56,7 +59,8 @@ public class Kitchen extends QWidget{
 
 		mirrorOrderList = new ArrayList<String[]>();
 
-
+		//QPushButton reciept = new QPushButton("Kvitering");
+		
 
 		//TODO: klokka m� fikses. m� ogs� legge til en i ordergui.
 		dateTime = new QDateTime(QDateTime.currentDateTime());
@@ -71,8 +75,8 @@ public class Kitchen extends QWidget{
 		layout.addWidget(btnFinish,2,1);
 		getOrders();
 		btnFinish.clicked.connect(this, "finishOrder()");
-
-
+		//layout.addWidget(reciept,2,2);
+		//reciept.clicked.connect(this,"print()");
 
 	}
 
@@ -162,6 +166,12 @@ public class Kitchen extends QWidget{
 
 
 	}
+//	public void print(){
+//		PrintReceipt pr = new PrintReceipt();
+//		pr.print();
+//		signalPrintReceipt.emit(true);
+//		System.out.println("PRIIIIIINT!!!");
+//	}
 
 	public void finishOrder(){
 		String[] tmp = mirrorOrderList.get(row);

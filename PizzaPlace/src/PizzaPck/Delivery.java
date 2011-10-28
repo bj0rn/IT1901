@@ -27,10 +27,12 @@ public class Delivery extends QWidget{
 	private QGridLayout layout;
 	private QDateTime dateTime;
 	private QPushButton btnDelivered;
+	private QPushButton receipt;
 	private Map map;
 	private QVBoxLayout map_lay;
 	private ArrayList<String[]> mirrorDeliveryList; 
 	private int row;
+	private PrintReceipt print;
 	/**
 	 * Delivery har kontakt med databasen for å få ut bestillinger. 
 	 * Den henter også en map over hvor bestillingen skal
@@ -51,6 +53,7 @@ public class Delivery extends QWidget{
 		mirrorDeliveryList = new ArrayList<String[]>();
 		layout = new QGridLayout(this);
 		
+		receipt = new QPushButton("Skriv ut");
 		btnDelivered = new QPushButton("Levering");
 		map_lay = new QVBoxLayout();
 		map_lay.addWidget(map);
@@ -58,10 +61,12 @@ public class Delivery extends QWidget{
 
 		layout.addLayout(map_lay, 1, 1);
 		layout.addWidget(btnDelivered,2,1);
+		layout.addWidget(receipt,2,2);
 		
 		getDeliveries();
 		
 		btnDelivered.clicked.connect(this, "setOrderDelivered()");
+		receipt.clicked.connect(this,"print()");
 	}
 	
 	public void setOrderDelivered(){
@@ -71,6 +76,11 @@ public class Delivery extends QWidget{
 		db.updateDeliveredStatus(orderID);
 		getDeliveries();
 		map.loadMap(new QUrl(map.getMap("Bispegata 5  7032 Trondheim","")));
+	}
+	
+	public void print(){
+		print = new PrintReceipt();
+		print.show();
 	}
 	
 	public void getDeliveries() {
