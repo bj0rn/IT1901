@@ -6,19 +6,19 @@ import java.text.DecimalFormat;
 public class PrintReceipt extends TheReceipt{
 	//private DB db;
 	
-	
+	private DecimalFormat format = new DecimalFormat("0.00");
 	
 	public PrintReceipt(/*DB db*/){
 		super();
 		//this.db = db;
-		super.setWindowTitle("Kvitering");
+		super.setWindowTitle("Kvittering");
 		
 		print();
 	}
 	
 	//må skrive noe HTML-kode eller noe for å formatere utskriften
 	public void print(){
-		DecimalFormat format = new DecimalFormat("0.00");
+		
 		this.textbox.append("<b>Ordre nr : </b>");
 		this.textbox.append("Skal være ferdig til : "/*orderID*/+1600);
 		this.textbox.append("Skal leveres ");//må hente ut om den skal leveres eller ikke
@@ -39,12 +39,13 @@ public class PrintReceipt extends TheReceipt{
 		double final_price;
 
 		//Her må ordrene legges inn slik at de dukker opp på kviteringen
-		/*while(){
-			this.textbox.append("<tr>"+ 
-			"<td width=220>"+ HvilkenPizza + "x"+ antallet+"</td>"+
-			"<td>"+ fomat.format(prisenpåpizza)+"</td>"+
+		/*while(){*/
+			this.textbox.append("<tr style=\"font-size:10px\">"+ 
+			"<td width=220>"+ "Kebab Pizza" + " x "+ 2+"</td>"+
+			"<td>"+ format.format(150)+"</td>"+
 			"</tr>");
-		}*/
+			
+		/*}*/
 		
 		tot_u_mva = (tot)/(1.25);
 		mva = (tot-tot_u_mva);
@@ -57,23 +58,23 @@ public class PrintReceipt extends TheReceipt{
 				"<strong>Bestillingsinfo</strong></p>" +
 				"<table style=\"font-size: 9px;\">" +
 				"<tr>" +
-				"<td width=\"200\">" +
+				"<td width=\"220\">" +
 				"	Leveringspris:</td>" +
 				"<td> " + delivery_price + "</td>" +
 				"</tr>" +
 
 				"<tr>" +
-				"<td width=\"200\">Totalpris med mva:</td>" + 
+				"<td width=\"220\">Totalpris med mva:</td>" + 
 				"<td>" + format.format(tot) + "</td>" +
 				"</tr>"+
 
 				"<tr>" +
-				"<td width=\"200\">Totalpris uten mva:</td>" +
+				"<td width=\"220\">Totalpris uten mva:</td>" +
 				"<td>" + format.format(tot_u_mva) + "</td>" +
 				"</tr>" +
 
 				"<tr>" +
-				"<td width=\"200\">Merverdiavgift:</td>" +
+				"<td width=\"220\">Merverdiavgift:</td>" +
 				"<td>" + format.format(mva) + "</td>" +
 				"</tr>" +
 				
@@ -83,8 +84,8 @@ public class PrintReceipt extends TheReceipt{
 				"</tr>" +
 
 				"<tr>" +
-				"<td style=\"font-size:10px\":width=\"200\"><b>Total pris:</b></td>" +
-				"<td style=\"font-size:10px\"><b>" + format.format(final_price) + "</b></td>" +
+				"<td style=\"font-size:11px\":width=\"220\"><b>Total pris:</b></td>" +
+				"<td style=\"font-size:11px\"><b>" + format.format(final_price) + "</b></td>" +
 				"</tr>" +
 		"</table>");
 		
