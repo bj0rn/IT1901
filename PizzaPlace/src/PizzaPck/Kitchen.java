@@ -1,15 +1,12 @@
 package PizzaPck;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 
 import com.trolltech.qt.core.QDateTime;
 import com.trolltech.qt.core.QTime;
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QListWidget;
-import com.trolltech.qt.gui.QListWidgetItem;
 import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QTextBrowser;
 import com.trolltech.qt.gui.QWidget;
@@ -79,14 +76,7 @@ public class Kitchen extends QWidget{
 		//reciept.clicked.connect(this,"print()");
 
 	}
-
-	public void hei() {
-		int row = orderList.currentIndex().row();
-		QListWidgetItem test = orderList.item(row);
-
-		System.out.println(test.text());
-	}
-
+	
 	public void showOrder() {
 		order.clear();
 		if(orderList == null) {
@@ -136,11 +126,8 @@ public class Kitchen extends QWidget{
 		if(list == null) {
 			return;
 		}
-		StringBuilder sb = new StringBuilder();
-		String[] tmp;
 		//sortOrders(list);
 		for(int i = 0; i <= list.size()-1; i++) {
-			//tmp = list.get(i);
 			orderList.addItem(format(list.get(i)));
 			mirrorOrderList.add(list.get(i));
 		}
@@ -156,16 +143,7 @@ public class Kitchen extends QWidget{
 		return sb.toString();
 	}
 
-	public void displayOrders() {
-		row = orderList.currentIndex().row();
-		QListWidgetItem item = orderList.item(row);
-		String delimiters = " ,";
-		String tmp = item.toString();
-		String[] orderTmp = tmp.split(delimiters);
 
-
-
-	}
 //	public void print(){
 //		PrintReceipt pr = new PrintReceipt();
 //		pr.print();

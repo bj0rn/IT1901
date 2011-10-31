@@ -240,7 +240,7 @@ public class DB {
 	 * @return  ArrayList
 	 */
 	public ArrayList <String[]> getAllDeliveries(){
-		String query = "SELECT * FROM orders WHERE (finish ='1' AND delivery = '1') AND delivered = '0'";
+		String query = "SELECT * FROM orders WHERE finish ='1' AND delivered = '0'";
 		ArrayList<String[]> list = new ArrayList<String[]>();
 		boolean running = true;
 		try{
