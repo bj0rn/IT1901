@@ -308,8 +308,8 @@ public class DB {
 
 		return null;
 	}
-	
-	
+
+
 	/**
 	 * Retrive all orders from the orders table. The data retrieved are packed
 	 * inside string arrays. Each string array contains orderID, customerID,
@@ -447,7 +447,7 @@ public class DB {
 			System.out.println(e);
 		}
 	}
-	
+
 	public void updateDeliveredStatus(String orderID){
 		String query = "UPDATE orders SET delivered = '1' WHERE orderID = '"+orderID+"'";
 		try{
@@ -476,7 +476,7 @@ public class DB {
 		}
 		return "";
 	}
-	
+
 	/**
 	 * 
 	 * @param time
@@ -486,16 +486,61 @@ public class DB {
 	public void updateTime(Timestamp time, int delivery, String orderID) {
 		String query = "UPDATE orders SET time = '"+time.toString()+"'"+
 				", delivery = '"+delivery+"'  WHERE orderID = '"+orderID+"'";
-		
+
 		try {
 			connect.createStatement().execute(query);
-			
+
 		}catch(SQLException sq) {
 			System.out.println("updateTime() failed!!");
 			sq.printStackTrace();
 		}
 	}
+	
+	
+	public ArrayList<String[]> getReceipt(String orderID){
+		String query = "SELECT * FROM receipt WHERE orderID='"+orderID+"'";
+		ArrayList<String[]> products = new ArrayList<String[]>();
+		boolean running = true;
+		try {
+			ResultSet rs = connect.createStatement().executeQuery(query);
+			rs.first();
+			while (running) {
+				String[] data = {
+						rs.getString(1), //orderID
+						rs.getString(2), //productID
+						rs.getString(4), //size
+						rs.getString(5), //	amount
+						"", //name from products table in database
+						"" //price from products table in database
+				};
+				products.add(data);
+				running =rs.next();
+			}
+			
+			for (String[] strings : products) {
+				try {
+					query = "SELECT * FROM product WHERE productID = '"+strings[1]+"'";
+					ResultSet fu = connect.createStatement().executeQuery(query);
+					if(fu.first() == false) {
+						System.out.println("FU!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+					}
+					strings[4] = fu.getString(2);	//name
+					strings[5] = fu.getString(3);	//price
+				}catch(SQLException sq) {
+					System.out.println("FU!!!");
+					sq.printStackTrace();
+				}
+			}
+			return products;
+			
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.out.println("men i helvete");
+			e.printStackTrace();
+		}
+		return null;
 	}
+}
 
 
 

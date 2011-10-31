@@ -79,11 +79,18 @@ public class Delivery extends QWidget{
 	}
 	
 	public void print(){
-		print = new PrintReceipt();
-		//print.setOrderNr(Integer.parseInt(data[0]));
+		String[] tmp = mirrorDeliveryList.get(row);
+		
+		ArrayList<String[]> receiptProducts = db.getReceipt(tmp[0]);
+		
+		try {
+			print = new PrintReceipt(tmp[0],tmp[2], receiptProducts);
+		} catch (NullPointerException e) {
+			// TODO: handle exception
+			System.out.println("Det er en tom liste");
+		}		
 		print.show();
 	}
-	
 	public void getDeliveries() {
 		
 		deliveryList = new QListWidget();

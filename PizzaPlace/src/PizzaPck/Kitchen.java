@@ -47,7 +47,7 @@ public class Kitchen extends QWidget{
 	 */
 	private void setUp() {
 		
-		print = new PrintReceipt();
+		//print = new PrintReceipt();
 		
 		layout = new QGridLayout(this);
 
