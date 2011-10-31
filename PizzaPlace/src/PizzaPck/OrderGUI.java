@@ -35,6 +35,7 @@ public class OrderGUI extends QWidget{
 	public Signal1<String[]> signalBridge = new Signal1<String[]>();
 	public Signal1<Boolean> signalKitchen = new Signal1<Boolean>();
 	public Signal1<Boolean> signalConfirm = new Signal1<Boolean>();
+	public Signal1<Boolean> signalCancel = new Signal1<Boolean>();
 	
 	//Mirror all the element contained in listProducts
 	public List<String[]> listProductsMirror;
@@ -47,7 +48,7 @@ public class OrderGUI extends QWidget{
 	private QTimeEdit changeTime;
 	private QDateEdit changeDate;
 	
-	private QPushButton btnConfirm, btnDelete, update;
+	private QPushButton btnConfirm, btnDelete, btnUpdate;
 	private QListWidget listProducts;
 	private QTextBrowser textCustomer;
 
@@ -72,10 +73,15 @@ public class OrderGUI extends QWidget{
 		order_list.signalBridge.connect(this, "handleListProducts(String[])");
 		listProducts.doubleClicked.connect(this, "removeFromLists()");
 		btnConfirm.clicked.connect(this, "confirmOrders()");
-		update.clicked.connect(this,"updateOrder()");
+		btnUpdate.clicked.connect(this,"updateOrder()");
+		btnDelete.clicked.connect(this,"deleteOrder()");
 	}
 	
-
+	public void deleteOrder(){
+		db.deleteOrder(db.getOrderID());
+		signalCancel.emit(true);
+		
+	}
 
 
 	/**
@@ -239,7 +245,7 @@ public class OrderGUI extends QWidget{
 		//create instances
 		QHBoxLayout top = new QHBoxLayout();
 		
-		update = new QPushButton("Oppdater");
+		btnUpdate = new QPushButton("Oppdater");
 		delivery = new QRadioButton("Levering");
 		delivery.setChecked(true);
 		pickup = new QRadioButton("Hente selv");
@@ -257,7 +263,7 @@ public class OrderGUI extends QWidget{
 		top.addWidget(new QLabel("Dato for levering:"));
 		top.addWidget(changeTime);
 		top.addWidget(changeDate);
-		top.addWidget(update);
+		top.addWidget(btnUpdate);
 		
 		
 		

@@ -18,6 +18,7 @@ public class MainFrame extends QWidget {
 	private Kitchen kitchenWidget;
 	private SettingsWidget settingWidget;
 	private Delivery deliveryWidget;
+	private KundeWidget customerWidget;
 	
 	public Signal1<Boolean> changeTab = new Signal1<Boolean>();
 	
@@ -53,16 +54,16 @@ public class MainFrame extends QWidget {
 
 
 		//adds customer widget to main window
-		KundeWidget kunde = new KundeWidget(db);
-		tabMain.addTab(kunde, null);
-		tabMain.addTab(kunde,"Kunde");
+		customerWidget = new KundeWidget(db);
+		tabMain.addTab(customerWidget, null);
+		tabMain.addTab(customerWidget,"Kunde");
 		
 
 
 		//adds ordergui to main window
 		orderGui = new OrderGUI(db);
 		tabMain.addTab(orderGui, "Bestilling");
-		//tab2.setDisabled(true);
+		orderGui.setDisabled(true);
 		
 		//adds kitchen widget to main windows
 		kitchenWidget = new Kitchen(db);
@@ -81,10 +82,11 @@ public class MainFrame extends QWidget {
 		
 		settingWidget.singalInsertProduct.connect(orderGui, " updatePizzaList()");
 		//kunde.customer.connect(tab2, "insertOrder(int)");
-		kunde.signalCustomer.connect(orderGui, "displayCustomer(int)");
-		kunde.changeTab.connect(this, "setCurrentTab()");
+		customerWidget.signalCustomer.connect(orderGui, "displayCustomer(int)");
+		customerWidget.changeTab.connect(this, "setCurrentTab()");
 		
 		orderGui.signalKitchen.connect(kitchenWidget, "getOrders()");
+		orderGui.signalCancel.connect(this,"setCurrentTab()");
 		kitchenWidget.signalDelivery.connect(deliveryWidget, "getDeliveries()");
 		
 
@@ -100,8 +102,26 @@ public class MainFrame extends QWidget {
 
 
 	public void setCurrentTab (){
-		tabMain.setCurrentIndex(1);
-		orderGui.setDisabled(false);
+		int index = tabMain.currentIndex();
+		System.out.println(index);
+		if(index == 0){
+			tabMain.setCurrentIndex(1);
+			
+			customerWidget.setDisabled(true);
+			orderGui.setDisabled(false);
+			kitchenWidget.setDisabled(true);
+			deliveryWidget.setDisabled(true);
+			settingWidget.setDisabled(true);
+		}
+		else if(index == 1) {
+			tabMain.setCurrentIndex(0);
+			customerWidget.setDisabled(false);
+			orderGui.setDisabled(true);
+			kitchenWidget.setDisabled(false);
+			deliveryWidget.setDisabled(false);
+			settingWidget.setDisabled(false);
+		}
+		
 	}
 
 	/**

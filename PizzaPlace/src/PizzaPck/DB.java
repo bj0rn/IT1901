@@ -540,6 +540,19 @@ public class DB {
 		}
 		return null;
 	}
+	
+	public void deleteOrder(String orderID){
+		String query = "DELETE FROM orders WHERE orderID ='"+orderID+"'";
+		
+		try {
+			connect.createStatement().execute(query);
+			System.out.println("Det funket yey");
+			
+		} catch (SQLException e) {
+			// TODO: handle eception
+			e.printStackTrace();
+		}
+	}
 }
 
 
