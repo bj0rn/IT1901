@@ -5,6 +5,12 @@ import java.text.DecimalFormat;
 
 public class PrintReceipt extends TheReceipt{
 	//private DB db;
+	private float delivery_price;
+	private float tot;
+	private double tot_u_mva;
+	private double mva;
+	private double final_price;
+	private int orderNr;
 	
 	private DecimalFormat format = new DecimalFormat("0.00");
 	
@@ -19,9 +25,9 @@ public class PrintReceipt extends TheReceipt{
 	//må skrive noe HTML-kode eller noe for å formatere utskriften
 	public void print(){
 		
-		this.textbox.append("<b>Ordre nr : </b>");
+		this.textbox.append("<b>Ordre nr : "+orderNr+"</b>");
 		this.textbox.append("Skal være ferdig til : "/*orderID*/+1600);
-		this.textbox.append("Skal leveres ");//må hente ut om den skal leveres eller ikke
+		this.textbox.append("Skal leveres "+"\n");//må hente ut om den skal leveres eller ikke
 		
 		this.textbox.append("<table>" +
 				"<tr>" +
@@ -29,14 +35,8 @@ public class PrintReceipt extends TheReceipt{
 				"<td><strong>Pris</strong></td>" +
 				"</tr>" +
 				"<tr>" +
-				"<td colspan=2>------------------------------------</td>" +
+				"<td colspan=2>________________________________________</td>" +
 				"</tr>");
-		
-		float delivery_price = 60;
-		float tot = 150;
-		double tot_u_mva;
-		double mva;
-		double final_price;
 
 		//Her må ordrene legges inn slik at de dukker opp på kviteringen
 		/*while(){*/
@@ -52,7 +52,7 @@ public class PrintReceipt extends TheReceipt{
 		final_price=tot+delivery_price;
 		
 		this.textbox.append("<tr>"+
-				"<td colspan=2>------------------------------------</td>" +
+				"<td colspan=2>________________________________________</td>" +
 				"</tr>" +
 				"<p style=\"width: 20px;\">"+
 				"<strong>Bestillingsinfo</strong></p>" +
@@ -79,8 +79,8 @@ public class PrintReceipt extends TheReceipt{
 				"</tr>" +
 				
 				"<tr>"+
-				"<td colspan=2>------------------------------"+
-				"--------------------------</td>" +
+				"<td colspan=2>______________________________"+
+				"__________________________</td>" +
 				"</tr>" +
 
 				"<tr>" +
@@ -90,5 +90,15 @@ public class PrintReceipt extends TheReceipt{
 		"</table>");
 		
 	}
+
+	public void setDelivery_price(float delivery_price) {
+		this.delivery_price = delivery_price;
+	}
+
+	public void setOrderNr(int orderNr) {
+		this.orderNr = orderNr;
+	}
+	
+	
 }
 

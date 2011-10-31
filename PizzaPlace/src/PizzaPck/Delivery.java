@@ -80,6 +80,7 @@ public class Delivery extends QWidget{
 	
 	public void print(){
 		print = new PrintReceipt();
+		//print.setOrderNr(Integer.parseInt(data[0]));
 		print.show();
 	}
 	
@@ -119,14 +120,14 @@ public class Delivery extends QWidget{
 	
 	private String format(String[] data) {
 		StringBuilder sb = new StringBuilder();
-			sb.append(data[0]+":  ");
-			sb.append(data[8]+" ");
-			sb.append(data[9]+" ");
-			sb.append(data[5]+"\n");
-			sb.append(data[10]+", ");
-			sb.append(data[11]+" ");
-			sb.append(data[12]+", ");
-			sb.append(data[13]+"\n");
+			sb.append(data[0]+":  "); //Ordre nummer
+			sb.append(data[8]+" ");//Fornavn
+			sb.append(data[9]+" ");//Etternavn
+			sb.append(data[5]+"\n");//leverings dato+ time
+			sb.append(data[10]+", ");//adresse
+			sb.append(data[11]+" ");//postnummer 
+			sb.append(data[12]+", ");//zipcode
+			sb.append(data[13]+"\n");//telefonnummer
 		return sb.toString();
 	}
 	
