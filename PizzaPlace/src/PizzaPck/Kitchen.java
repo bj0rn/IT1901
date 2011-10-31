@@ -162,9 +162,5 @@ public class Kitchen extends QWidget{
 	}
 
 
-	public void updateKitchen(Boolean bool) {
-		System.out.println("Hello world");
-		getOrders();
-	}
 
 }

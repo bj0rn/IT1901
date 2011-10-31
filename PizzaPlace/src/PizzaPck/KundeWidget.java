@@ -16,7 +16,6 @@ import com.trolltech.qt.gui.QWidget;
  */
 public class KundeWidget extends QWidget {
 
-	private String fornavn, etternavn, adresse, poststed, postkode,telefonNr;
 
 	private QPushButton btnSok, btnBestill, btnOppdater, btnLagre;
 	private QLineEdit txtFornavn, txtEtternavn, txtAdresse, txtPoststed, txtPostkode, txtTelefonNr, txtSok;

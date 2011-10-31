@@ -20,6 +20,8 @@ public class MainFrame extends QWidget {
 	private Delivery deliveryWidget;
 	
 	public Signal1<Boolean> changeTab = new Signal1<Boolean>();
+	
+	
 	/**
 	 * Constructoren kaller setUp()
 	 * @author Vegard 
@@ -31,7 +33,7 @@ public class MainFrame extends QWidget {
 
 	
 	/**
-	 * Intern metode som setter opp fanene
+	 * Creates the gui
 	 */
 	private void setUp(){
 
@@ -59,7 +61,6 @@ public class MainFrame extends QWidget {
 
 		//adds ordergui to main window
 		orderGui = new OrderGUI(db);
-		
 		tabMain.addTab(orderGui, "Bestilling");
 		//tab2.setDisabled(true);
 		
@@ -76,17 +77,15 @@ public class MainFrame extends QWidget {
 		tabMain.addTab(settingWidget, "Settings");
 	
 		
-		
 		//Connect Settingswidget to ordergui
-		System.out.println("Signal connection complete");
-		settingWidget.test.connect(orderGui, "hei()");
+		
+		settingWidget.singalInsertProduct.connect(orderGui, " updatePizzaList()");
 		//kunde.customer.connect(tab2, "insertOrder(int)");
 		kunde.signalCustomer.connect(orderGui, "displayCustomer(int)");
 		kunde.changeTab.connect(this, "setCurrentTab()");
 		
-		orderGui.signalKitchen.connect(kitchenWidget, "updateKitchen(Boolean)");
+		orderGui.signalKitchen.connect(kitchenWidget, "getOrders()");
 		kitchenWidget.signalDelivery.connect(deliveryWidget, "getDeliveries()");
-		orderGui.signalConfirm.connect(kitchenWidget, "getOrders()");
 		
 
 		

@@ -27,7 +27,7 @@ public class SettingsWidget extends QWidget {
 	
 	
 	//Signal handler
-	public Signal1 <Boolean> test = new Signal1<Boolean>();
+	public Signal1 <Boolean> singalInsertProduct = new Signal1<Boolean>();
 	
 	
 	/**
@@ -58,7 +58,7 @@ public class SettingsWidget extends QWidget {
 		}
 		//Send signal indicating change in DB 
 		System.out.println("Signal emited");
-		test.emit(true);
+		singalInsertProduct.emit(true);
 	}
 	
 	

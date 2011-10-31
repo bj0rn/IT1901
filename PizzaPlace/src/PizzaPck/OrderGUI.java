@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import com.mysql.jdbc.UpdatableResultSet;
 import com.trolltech.qt.core.QDate;
 import com.trolltech.qt.core.QDateTime;
 import com.trolltech.qt.core.QTime;
@@ -33,127 +34,53 @@ public class OrderGUI extends QWidget{
 	public Signal1<Integer> signalCustomer = new Signal1<Integer>();
 	public Signal1<String[]> signalBridge = new Signal1<String[]>();
 	public Signal1<Boolean> signalKitchen = new Signal1<Boolean>();
+	public Signal1<Boolean> signalConfirm = new Signal1<Boolean>();
+	
 	//Mirror all the element contained in listProducts
 	public List<String[]> listProductsMirror;
 
-	//Not used at the moment 
-	//public Signal1<String[]> customerInfo = new Signal1<String[]>(); 
 
-	protected PizzaList order_list;
-	protected QRadioButton delivery;
-	protected QRadioButton pickup;
-	protected QGridLayout main;
-	protected QTimeEdit changeTime;
-	protected QDateEdit changeDate;
-
+	private PizzaList order_list;
+	private QRadioButton delivery;
+	private QRadioButton pickup;
+	private QGridLayout main;
+	private QTimeEdit changeTime;
+	private QDateEdit changeDate;
+	
+	private QPushButton btnConfirm, btnDelete, update;
 	private QListWidget listProducts;
 	private QTextBrowser textCustomer;
 
+	
+	/**
+	 * Create a new instance of ordergui with a reference to a DB obejct.
+	 * @param db
+	 * @see DB
+	 */
 	public OrderGUI(DB db){
 		this.db = db;
+		setUpGUI();
+		createSignals();
+	}
 
-		listProductsMirror = new ArrayList<String[]>();
+	
+	/**
+	 * creates the necessary signals 
+	 */
+	private void createSignals(){
 
-		// alt som har med venstre widget ï¿½ gjï¿½re
-		QGroupBox boxLeft = new QGroupBox();
-		boxLeft.setFixedWidth(270);
-		QVBoxLayout layoutLeft = new QVBoxLayout();
-		boxLeft.setLayout(layoutLeft);
-
-		textCustomer = new QTextBrowser();
-		textCustomer.setSizePolicy(Policy.Maximum, Policy.Maximum);
-		layoutLeft.addWidget(textCustomer);
-
-		listProducts = new QListWidget();
-		listProducts.setSizePolicy(Policy.Maximum, Policy.Maximum);
-
-		layoutLeft.addWidget(listProducts);
-
-
-
-
-		//ï¿½verste widgeten ikke sï¿½ viktig med det fï¿½rste
-
-		delivery = new QRadioButton("Levering");
-		delivery.setChecked(true);
-		pickup = new QRadioButton("Hente selv");
-
-		//the clock
-		changeDate = new QDateEdit();
-		changeDate.setDate(QDate.currentDate());
-
-		changeTime = new QTimeEdit();
-		changeTime.setTime(QTime.currentTime());
-
-
-		//Timestamp test = new Timestamp(, month, date, hour, minute, second, nano);
-
-
-		//layouter
-		QVBoxLayout layoutRight= new QVBoxLayout();
-		QGroupBox boxRight = new QGroupBox();
-		boxRight.setFixedWidth(600);
-		boxRight.setLayout(layoutRight);
-
-		order_list = new PizzaList(db);
-		order_list.setContentsMargins(1, 1, 1, 1);
-		//order_list.setFixedWidth(600);
-		order_list.scrollarea.setFixedWidth(550);
-		layoutRight.addWidget(order_list);
-
-		QPushButton btnConfirm = new QPushButton("Bekreft");
-		QPushButton btnDelete = new QPushButton("Slett");
-		QPushButton update = new QPushButton("Oppdater");
-		//setter tingen inn i base widget
-		main = new QGridLayout(this);
-
-		QHBoxLayout top = new QHBoxLayout();
-		top.addWidget(delivery);
-		top.addWidget(pickup);
-		top.addWidget(new QLabel("Dato for levering:"));
-		top.addWidget(changeTime);
-		top.addWidget(changeDate);
-
-		top.addWidget(update);
-
-
-		main.addLayout(top, 0, 0, 1, 0);
-		main.addWidget(boxLeft, 1, 0);
-		main.addWidget(boxRight, 1, 1);
-		main.addWidget(btnConfirm, 2, 1);
-		main.addWidget(btnDelete, 2, 0);
-
-		//Test function 
-		//HelperTest();
-		//insertOrder();
-
-
-		//Get signal from pizzaList
 		order_list.signalBridge.connect(this, "handleListProducts(String[])");
 		listProducts.doubleClicked.connect(this, "removeFromLists()");
-		btnConfirm.clicked.connect(this, ("confirmOrders()"));
+		btnConfirm.clicked.connect(this, "confirmOrders()");
 		update.clicked.connect(this,"updateOrder()");
 	}
-
-	//Not part of the program. Used for testing only
-	@SuppressWarnings("deprecation")
-	public void HelperTest() {
-		System.out.println(delivery.isChecked());
-		System.out.println(new Timestamp(new Date().getTime()));
-		int val = delivery.isChecked()? 1 : 0;
-		System.out.println(val);
-	}
-	public Signal1<Boolean> signalConfirm = new Signal1<Boolean>();
-	public void confirmOrder(){
-		signalConfirm.emit(true);
-	}
+	
 
 
-	public void hei() {
-		System.out.println("Fill list");
-		order_list.fillList();
-	}
 
+	/**
+	 * insert order.....
+	 */
 	public void insertOrder() {
 		String currentTime = new java.sql.Timestamp(new java.util.Date().getTime()).toString();
 		Timestamp time = new java.sql.Timestamp(new java.util.Date().getTime());
@@ -183,14 +110,11 @@ public class OrderGUI extends QWidget{
 	}
 
 
-	public void test() {
-		int index = listProducts.currentRow();
-
-	}
-
 	/**
-	 *
+	 * Displays the customer in the upper left textbox in OrderGUI. Takes an Integer as parameter and
+	 * searches the database for the customer with the integer as customerID 
 	 * @param customerID
+	 * @see DB  
 	 */
 	public void displayCustomer(int customerID) {
 		try {
@@ -214,7 +138,7 @@ public class OrderGUI extends QWidget{
 	}
 
 
-	public void handleListProducts(String[] data) {
+	private void handleListProducts(String[] data) {
 		System.out.println("Insert completed");
 		listProductsMirror.add(data);
 		//Iterator<String[]> iter = listProductsMirror.iterator();
@@ -222,14 +146,10 @@ public class OrderGUI extends QWidget{
 		listProducts.addItem(tmp);
 
 
-		//		while(iter.hasNext()) {
-		//			tmp = format(iter.next());
-		//			listProducts.addItem(tmp);
-		//		}
 		System.out.println("StÃ¸rrelsen pÃ¥ mirror list"+listProductsMirror.size()+"");
 	}
 
-	public void removeFromLists() {
+	private void removeFromLists() {
 		int row = listProducts.currentIndex().row();
 		listProducts.takeItem(row);
 		listProductsMirror.remove(row);
@@ -242,7 +162,7 @@ public class OrderGUI extends QWidget{
 	//Price
 	//ingridients
 	//comments
-	public String format(String[] data) {
+	private String format(String[] data) {
 		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i < 4; i++) {
 			sb.append(data[i]);
@@ -252,7 +172,11 @@ public class OrderGUI extends QWidget{
 		return sb.toString();
 	}
 
-	public void confirmOrders() {
+	private void confirmOrders() {
+		//TODO: må fikse hva som skal komme ut når man ikke har lagt til produkter og trykket på bekreft
+		if (listProductsMirror.size() <=0) {
+			System.out.println("Don't do this");
+		}
 		Iterator<String[]> iter = listProductsMirror.iterator();
 		while(iter.hasNext()) {
 			String[] tmp = iter.next();
@@ -274,15 +198,22 @@ public class OrderGUI extends QWidget{
 			db.insert(new receipt(data));
 			System.out.println(db.getPizzaID(tmp[0]));
 			System.out.println(db.getOrderID());
+			
 
 			signalKitchen.emit(true);
-
 
 		}
 
 	}
 	
-	public void updateOrder() {
+	public void updatePizzaList() {
+		order_list.fillList();
+	}
+	/**
+	 *  Changes the time and delivery status in the database
+	 *  @see DB
+	 */
+	private void updateOrder() {
 		int date = changeDate.date().day();
 		int month = changeDate.date().month();
 		int year = changeDate.date().year()-1900;
@@ -291,8 +222,110 @@ public class OrderGUI extends QWidget{
 		int seconds = changeTime.time().second();
 		int nano = 0;
 		Timestamp time = new java.sql.Timestamp(year, month, date, hour, minute, seconds, nano);
-		db.updateTime(time,delivery.isChecked()? 1 : 0 , db.getOrderID());
+		db.updateTime(time, delivery.isChecked()? 1 : 0 , db.getOrderID());
 		
+	}
+	
+	/**
+	 * creates the GUI
+	 */
+	private void setUpGUI(){
+		
+		listProductsMirror = new ArrayList<String[]>();
+		
+		/**
+		 * creates the bar at the top
+		 */
+		//create instances
+		QHBoxLayout top = new QHBoxLayout();
+		
+		update = new QPushButton("Oppdater");
+		delivery = new QRadioButton("Levering");
+		delivery.setChecked(true);
+		pickup = new QRadioButton("Hente selv");
+		changeDate = new QDateEdit();
+		changeTime = new QTimeEdit();
+		
+		
+		//sets the time and date
+		changeDate.setDate(QDate.currentDate());
+		changeTime.setTime(QTime.currentTime());
+		
+		//adds to the top layout
+		top.addWidget(delivery);
+		top.addWidget(pickup);
+		top.addWidget(new QLabel("Dato for levering:"));
+		top.addWidget(changeTime);
+		top.addWidget(changeDate);
+		top.addWidget(update);
+		
+		
+		
+		/**
+		 * creating the left box
+		 */
+		//creates instances
+		QGroupBox boxLeft = new QGroupBox();
+		QVBoxLayout layoutLeft = new QVBoxLayout();
+		textCustomer = new QTextBrowser();
+		listProducts = new QListWidget();
+		
+		//sets the size policies for the lists and textbrowser and the size for the groupbox
+		boxLeft.setFixedWidth(270);
+		textCustomer.setSizePolicy(Policy.Maximum, Policy.Maximum);
+		listProducts.setSizePolicy(Policy.Maximum, Policy.Maximum);
+		
+		//adds the box and list in the left layout
+		boxLeft.setLayout(layoutLeft);
+		layoutLeft.addWidget(textCustomer);
+		layoutLeft.addWidget(listProducts);
+		
+		
+
+		
+		/**
+		 * creating the right box
+		 */
+		//create instances
+		QVBoxLayout layoutRight= new QVBoxLayout();
+		QGroupBox boxRight = new QGroupBox();
+		order_list = new PizzaList(db);
+		
+		//sets the size
+		order_list.setContentsMargins(1, 1, 1, 1);
+		order_list.scrollarea.setFixedWidth(550);
+		
+		//adds to layout and sets the layout for the rightbox
+		boxRight.setFixedWidth(600);
+		boxRight.setLayout(layoutRight);
+		layoutRight.addWidget(order_list);
+		
+		
+		
+		/**
+		 * bottom box
+		 */
+		//create instances
+		btnConfirm = new QPushButton("Bekreft");
+		btnDelete = new QPushButton("Avbryt");
+		
+		
+		
+		/**
+		 * create the main layout where all the layouts and boxes are added
+		 */
+		//create instances
+		main = new QGridLayout(this); 
+		
+		//adds to layout
+		main.addLayout(top, 0, 0, 1, 0);
+		main.addWidget(boxLeft, 1, 0);
+		main.addWidget(boxRight, 1, 1);
+		main.addWidget(btnConfirm, 2, 1);
+		main.addWidget(btnDelete, 2, 0);
+		
+
+
 	}
 
 }
