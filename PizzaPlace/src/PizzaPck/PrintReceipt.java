@@ -35,7 +35,7 @@ public class PrintReceipt extends TheReceipt{
 				"<td><strong>Pris</strong></td>" +
 				"</tr>" +
 				"<tr>" +
-				"<td colspan=2>________________________________________</td>" +
+				"<td colspan=2><hr align=\"left\" : width =\"305\" /></td>" +
 				"</tr>");
 
 		//Her må ordrene legges inn slik at de dukker opp på kviteringen
@@ -52,7 +52,7 @@ public class PrintReceipt extends TheReceipt{
 		final_price=tot+delivery_price;
 		
 		this.textbox.append("<tr>"+
-				"<td colspan=2>________________________________________</td>" +
+				"<td colspan=2><hr align=\"left\" : width =\"300\" /></td>" +
 				"</tr>" +
 				"<p style=\"width: 20px;\">"+
 				"<strong>Bestillingsinfo</strong></p>" +
@@ -79,8 +79,8 @@ public class PrintReceipt extends TheReceipt{
 				"</tr>" +
 				
 				"<tr>"+
-				"<td colspan=2>______________________________"+
-				"__________________________</td>" +
+				"<td colspan=2><hr align=\"left\" : width =\"300\" />"+
+				"</td>" +
 				"</tr>" +
 
 				"<tr>" +
