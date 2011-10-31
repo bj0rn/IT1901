@@ -161,6 +161,7 @@ public class KundeWidget extends QWidget {
 	 * clear fields
 	 */
 	private void clearFields(){
+		txtSok.clear();
 		txtFornavn.clear();
 		txtEtternavn.clear();
 		txtAdresse.clear();
@@ -238,6 +239,8 @@ public class KundeWidget extends QWidget {
 		}catch(RuntimeException err) {
 			System.out.println("sendCustomer() failed");
 		}
+		
+		clearFields();
 	}
 
 
