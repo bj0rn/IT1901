@@ -84,7 +84,6 @@ public class PizzaList extends QWidget implements Iterable<Pizza>{
 		scrollarea.setFixedWidth(580);
 		scrollarea.setFixedHeight(420);
 	
-		System.out.println(this.sizeHint());
 		//Update gui
 		for (Pizza p: pizza_list) {
 			v_box.addWidget(p);

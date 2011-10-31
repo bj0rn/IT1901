@@ -12,11 +12,14 @@ import com.trolltech.qt.core.QDateTime;
 import com.trolltech.qt.core.QTime;
 import com.trolltech.qt.gui.QDateEdit;
 import com.trolltech.qt.gui.QDateTimeEdit;
+import com.trolltech.qt.gui.QDialogButtonBox;
+import com.trolltech.qt.gui.QDialogButtonBox.StandardButton;
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QGroupBox;
 import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QListWidget;
+import com.trolltech.qt.gui.QMessageBox;
 import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QRadioButton;
 import com.trolltech.qt.gui.QSizePolicy.Policy;
@@ -179,10 +182,12 @@ public class OrderGUI extends QWidget{
 	}
 
 	private void confirmOrders() {
-		//TODO: må fikse hva som skal komme ut når man ikke har lagt til produkter og trykket på bekreft
-		if (listProductsMirror.size() <=0) {
-			System.out.println("Don't do this");
+		//TODO: må fikse hva som skal komme ut når man ikke har lagt til produkter og trykker på bekreft
+		if (listProductsMirror.size() ==0) {
+			System.out.println("ikke greit");
+			return;
 		}
+		
 		Iterator<String[]> iter = listProductsMirror.iterator();
 		while(iter.hasNext()) {
 			String[] tmp = iter.next();
@@ -205,11 +210,12 @@ public class OrderGUI extends QWidget{
 			System.out.println(db.getPizzaID(tmp[0]));
 			System.out.println(db.getOrderID());
 			
-
-			signalKitchen.emit(true);
-
 		}
-
+		signalKitchen.emit(true);
+		signalCancel.emit(true);
+		
+		listProductsMirror = new ArrayList<String[]>();
+		listProducts.clear();
 	}
 	
 	public void updatePizzaList() {
