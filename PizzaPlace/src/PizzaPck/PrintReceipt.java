@@ -31,7 +31,7 @@ public class PrintReceipt extends TheReceipt{
 	}
 	
 	public String calculate(String[] product){
-		Float price = Float.parseFloat(product[3])* Float.parseFloat(product[5]);
+		Float price = Float.parseFloat(product[3])*(product[2].equals("1") ? 1.25f : 1.00f)* Float.parseFloat(product[5]);
 		tot += price;
 		return 
 		"<tr style=\"font-size:10px\">"+ 
