@@ -293,7 +293,6 @@ public class OrderGUI extends QWidget{
 		
 		//sets the size
 		order_list.setContentsMargins(1, 1, 1, 1);
-		order_list.scrollarea.setFixedWidth(550);
 		
 		//adds to layout and sets the layout for the rightbox
 		boxRight.setFixedWidth(600);
