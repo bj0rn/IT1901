@@ -235,9 +235,16 @@ public class DB {
 			sq.printStackTrace();
 		}
 	}
+	
+	
 	/**
+	 * Retrieve all orders which is finish and not delivered as a arraylist with String[] arrays
+	 * String[] = {orderID, customerID, delivery, finish, 
+	 * delivered, time, currentTime, customerID, firste_name, 
+	 * last_name, address, zipcode, city, phone} 
 	 * 
-	 * @return  ArrayList
+	 * @return  ArrayList<String[]>
+	 * @throws {@link SQLException}
 	 */
 	public ArrayList <String[]> getAllDeliveries(){
 		String query = "SELECT * FROM orders WHERE finish ='1' AND delivered = '0'";
@@ -423,6 +430,7 @@ public class DB {
 	 * 
 	 * @param string PizzaName
 	 * @return String
+	 * @throws SQLException
 	 */
 	public String getPizzaID(String PizzaName) {
 		String  query = "SELECT productID FROM product WHERE name = '"+PizzaName+"'";
@@ -436,7 +444,13 @@ public class DB {
 		}
 		return "";
 	}
-
+	
+	/**
+	 * Updates the order status to finished
+	 * 
+	 * @param orderID
+	 * @throws SQLException
+	 */
 	public void updateFinishStatus(String orderID){
 		String query = "UPDATE orders SET finish = '1' WHERE orderID = '"+orderID+"'";
 		try{
@@ -447,7 +461,13 @@ public class DB {
 			System.out.println(e);
 		}
 	}
-
+	
+	/**
+	 * Updates the delivered status in order to delivered 
+	 *
+	 * @param orderID
+	 * @throws SQLException
+	 */
 	public void updateDeliveredStatus(String orderID){
 		String query = "UPDATE orders SET delivered = '1' WHERE orderID = '"+orderID+"'";
 		try{
@@ -459,10 +479,12 @@ public class DB {
 		}
 	}
 
+	
 
 	/**
 	 * Retrieve the last inserted orderID from table orders
 	 * @return String
+	 * @throws SQLException
 	 */
 	public String getOrderID() {
 		String query = "SELECT MAX(orderid) FROM orders";
@@ -477,8 +499,10 @@ public class DB {
 		return "";
 	}
 
+	
+	
 	/**
-	 * 
+	 *  updates the order with time and if the order is going to be delivered
 	 * @param time
 	 * @param delivery
 	 * @param orderID
@@ -497,6 +521,12 @@ public class DB {
 	}
 	
 	
+	/**
+	 * 
+	 * @param orderID
+	 * @return
+	 * @throws SQLException
+	 */
 	public ArrayList<String[]> getReceipt(String orderID){
 		String query = "SELECT * FROM receipt WHERE orderID='"+orderID+"'";
 		ArrayList<String[]> products = new ArrayList<String[]>();

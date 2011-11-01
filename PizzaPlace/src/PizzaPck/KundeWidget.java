@@ -2,7 +2,9 @@ package PizzaPck;
 
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QGroupBox;
+import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QLabel;
+import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QLayout.SizeConstraint;
 import com.trolltech.qt.gui.QLineEdit;
 import com.trolltech.qt.gui.QPushButton;
@@ -23,6 +25,8 @@ public class KundeWidget extends QWidget {
 	private QLabel labFornavn, labEtternavn, labAdresse, labPostSted, labtPostKode, labTelefon, labSok;
 	private QGridLayout layout;
 	private QGroupBox groupbox;
+	private QHBoxLayout sok;
+	private QVBoxLayout main;
 	
 	//Database instance
 	private DB db;
@@ -52,10 +56,15 @@ public class KundeWidget extends QWidget {
 	private void setUp(){
 
 		//setter opp de akutelle layoutene
+		
 		groupbox = new QGroupBox();
 		layout = new QGridLayout();
-		
-		groupbox.setLayout(layout);
+		sok = new QHBoxLayout();
+		main = new QVBoxLayout(groupbox);
+		main.addLayout(sok);
+		main.addLayout(layout);
+//		groupbox.setLayout(sok);
+//		groupbox.setLayout(layout);
 		groupbox.setParent(this);
 
 		/*
@@ -111,8 +120,11 @@ public class KundeWidget extends QWidget {
 		
 
 		//oppsett av layout
-		layout.addWidget(txtSok, 0, 1);
-		layout.addWidget(btnSok, 0, 2);
+		txtSok.setFixedWidth(200);
+		sok.addStretch(5);
+		sok.addWidget(txtSok);
+		sok.addStretch(1);
+		sok.addWidget(btnSok);
 
 		layout.addWidget(labFornavn, 1, 0);
 		layout.addWidget(txtFornavn, 1, 1);
