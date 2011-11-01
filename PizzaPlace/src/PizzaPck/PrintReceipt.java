@@ -121,8 +121,8 @@ public class PrintReceipt extends TheReceipt{
 				"<td width=\"220\">" +
 				"	Leveringspris:</td>" +
 				"<td> " +(tot > SettingsWidget.DELIVERY_LIMIT ?
-						(delivery_price = 0.0f) : 
-						(delivery_price = SettingsWidget.DELIVERY_PRICE)) 
+						format.format((delivery_price = 0.0f)) : 
+						format.format((delivery_price = SettingsWidget.DELIVERY_PRICE))) 
 						+ "</td>" +
 				"</tr>" +
 
