@@ -310,7 +310,6 @@ public class OrderGUI extends QWidget{
 		//adds to layout and sets the layout for the rightbox
 		boxRight.setFixedWidth(600);
 		boxRight.setLayout(layoutRight);
-		QScrollArea scroll = new QScrollArea();
 		
 		layoutRight.addWidget(order_list);
 		//layoutRight.addWidget(scroll);
