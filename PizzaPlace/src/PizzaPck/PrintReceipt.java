@@ -44,7 +44,7 @@ public class PrintReceipt extends TheReceipt{
 		
 		this.textbox.append("<b>Ordre nr : "+orderID+"</b>");
 		this.textbox.append("Skal være ferdig til : "/*orderID*/+1600);
-		this.textbox.append("Skal leveres "+(delivery.equals("1")? "Ja" : "Nei") +"\n");//må hente ut om den skal leveres eller ikke
+		this.textbox.append("Skal leveres: "+(delivery.equals("1")? "Ja" : "Nei") +"\n");//må hente ut om den skal leveres eller ikke
 		
 		this.textbox.append("<table>" +
 				"<tr>" +
@@ -52,7 +52,7 @@ public class PrintReceipt extends TheReceipt{
 				"<td><strong>Pris</strong></td>" +
 				"</tr>" +
 				"<tr>" +
-				"<td colspan=2><hr align=\"left\" : width =\"305\" /></td>" +
+				"<td colspan=2><strong><hr align=\"left\" : width =\"320\" /></strong></td>" +
 				"</tr>");
 
 		//Her må ordrene legges inn slik at de dukker opp på kviteringen
@@ -66,7 +66,7 @@ public class PrintReceipt extends TheReceipt{
 		mva = (tot-tot_u_mva);
 		
 		this.textbox.append("<tr>"+
-				"<td colspan=2><hr align=\"left\" : width =\"300\" /></td>" +
+				"<td colspan=2><b><hr align=\"left\" : width =\"300\" /></b></td>" +
 				"</tr>" +
 				"<p style=\"width: 20px;\">"+
 				"<strong>Bestillingsinfo</strong></p>" +
@@ -93,7 +93,7 @@ public class PrintReceipt extends TheReceipt{
 				"</tr>" +
 				
 				"<tr>"+
-				"<td colspan=2><hr align=\"left\" : width =\"300\" />"+
+				"<td colspan=2><b><hr align=\"left\" : width =\"300\" /></b>"+
 				"</td>" +
 				"</tr>" +
 
