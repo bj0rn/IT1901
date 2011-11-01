@@ -1,6 +1,7 @@
 package PizzaPck;
 
 import com.trolltech.qt.gui.QGridLayout;
+import com.trolltech.qt.gui.QGroupBox;
 import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QLayout.SizeConstraint;
 import com.trolltech.qt.gui.QLineEdit;
@@ -21,6 +22,7 @@ public class KundeWidget extends QWidget {
 	private QLineEdit txtFornavn, txtEtternavn, txtAdresse, txtPoststed, txtPostkode, txtTelefonNr, txtSok;
 	private QLabel labFornavn, labEtternavn, labAdresse, labPostSted, labtPostKode, labTelefon, labSok;
 	private QGridLayout layout;
+	private QGroupBox groupbox;
 	
 	//Database instance
 	private DB db;
@@ -50,8 +52,11 @@ public class KundeWidget extends QWidget {
 	private void setUp(){
 
 		//setter opp de akutelle layoutene
-		layout = new QGridLayout(this);
-
+		groupbox = new QGroupBox();
+		layout = new QGridLayout();
+		
+		groupbox.setLayout(layout);
+		groupbox.setParent(this);
 
 		/*
 		 * Denne linjen gjør at ting ikke blir strekt ut det som er plassert på layout. 
