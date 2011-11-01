@@ -22,6 +22,7 @@ import com.trolltech.qt.gui.QListWidget;
 import com.trolltech.qt.gui.QMessageBox;
 import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QRadioButton;
+import com.trolltech.qt.gui.QScrollArea;
 import com.trolltech.qt.gui.QSizePolicy.Policy;
 import com.trolltech.qt.gui.QTextBrowser;
 import com.trolltech.qt.gui.QTimeEdit;
@@ -182,7 +183,7 @@ public class OrderGUI extends QWidget{
 	}
 
 	private void confirmOrders() {
-		//TODO: må fikse hva som skal komme ut når man ikke har lagt til produkter og trykker på bekreft
+		//TODO: mï¿½ fikse hva som skal komme ut nï¿½r man ikke har lagt til produkter og trykker pï¿½ bekreft
 		if (listProductsMirror.size() ==0) {
 			System.out.println("ikke greit");
 			return;
@@ -309,8 +310,10 @@ public class OrderGUI extends QWidget{
 		//adds to layout and sets the layout for the rightbox
 		boxRight.setFixedWidth(600);
 		boxRight.setLayout(layoutRight);
-		layoutRight.addWidget(order_list);
+		QScrollArea scroll = new QScrollArea();
 		
+		layoutRight.addWidget(order_list);
+		//layoutRight.addWidget(scroll);
 		
 		
 		/**

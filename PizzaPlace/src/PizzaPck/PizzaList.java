@@ -15,7 +15,7 @@ import com.trolltech.qt.gui.QWidget;
 
 
 
-public class PizzaList extends QWidget implements Iterable<Pizza>{
+public class PizzaList extends QScrollArea implements Iterable<Pizza>{
 
 	protected QLayout lay;
 	protected QVBoxLayout v_box;
@@ -57,6 +57,7 @@ public class PizzaList extends QWidget implements Iterable<Pizza>{
 		llProdukter = db.getMenu();
 		Iterator<String[]> iter = llProdukter.iterator();
 		System.out.println(llProdukter);
+		
 		while(iter.hasNext()){
 			String[] a = iter.next();
 			Pizza p = new Pizza(a);
@@ -64,28 +65,22 @@ public class PizzaList extends QWidget implements Iterable<Pizza>{
 			p.signalPizza.connect(this, "signalBridge(String[])");
 			pizza_list.add(p);
 		}
-		v_box = new QVBoxLayout(); 
-		lay = new QGridLayout();
-		v_box.setContentsMargins(1,1,1,1);
+		
 
-
-
-		main = new QWidget();
+		main = new QWidget(this);
+		v_box = new QVBoxLayout(main); 
 		main.setLayout(v_box);
+		v_box.setContentsMargins(2,2,2,2);
+		
+		this.setVerticalScrollBarPolicy(ScrollBarPolicy.ScrollBarAlwaysOn);
 		this.setContentsMargins(1, 1, 1, 2);
-
-		//main.setBaseSize(pizza_list.get(0).width()+10, pizza_list.get(0).height()*6);
-		scrollarea = new QScrollArea(this);
-		scrollarea.setWidgetResizable(true);
-
-		scrollarea.setVerticalScrollBarPolicy(ScrollBarPolicy.ScrollBarAlwaysOn);
-
-		scrollarea.setWidget(main);
-		scrollarea.setFixedWidth(580);
-		scrollarea.setFixedHeight(420);
+		this.setWidget(main);
+		this.setWidgetResizable(true);
+	
 	
 		//Update gui
 		for (Pizza p: pizza_list) {
+			
 			v_box.addWidget(p);
 		}
 	}
