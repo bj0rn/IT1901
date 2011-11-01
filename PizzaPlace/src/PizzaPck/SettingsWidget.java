@@ -10,6 +10,8 @@ import com.trolltech.qt.gui.QLineEdit;
 import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QWidget;
 
+
+
 /**
  * 
  * @author Vegard
@@ -18,12 +20,16 @@ import com.trolltech.qt.gui.QWidget;
 public class SettingsWidget extends QWidget {
 	
 	//knapper, tekstfelt og labels
-	private QLineEdit txtName, txtContents, txtPrice;
-	private QLabel labName,labContents,labPrice;
+	private QLineEdit txtName, txtContents, txtPrice, txtBorder, txtDelivery;
+	private QLabel labName,labContents,labPrice, labBorder, labDelivery;
 	private QGridLayout pizzaLayout;
-	private QPushButton btnAddpizza;
+	private QGridLayout settingsLayout, borderLayout;
+	private QPushButton btnAddpizza, btnChange, btnChangeDelivey;
 	private QGroupBox groupBoxPizza;
+	private QGroupBox groupBoxPrice;
 	private DB db;
+	public static float DELIVERY_LIMIT = 500.0f;
+	public static float DELIVERY_PRICE = 50.0f;
 	
 	
 	//Signal handler
@@ -31,7 +37,7 @@ public class SettingsWidget extends QWidget {
 	
 	
 	/**
-	 * DB objektet ordner slik at man får tilgang metoder som jobber mot databasen
+	 * DB objektet ordner slik at man fï¿½r tilgang metoder som jobber mot databasen
 	 * @param db
 	 */
 	public SettingsWidget(DB db){
@@ -63,6 +69,18 @@ public class SettingsWidget extends QWidget {
 	
 	
 	
+	public void setDeliveyPrice(){
+		String var = txtDelivery.text();
+		DELIVERY_PRICE = Float.valueOf(var);
+	}
+	
+	public void setLimit(){
+		String var = txtBorder.text();
+		DELIVERY_LIMIT = Float.valueOf(var);
+	}
+	
+	
+	
 	/**
 	 * generates a new 
 	 */
@@ -70,11 +88,24 @@ public class SettingsWidget extends QWidget {
 		
 		
 		//creates new instances of buttons, labels, lineEdit, etc
+		settingsLayout = new QGridLayout();
 		pizzaLayout = new QGridLayout();
+		borderLayout = new QGridLayout();
+		
 		
 		groupBoxPizza = new QGroupBox("Legg til nye pizzaer");
 		groupBoxPizza.setLayout(pizzaLayout);
-		groupBoxPizza.setParent(this);
+		this.setLayout(settingsLayout);
+		
+		groupBoxPrice = new QGroupBox("Endre prisgrense for gratis levering og leveringsgebyr");
+		groupBoxPrice.setLayout(borderLayout);
+		
+		labBorder = new QLabel("Ny grense");
+		txtBorder = new QLineEdit();
+		labDelivery = new QLabel("Ny Leveringspris");
+		txtDelivery = new QLineEdit();
+		btnChange = new QPushButton("Endre grensen");
+		btnChangeDelivey = new QPushButton("Endre leveringspris");
 		
 		btnAddpizza = new QPushButton("Legg til pizza i DB");
 		
@@ -85,6 +116,22 @@ public class SettingsWidget extends QWidget {
 		labName = new QLabel("Navn pï¿½ pizza:");
 		labContents = new QLabel("Ingredienser");
 		labPrice = new QLabel("Pris");
+		
+		
+		settingsLayout.addWidget(groupBoxPizza);
+		settingsLayout.addWidget(groupBoxPrice);
+		
+		
+		borderLayout.addWidget(labBorder, 0, 0);
+		borderLayout.addWidget(txtBorder, 0, 1);
+		borderLayout.addWidget(btnChange, 0, 2);
+		btnChange.clicked.connect(this, "setLimit()");
+		
+		borderLayout.addWidget(labDelivery, 1, 0);
+		borderLayout.addWidget(txtDelivery, 1, 1);
+		borderLayout.addWidget(btnChangeDelivey, 1, 2);
+		btnChangeDelivey.clicked.connect(this, "setDeliveyPrice()");
+		
 		
 		
 		//add buttons, labels and lineedits to pizzalayout

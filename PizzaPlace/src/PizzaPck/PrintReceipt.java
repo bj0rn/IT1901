@@ -74,7 +74,7 @@ public class PrintReceipt extends TheReceipt{
 				"<tr>" +
 				"<td width=\"220\">" +
 				"	Leveringspris:</td>" +
-				"<td> " +(tot > 500.0f ? (delivery_price = 0.0f) : (delivery_price = 50.0f)) + "</td>" +
+				"<td> " +(tot > SettingsWidget.DELIVERY_LIMIT ? (delivery_price = 0.0f) : (delivery_price = SettingsWidget.DELIVERY_PRICE)) + "</td>" +
 				"</tr>" +
 
 				"<tr>" +
