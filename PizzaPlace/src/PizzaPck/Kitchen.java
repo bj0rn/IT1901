@@ -13,7 +13,7 @@ import com.trolltech.qt.gui.QWidget;
 
 /**
  * Creates the kitchen widget for showing active orders
- * @author Vegard
+ * @author
  *
  */
 public class Kitchen extends QWidget{
@@ -43,11 +43,9 @@ public class Kitchen extends QWidget{
 	}
 
 	/**
-	 * creates the kitchen gui
+	 * creates the kitchen GUI
 	 */
 	private void setUp() {
-		
-		//print = new PrintReceipt();
 		
 		layout = new QGridLayout(this);
 
@@ -55,18 +53,10 @@ public class Kitchen extends QWidget{
 		orderList = new QListWidget();
 
 		mirrorOrderList = new ArrayList<String[]>();
-
-		//QPushButton reciept = new QPushButton("Kvitering");
 		
-
-		//TODO: klokka m� fikses. m� ogs� legge til en i ordergui.
-		dateTime = new QDateTime(QDateTime.currentDateTime());
-		dateTime.setTime(QTime.currentTime());
-
 		//knappen som fullf�rer en ordre
 		btnFinish = new QPushButton("Fullf�r ordre");
 
-		layout.addWidget(new QLabel(dateTime.toString()),0,0);
 		layout.addWidget(order, 1, 1);
 
 		layout.addWidget(btnFinish,2,1);
@@ -77,6 +67,10 @@ public class Kitchen extends QWidget{
 
 	}
 	
+	/**
+	 * showOrder retrieves all products from the database according to the selected 
+	 * element in the over all orders 
+	 */
 	public void showOrder() {
 		order.clear();
 		if(orderList == null) {
@@ -114,9 +108,9 @@ public class Kitchen extends QWidget{
 	}
 
 
-
-
-
+	/**
+	 * Retrieves all orders and put them into the list over all active orders
+	 */
 	public void getOrders() {
 		orderList = new QListWidget();
 		layout.addWidget(orderList, 1, 0);
@@ -133,7 +127,13 @@ public class Kitchen extends QWidget{
 		}
 		orderList.clicked.connect(this, "showOrder()");
 	}
-
+	
+	/**
+	 * Transform a string array to a string
+	 * See {@link StringBuilder}
+	 * @param data
+	 * @return
+	 */
 	private String format(String[] data) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < data.length; i++) {
@@ -143,14 +143,9 @@ public class Kitchen extends QWidget{
 		return sb.toString();
 	}
 
-
-//	public void print(){
-//		PrintReceipt pr = new PrintReceipt();
-//		pr.print();
-//		signalPrintReceipt.emit(true);
-//		System.out.println("PRIIIIIINT!!!");
-//	}
-
+	/**
+	 * 
+	 */
 	public void finishOrder(){
 		String[] tmp = mirrorOrderList.get(row);
 		String orderID = tmp[0];

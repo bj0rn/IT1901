@@ -48,7 +48,7 @@ public class Delivery extends QWidget{
 	
 	
 	/**
-	 * this method setup the userinteface for the delivery
+	 * this method setup the interface for the delivery
 	 * 
 	 */
 	protected void setup(){
@@ -87,7 +87,7 @@ public class Delivery extends QWidget{
 	
 	
 	/**
-	 * creates a print receipt for displaying the receipt
+	 * creates a print receipt and displays it
 	 *  
 	 */
 	public void print(){
@@ -105,7 +105,7 @@ public class Delivery extends QWidget{
 	}
 	
 	/**
-	 * get all orders from the database where the order is finished produced
+	 * get all orders from the database where the finish status is set to true
 	 */
 	public void getDeliveries() {
 		
@@ -177,7 +177,6 @@ public class Delivery extends QWidget{
 		 */
 		map.loadMap(new QUrl(map.getMap("Kringsjåvegen 51 7032 Trondheim","Prinsens Gate 1 7011 Trondheim")));
 		//her må vi få ut adressen dit vi skal... slik at vi kan oppdatere kart
-		
 		System.out.println(test.text());
 	}
 }

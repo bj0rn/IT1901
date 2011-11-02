@@ -24,7 +24,7 @@ public class DB {
 
 
 	/**
-	 * Create new connection
+	 * Creates a connection to the database
 	 * @throws SQLException
 	 * @Throws {@link ClassNotFoundException}
 	 */
@@ -472,7 +472,7 @@ public class DB {
 	}
 	
 	/**
-	 * Updates the delivered status in order to delivered 
+	 * Updates the delivered status in order to delivered according to the orderID
 	 *
 	 * @param orderID
 	 * @throws SQLException
@@ -512,6 +512,7 @@ public class DB {
 	
 	/**
 	 *  updates the order with time and if the order is going to be delivered
+	 *  
 	 * @param time
 	 * @param delivery
 	 * @param orderID

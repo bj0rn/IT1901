@@ -2,11 +2,12 @@ package PizzaPck;
 
 import com.trolltech.qt.gui.*;
 import com.trolltech.qt.gui.QSizePolicy.Policy;
+
 /**
- * Her opprettes widgeten som holder på fanene man vil legge til i programmet
+ * This class contains the main method and acts as a boss.
+ * Mainframe is setting up the entire program
  * 
- * Main-metoden for å kjøre hele programmet ligger her
- * @author Vegard
+ * @author 
  *
  */
 public class MainFrame extends QWidget {
@@ -19,13 +20,14 @@ public class MainFrame extends QWidget {
 	private SettingsWidget settingWidget;
 	private Delivery deliveryWidget;
 	private KundeWidget customerWidget;
+	private DB db;
 	
 	public Signal1<Boolean> changeTab = new Signal1<Boolean>();
 	
 	
 	/**
-	 * Constructoren kaller setUp()
-	 * @author Vegard 
+	 * the constructor calls the setUp method
+	 * @author
 	 */
 	public MainFrame(){
 		setUp();
@@ -34,12 +36,12 @@ public class MainFrame extends QWidget {
 
 	
 	/**
-	 * Creates the gui
+	 * Creates the Main GUI and connects all parts of the program in this class
 	 */
 	private void setUp(){
 
 		//Connect to database
-		DB db = new DB();
+		db = new DB();
 		
 		
 		//oppretter layout og QtabWidget der vi kan plassere widgeter i hver fane
@@ -100,7 +102,13 @@ public class MainFrame extends QWidget {
 
 	}
 
-
+	/**
+	 * Changes the tab according to which tab the user i currently working in
+	 * 
+	 * The program limits the user to just working with order as long as there is a customer who are
+	 * ordering. As a result this will make the user to either decline or finish ordering products before continuing.
+	 * 
+	 */
 	public void setCurrentTab (){
 		int index = tabMain.currentIndex();
 		System.out.println(index);
@@ -125,7 +133,7 @@ public class MainFrame extends QWidget {
 	}
 
 	/**
-	 * Setter opp og kjører programmet
+	 * Runs the program
 	 * @param args
 	 */
     public static void main(String[] args) {
