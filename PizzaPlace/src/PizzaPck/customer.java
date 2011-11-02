@@ -1,5 +1,9 @@
 package PizzaPck;
 
+/**
+ * this class is similar to the customer table in the database 
+ *
+ */
 public class customer {
 	//Table fields 
 	private String first_name;

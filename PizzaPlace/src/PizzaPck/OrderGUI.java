@@ -29,6 +29,14 @@ import com.trolltech.qt.gui.QTimeEdit;
 import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QWidget;
 
+/**
+ * This class extends the {@link QWidget} and creates the GUI
+ * for adding products to an order. 
+ * 
+ * 
+ * @author Everyone
+ *
+ */
 public class OrderGUI extends QWidget{
 
 	private DB db;
