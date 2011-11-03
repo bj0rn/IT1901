@@ -26,7 +26,7 @@ public class Delivery extends QWidget{
 	private QListWidget deliveryList;
 	private QGridLayout layout;
 	private QDateTime dateTime;
-	private QPushButton btnDelivered;
+	private QPushButton btnDelivered,update;
 	private QPushButton receipt;
 	private Map map;
 	private QVBoxLayout map_lay;
@@ -59,16 +59,18 @@ public class Delivery extends QWidget{
 		
 		receipt = new QPushButton("Skriv ut");
 		btnDelivered = new QPushButton("Levering");
+		update = new QPushButton("Oppdater");
 		map_lay = new QVBoxLayout();
 		map_lay.addWidget(map);
 		
 
 		layout.addLayout(map_lay, 1, 1);
+		layout.addWidget(update, 2, 0);
 		layout.addWidget(btnDelivered,2,1);
 		layout.addWidget(receipt,2,2);
 		
 		getDeliveries();
-		
+		update.clicked.connect(this,"getDeliveries()");
 		btnDelivered.clicked.connect(this, "setOrderDelivered()");
 		receipt.clicked.connect(this,"print()");
 	}
