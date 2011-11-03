@@ -24,7 +24,7 @@ public class Kitchen extends QWidget{
 	private PrintReceipt print;
 	private QGridLayout layout;
 	private QDateTime dateTime;
-	private QPushButton btnFinish;
+	private QPushButton btnFinish,update;
 	private ArrayList<String[]> mirrorOrderList;
 	public Signal1<Boolean> signalKitchen = new Signal1<Boolean>();
 	public Signal1<Boolean> signalDelivery = new Signal1<Boolean>();
@@ -56,12 +56,14 @@ public class Kitchen extends QWidget{
 		
 		//knappen som fullf�rer en ordre
 		btnFinish = new QPushButton("Fullf�r ordre");
-
+		update = new QPushButton("Oppdater");
 		layout.addWidget(order, 1, 1);
 
 		layout.addWidget(btnFinish,2,1);
+		layout.addWidget(update, 2, 0);
 		getOrders();
 		btnFinish.clicked.connect(this, "finishOrder()");
+		update.clicked.connect(this, "getOrders()");
 		//layout.addWidget(reciept,2,2);
 		//reciept.clicked.connect(this,"print()");
 
