@@ -1,9 +1,13 @@
 package PizzaPck;
 
+import java.util.ArrayList;
+
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QGroupBox;
 import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QLabel;
+import com.trolltech.qt.gui.QListWidget;
+import com.trolltech.qt.gui.QStringListModel;
 import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QLayout.SizeConstraint;
 import com.trolltech.qt.gui.QLineEdit;
@@ -27,10 +31,10 @@ public class KundeWidget extends QWidget {
 	private QGroupBox groupbox;
 	private QHBoxLayout layoutSearch;
 	private QVBoxLayout layoutMain;
-	
+	private QListWidget list;
 	//Database instance
 	private DB db;
-	
+
 	//Current customer
 	private String[] tmpCustomer;
 	
@@ -98,8 +102,7 @@ public class KundeWidget extends QWidget {
 		labZipCode = new QLabel("Postkode");
 		labPhone = new QLabel("Telefon");
 		labSearch = new QLabel("Søk");
-
-
+		
 
 		//knapper
 		btnSearch = new QPushButton("Søk");
@@ -113,7 +116,7 @@ public class KundeWidget extends QWidget {
 		btnUpdate.clicked.connect(this, "updateUser()");
 		btnOrder.clicked.connect(this, "sendCustomer()");
 		//btnBestill.clicked.connect(this, "sendCustomer()");
-		
+
 		
 		/*
 		 * plasserer knapper, labels og tekstfelt slik i layout

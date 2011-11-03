@@ -24,6 +24,7 @@ import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QRadioButton;
 import com.trolltech.qt.gui.QScrollArea;
 import com.trolltech.qt.gui.QSizePolicy.Policy;
+import com.trolltech.qt.gui.QStringListModel;
 import com.trolltech.qt.gui.QTextBrowser;
 import com.trolltech.qt.gui.QTimeEdit;
 import com.trolltech.qt.gui.QVBoxLayout;
@@ -51,8 +52,7 @@ public class OrderGUI extends QWidget{
 	
 	//Mirror all the element contained in listProducts
 	public List<String[]> listProductsMirror;
-
-
+	
 	private PizzaList order_list;
 	private QRadioButton delivery;
 	private QRadioButton pickup;
@@ -299,6 +299,7 @@ public class OrderGUI extends QWidget{
 		
 		
 		//sets the time and date
+		changeDate.setCalendarPopup(true);
 		changeDate.setDate(QDate.currentDate());
 		changeTime.setTime(QTime.currentTime());
 		
