@@ -43,7 +43,6 @@ import com.trolltech.qt.gui.QWidget;
 	protected QGridLayout grid;
 	protected DecimalFormat price_format;
 	protected double start_price;
-	protected List<String> sizes;
 	protected List<String> amountList;
 	protected QGroupBox box;
 	protected QLabel image_label;
@@ -93,11 +92,9 @@ import com.trolltech.qt.gui.QWidget;
 
 		//Man kan valge mellom liten og stor pizza
 		size = new QComboBox();
-		sizes = new ArrayList<String>();
 		size_label = new QLabel("Størrelse :");
-		sizes.add("Liten");
-		sizes.add("Stor");
-		size.addItems(sizes);
+		size.addItem("Liten");
+		size.addItem("Stor");
 		
 		//
 		amount = new QComboBox();
@@ -174,6 +171,9 @@ import com.trolltech.qt.gui.QWidget;
 		//Send data
 		signalPizza.emit(data);
 		
-		
+		comments.clear();
+		size.setCurrentIndex(0);
+		amount.setCurrentIndex(0);
 	}
+	
 }
