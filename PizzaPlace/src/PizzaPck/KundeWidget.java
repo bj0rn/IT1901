@@ -166,12 +166,13 @@ public class KundeWidget extends QWidget {
 		//Insert throws exception
 		try {
 			db.insert(c);
+			clearFields();
 		}catch(RuntimeException err) {
-			//TODO: Add message box ?
+			ErrorMessage.invalidInput(this);
 			System.out.println("INSERT: Invalid input");
 			
 		}
-		clearFields();
+		
 	}
 	
 	/**
@@ -205,6 +206,7 @@ public class KundeWidget extends QWidget {
 			txtPhone.setText(res[5]);	//Telefon 
 		
 		}catch(RuntimeException err) {
+			ErrorMessage.noSuchUser(this);
 			System.out.println("SEARCH: findCustomer() failed");
 		}
 		
@@ -219,6 +221,7 @@ public class KundeWidget extends QWidget {
 			String SearchQuery = ""+tmpCustomer[0]+" "+tmpCustomer[1]+"";
 			db.Update(customer, db.Search(SearchQuery, true, false));
 		}catch(RuntimeException err) {
+			ErrorMessage.invalidInput(this);
 			System.out.println("SEARCH: updateUser() failed");
 		}
 	}
@@ -246,6 +249,7 @@ public class KundeWidget extends QWidget {
 	 */
 	private void sendCustomer() {
 		if(tmpCustomer == null) {
+			ErrorMessage.noSuchUser(this);
 			System.out.println("No customer");
 			return;
 		}
@@ -258,6 +262,7 @@ public class KundeWidget extends QWidget {
 			changeTab.emit(true);
 			
 		}catch(RuntimeException err) {
+			ErrorMessage.noSuchUser(this);
 			System.out.println("sendCustomer() failed");
 		}
 		
