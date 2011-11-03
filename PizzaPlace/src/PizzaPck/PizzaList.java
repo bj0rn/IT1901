@@ -34,7 +34,6 @@ public class PizzaList extends QScrollArea implements Iterable<Pizza>{
 		//Init 
 		fillList();
 
-
 	}
 
 

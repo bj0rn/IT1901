@@ -1,5 +1,9 @@
 package PizzaPck;
 
+/**
+ * this class is similar to receipt table in the database
+ * 
+ */
 public class receipt {
 	
 	private String orderID;
@@ -8,6 +12,12 @@ public class receipt {
 	private String size;
 	private String amount;
 	
+
+	/**
+	 * data must be a string[] of length 5 and consists of
+	 * orderID, productId, comment, size amount
+	 * @param data
+	 */
 	public receipt(String[] data) {
 		orderID = data[0];
 		productID = data[1];

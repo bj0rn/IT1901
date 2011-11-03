@@ -4,19 +4,36 @@ package PizzaPck;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+/**
+ * This class extends the TheReceipt class,
+ * @see: TheReceipt
+ * and formats the receipt depending on the
+ * order that is marked when you click "Skriv ut".
+ *
+ */
 public class PrintReceipt extends TheReceipt{
 	//private DB db;
 	private float delivery_price;
 	private float tot;
 	private double tot_u_mva;
 	private double mva;
-	private double final_price;
 	private String orderID;
 	private String delivery;
 	private ArrayList<String[]> products;
 	private DecimalFormat format = new DecimalFormat("0.00");
 	
-	public PrintReceipt(String orderID, String delivery, ArrayList<String[]> products) throws NullPointerException{
+	/**
+	 * The Constructor takes a set of parameters
+	 * to get the information it needs to build 
+	 * the receipt. 
+	 * 
+	 * @param orderID
+	 * @param delivery
+	 * @param products
+	 * @throws NullPointerException
+	 */
+	public PrintReceipt(String orderID, String delivery,
+			ArrayList<String[]> products) throws NullPointerException{
 		
 		super();
 		super.setWindowTitle("Kvittering");
@@ -30,21 +47,48 @@ public class PrintReceipt extends TheReceipt{
 		print();
 	}
 	
+	/**
+	 * This method fetches the orders, amount,
+	 * size and price for each product,
+	 * and insert each product to the receipt.
+	 * The method returns a String with HTML formated
+	 * text, wich is used to build the receipt in the
+	 * print method. 
+	 * @see:print
+	 * @param product
+	 * @return
+	 */
 	public String calculate(String[] product){
-		Float price = Float.parseFloat(product[3])*(product[2].equals("1") ? 1.25f : 1.00f)* Float.parseFloat(product[5]);
+		Float price = Float.parseFloat(product[3])
+					*(product[2].equals("1") ? 1.25f : 1.00f)* 
+					Float.parseFloat(product[5]);
 		tot += price;
 		return 
 		"<tr style=\"font-size:10px\">"+ 
-				   "<td width=220>"+ product[3] + " x " +(product[2].equals("1") ? "Stor " : "Liten ") + product[4]+"</td>"+
+				   "<td width=220>"+ product[3] + " x " 
+				   +(product[2].equals("1") ? "Stor " : "Liten ") 
+				   + product[4]+"</td>"+
 				   "<td>"+ format.format(price)+"</td>"+
 				   "</tr>";
 	}
-	//må skrive noe HTML-kode eller noe for å formatere utskriften
+	
+	/**
+	 * This method formates the whole receipt with;
+	 * order id,
+	 * time set to deliver,
+	 * if it should be delivered or not,
+	 * a list of the products with amount,size,pizza name and price,
+	 * delivery price,
+	 * price without mva,
+	 * mva,
+	 * total price
+	 */
 	public void print(){
 		
 		this.textbox.append("<b>Ordre nr : "+orderID+"</b>");
 		this.textbox.append("Skal være ferdig til : "/*orderID*/+1600);
-		this.textbox.append("Skal leveres: "+(delivery.equals("1")? "Ja" : "Nei") +"\n");//må hente ut om den skal leveres eller ikke
+		this.textbox.append("Skal leveres: "+
+		(delivery.equals("1")? "Ja" : "Nei") +"\n");
 		
 		this.textbox.append("<table>" +
 				"<tr>" +
@@ -52,7 +96,8 @@ public class PrintReceipt extends TheReceipt{
 				"<td><strong>Pris</strong></td>" +
 				"</tr>" +
 				"<tr>" +
-				"<td colspan=2><strong><hr align=\"left\" : width =\"320\" /></strong></td>" +
+				"<td colspan=2><strong><hr align=\"left\" "+
+				": width =\"320\" /></strong></td>" +
 				"</tr>");
 
 		//Her må ordrene legges inn slik at de dukker opp på kviteringen
@@ -66,7 +111,8 @@ public class PrintReceipt extends TheReceipt{
 		mva = (tot-tot_u_mva);
 		
 		this.textbox.append("<tr>"+
-				"<td colspan=2><b><hr align=\"left\" : width =\"300\" /></b></td>" +
+				"<td colspan=2><b><hr align=\"left\" "+
+				": width =\"300\" /></b></td>" +
 				"</tr>" +
 				"<p style=\"width: 20px;\">"+
 				"<strong>Bestillingsinfo</strong></p>" +
@@ -74,7 +120,10 @@ public class PrintReceipt extends TheReceipt{
 				"<tr>" +
 				"<td width=\"220\">" +
 				"	Leveringspris:</td>" +
-				"<td> " +(tot > SettingsWidget.DELIVERY_LIMIT ? (delivery_price = 0.0f) : (delivery_price = SettingsWidget.DELIVERY_PRICE)) + "</td>" +
+				"<td> " +(tot > SettingsWidget.DELIVERY_LIMIT ?
+						format.format((delivery_price = 0.0f)) : 
+						format.format((delivery_price = SettingsWidget.DELIVERY_PRICE))) 
+						+ "</td>" +
 				"</tr>" +
 
 				"<tr>" +
@@ -98,19 +147,23 @@ public class PrintReceipt extends TheReceipt{
 				"</tr>" +
 
 				"<tr>" +
-				"<td style=\"font-size:11px\":width=\"220\"><b>Total pris:</b></td>" +
-				"<td style=\"font-size:11px\"><b>" + format.format(calculateFinalPrize()) + "</b></td>" +
+				"<td style=\"font-size:11px\""+
+				":width=\"220\"><b>Total pris:</b></td>" +
+				"<td style=\"font-size:11px\"><b>" + 
+				format.format(calculateFinalPrize()) + 
+				"</b></td>" +
 				"</tr>" +
 		"</table>");
 		
 	}
+	
+	/**
+	 * This methode calculates the final total price
+	 * of the order
+	 * @return
+	 */
 	public float calculateFinalPrize(){
 		return tot + delivery_price;
-	}
-	public void setDelivery_price(float delivery_price) {
-		this.delivery_price = delivery_price;
-	}
-
-	
+	}	
 }
 

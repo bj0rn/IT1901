@@ -29,6 +29,14 @@ import com.trolltech.qt.gui.QTimeEdit;
 import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QWidget;
 
+/**
+ * This class extends the {@link QWidget} and creates the GUI
+ * for adding products to an order. 
+ * 
+ * 
+ * @author Everyone
+ *
+ */
 public class OrderGUI extends QWidget{
 
 	private DB db;
@@ -81,6 +89,9 @@ public class OrderGUI extends QWidget{
 		btnDelete.clicked.connect(this,"deleteOrder()");
 	}
 	
+	/**
+	 * Deletes the latest inserted order in the database. 
+	 */
 	public void deleteOrder(){
 		db.deleteOrder(db.getOrderID());
 		signalCancel.emit(true);
@@ -89,7 +100,10 @@ public class OrderGUI extends QWidget{
 
 
 	/**
-	 * insert order.....
+	 * This method inserts a order into the database
+	 * 
+	 * 
+	 * @throws RuntimeException
 	 */
 	public void insertOrder() {
 		String currentTime = new java.sql.Timestamp(new java.util.Date().getTime()).toString();
@@ -148,6 +162,12 @@ public class OrderGUI extends QWidget{
 	}
 
 
+	/**
+	 * This method adds data into the product list and the mirror product list
+	 * This method is usually called when a button in the productlist is clicked.
+	 * 
+	 * @param data
+	 */
 	private void handleListProducts(String[] data) {
 		System.out.println("Insert completed");
 		listProductsMirror.add(data);
@@ -172,6 +192,13 @@ public class OrderGUI extends QWidget{
 	//Price
 	//ingridients
 	//comments
+	/**
+	 * 
+	 * Iterates over the String[] and returns a string created by a StringBuilder
+	 * Usually used for formating the text in QListWidget
+	 * @param data
+	 * @return
+	 */
 	private String format(String[] data) {
 		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i < 4; i++) {
@@ -182,6 +209,12 @@ public class OrderGUI extends QWidget{
 		return sb.toString();
 	}
 
+
+	/**
+	 * This method iterates over the mirrorOrderList and inserts the products into the database.
+	 * 
+	 * This method will also clear the data in orderlist and the mirrorOrderList
+	 */
 	private void confirmOrders() {
 		//TODO: m� fikse hva som skal komme ut n�r man ikke har lagt til produkter og trykker p� bekreft
 		if (listProductsMirror.size() ==0) {
@@ -219,9 +252,14 @@ public class OrderGUI extends QWidget{
 		listProducts.clear();
 	}
 	
+	/**
+	 * updates the list of products. Usually called when a product has been inserted into the database.
+	 */
 	public void updatePizzaList() {
 		order_list.fillList();
 	}
+	
+	
 	/**
 	 *  Changes the time and delivery status in the database
 	 *  @see DB
@@ -240,7 +278,7 @@ public class OrderGUI extends QWidget{
 	}
 	
 	/**
-	 * creates the GUI
+	 * Creates and setup's the GUI in 
 	 */
 	private void setUpGUI(){
 		

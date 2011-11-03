@@ -9,6 +9,10 @@ import com.trolltech.qt.gui.QTextEdit;
 import com.trolltech.qt.gui.QVBoxLayout;
 
 /**
+ * This class sets up a QDialog that communicates
+ * with the printer. This class has
+ * ovverwritten the accept method so it can print
+ * the acutal textfield we have edited.
  * 
  * @author Linn
  *
@@ -19,10 +23,19 @@ public class TheReceipt extends QDialog{
 	
 	//Må evt ta inn DB...
 	
+	/**
+	 * This method is the constructor,
+	 * and sets up the whole dialogbox
+	 */
 	public TheReceipt(){
 		setup();
 	}
 	
+	/**
+	 * This method sets up the printview, with
+	 * a dialogbox. Where the user can choose to
+	 * print the receipt or cancel the action
+	 */
 	public void setup(){
 		this.setFixedSize(400, 400);
 		printer = new QPrinter();
@@ -53,7 +66,10 @@ public class TheReceipt extends QDialog{
 		this.setLayout(vbox);
 		
 	}
-	
+	/**
+	 * Ovverride method, that print the actual
+	 * textbox/receipt.
+	 */
 	@Override
 	public void accept(){
 		QPrintDialog dialog = new QPrintDialog(printer,this);

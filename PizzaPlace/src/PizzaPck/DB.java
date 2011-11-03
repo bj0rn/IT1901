@@ -7,6 +7,13 @@ import java.util.*;
 import javax.swing.JTextArea;
 import javax.swing.text.html.HTMLDocument.Iterator;
 
+/**
+ * This class creates the connection to the database and have all the methods for 
+ * executing queries on the database
+ * 
+ * @author 
+ *
+ */
 public class DB {
 	//Fields 
 	String driver = "org.gjt.mm.mysql.Driver";
@@ -17,7 +24,7 @@ public class DB {
 
 
 	/**
-	 * Create new connection
+	 * Creates a connection to the database
 	 * @throws SQLException
 	 * @Throws {@link ClassNotFoundException}
 	 */
@@ -362,6 +369,8 @@ public class DB {
 		return null;
 
 	}
+	
+	
 	//TODO: Skrive om denne kommentaren 
 	/**
 	 * Retrieves all rows in table receipt where orderID == orderNr. The data
@@ -463,7 +472,7 @@ public class DB {
 	}
 	
 	/**
-	 * Updates the delivered status in order to delivered 
+	 * Updates the delivered status in order to delivered according to the orderID
 	 *
 	 * @param orderID
 	 * @throws SQLException
@@ -503,6 +512,7 @@ public class DB {
 	
 	/**
 	 *  updates the order with time and if the order is going to be delivered
+	 *  
 	 * @param time
 	 * @param delivery
 	 * @param orderID
@@ -522,6 +532,11 @@ public class DB {
 	
 	
 	/**
+	 * This method receive results from product and receipt tables in 
+	 * the database
+	 * Returns an arraylist of string[] arrays were each string[] consists of 
+	 * { receipt.orderID, receipt.productID, receipt.size, receipt.amount, 
+	 * products.name, products.price}
 	 * 
 	 * @param orderID
 	 * @return
@@ -571,6 +586,14 @@ public class DB {
 		return null;
 	}
 	
+	/**
+	 * 
+	 * Deletes the order in orders where orders.orderID ='orderID'
+	 * Throws an exception if the orderID doesn't exist 
+	 * 
+	 * @throws SQLException
+	 * @param orderID
+	 */
 	public void deleteOrder(String orderID){
 		String query = "DELETE FROM orders WHERE orderID ='"+orderID+"'";
 		

@@ -13,20 +13,20 @@ import com.trolltech.qt.gui.QSizePolicy.Policy;
 import com.trolltech.qt.gui.QWidget;
 
 /**
- * 
+ * This class handle all customer registration
  * @author Vegard
  *
  */
 public class KundeWidget extends QWidget {
 
 
-	private QPushButton btnSok, btnBestill, btnOppdater, btnLagre;
-	private QLineEdit txtFornavn, txtEtternavn, txtAdresse, txtPoststed, txtPostkode, txtTelefonNr, txtSok;
-	private QLabel labFornavn, labEtternavn, labAdresse, labPostSted, labtPostKode, labTelefon, labSok;
-	private QGridLayout layout;
+	private QPushButton btnSearch, btnOrder, btnUpdate, btnSave;
+	private QLineEdit txtFirstName, txtLastName, txtAdress, txtCity, txtZipCode, txtPhone, txtSearch;
+	private QLabel labFirstName, labLastName, labAdress, labCity, labZipCode, labPhone, labSearch;
+	private QGridLayout layoutGrid;
 	private QGroupBox groupbox;
-	private QHBoxLayout sok;
-	private QVBoxLayout main;
+	private QHBoxLayout layoutSearch;
+	private QVBoxLayout layoutMain;
 	
 	//Database instance
 	private DB db;
@@ -41,9 +41,10 @@ public class KundeWidget extends QWidget {
 	//public Signal1<String[]> customerInfo = new Signal1<String[]>();
 	
 
-	
+	//TODO: we will have to refactor the kundewidget class to customer widget
 	/**
-	 * 
+	 * Creates a new instance of "kundeWidget" and 
+	 * @param db
 	 */
 	public KundeWidget(DB db) {
 		this.db = db;
@@ -51,18 +52,18 @@ public class KundeWidget extends QWidget {
 	}
 
 	/**
-	 * privat metode som setter opp kundewidgeten 
+	 * Creates the user interface for customer registration
 	 */
 	private void setUp(){
 
 		//setter opp de akutelle layoutene
 		
 		groupbox = new QGroupBox();
-		layout = new QGridLayout();
-		sok = new QHBoxLayout();
-		main = new QVBoxLayout(groupbox);
-		main.addLayout(sok);
-		main.addLayout(layout);
+		layoutGrid = new QGridLayout();
+		layoutSearch = new QHBoxLayout();
+		layoutMain = new QVBoxLayout(groupbox);
+		layoutMain.addLayout(layoutSearch);
+		layoutMain.addLayout(layoutGrid);
 //		groupbox.setLayout(sok);
 //		groupbox.setLayout(layout);
 		groupbox.setParent(this);
@@ -72,7 +73,7 @@ public class KundeWidget extends QWidget {
 		 * Da vil alt som er addet til layout også få samme policy. 
 		 * Vil du få dette til å gjelde for label eller lineedit, da kan du burke setSizePolicy
 		 */
-		layout.setSizeConstraint(SizeConstraint.SetFixedSize); // 
+		layoutGrid.setSizeConstraint(SizeConstraint.SetFixedSize); // 
 
 
 
@@ -81,36 +82,36 @@ public class KundeWidget extends QWidget {
 		 */
 
 		//tekstfelt
-		txtSok = new QLineEdit();	
-		txtFornavn = new QLineEdit();
-		txtEtternavn = new QLineEdit();
-		txtAdresse = new QLineEdit();
-		txtPoststed = new QLineEdit();
-		txtPostkode = new QLineEdit();
-		txtTelefonNr = new QLineEdit();
+		txtSearch = new QLineEdit();	
+		txtFirstName = new QLineEdit();
+		txtLastName = new QLineEdit();
+		txtAdress = new QLineEdit();
+		txtCity = new QLineEdit();
+		txtZipCode = new QLineEdit();
+		txtPhone = new QLineEdit();
 
 		//labels
-		labFornavn = new QLabel("Fornavn");
-		labEtternavn = new QLabel("Etternavn");
-		labAdresse = new QLabel("Adresse");
-		labPostSted = new QLabel("Poststed");
-		labtPostKode = new QLabel("Postkode");
-		labTelefon = new QLabel("Telefon");
-		labSok = new QLabel("Søk");
+		labFirstName = new QLabel("Fornavn");
+		labLastName = new QLabel("Etternavn");
+		labAdress = new QLabel("Adresse");
+		labCity = new QLabel("Poststed");
+		labZipCode = new QLabel("Postkode");
+		labPhone = new QLabel("Telefon");
+		labSearch = new QLabel("Søk");
 
 
 
 		//knapper
-		btnSok = new QPushButton("Søk");
-		btnBestill = new QPushButton("Bestill");
-		btnLagre = new QPushButton("Lagre kunde");
-		btnOppdater = new QPushButton("Oppdater kunde");
+		btnSearch = new QPushButton("Søk");
+		btnOrder = new QPushButton("Bestill");
+		btnSave = new QPushButton("Lagre kunde");
+		btnUpdate = new QPushButton("Oppdater kunde");
 		
 		//Clicked
-		btnSok.clicked.connect(this, "findCustomer()");
-		btnLagre.clicked.connect(this, "insertCustomer()");
-		btnOppdater.clicked.connect(this, "updateUser()");
-		btnBestill.clicked.connect(this, "sendCustomer()");
+		btnSearch.clicked.connect(this, "findCustomer()");
+		btnSave.clicked.connect(this, "insertCustomer()");
+		btnUpdate.clicked.connect(this, "updateUser()");
+		btnOrder.clicked.connect(this, "sendCustomer()");
 		//btnBestill.clicked.connect(this, "sendCustomer()");
 		
 		
@@ -120,34 +121,34 @@ public class KundeWidget extends QWidget {
 		
 
 		//oppsett av layout
-		txtSok.setFixedWidth(200);
-		sok.addStretch(5);
-		sok.addWidget(txtSok);
-		sok.addStretch(1);
-		sok.addWidget(btnSok);
+		txtSearch.setFixedWidth(200);
+		layoutSearch.addStretch(5);
+		layoutSearch.addWidget(txtSearch);
+		layoutSearch.addStretch(1);
+		layoutSearch.addWidget(btnSearch);
 
-		layout.addWidget(labFornavn, 1, 0);
-		layout.addWidget(txtFornavn, 1, 1);
+		layoutGrid.addWidget(labFirstName, 1, 0);
+		layoutGrid.addWidget(txtFirstName, 1, 1);
 
-		layout.addWidget(labEtternavn, 2, 0);
-		layout.addWidget(txtEtternavn, 2, 1);
+		layoutGrid.addWidget(labLastName, 2, 0);
+		layoutGrid.addWidget(txtLastName, 2, 1);
 
-		layout.addWidget(labAdresse, 3, 0);
-		layout.addWidget(txtAdresse, 3, 1);
+		layoutGrid.addWidget(labAdress, 3, 0);
+		layoutGrid.addWidget(txtAdress, 3, 1);
 
-		layout.addWidget(labPostSted, 4, 0);
-		layout.addWidget(txtPoststed, 4, 1);
+		layoutGrid.addWidget(labCity, 4, 0);
+		layoutGrid.addWidget(txtCity, 4, 1);
 
-		layout.addWidget(labtPostKode, 5, 0);
-		layout.addWidget(txtPostkode, 5, 1);
+		layoutGrid.addWidget(labZipCode, 5, 0);
+		layoutGrid.addWidget(txtZipCode, 5, 1);
 
-		layout.addWidget(labTelefon, 6, 0);
-		layout.addWidget(txtTelefonNr, 6, 1);
+		layoutGrid.addWidget(labPhone, 6, 0);
+		layoutGrid.addWidget(txtPhone, 6, 1);
 
-		layout.addWidget(btnOppdater, 7, 0);
-		layout.addWidget(btnLagre, 7, 1);
+		layoutGrid.addWidget(btnUpdate, 7, 0);
+		layoutGrid.addWidget(btnSave, 7, 1);
 
-		layout.addWidget(btnBestill, 8, 2);
+		layoutGrid.addWidget(btnOrder, 8, 2);
 
 	}
 	
@@ -177,14 +178,14 @@ public class KundeWidget extends QWidget {
 	 * clear fields
 	 */
 	private void clearFields(){
-		txtSok.clear();
-		txtFornavn.clear();
-		txtEtternavn.clear();
-		txtAdresse.clear();
-		txtPoststed.clear();
-		txtPostkode.clear();
-		txtTelefonNr.clear();
-		txtAdresse.clear();
+		txtSearch.clear();
+		txtFirstName.clear();
+		txtLastName.clear();
+		txtAdress.clear();
+		txtCity.clear();
+		txtZipCode.clear();
+		txtPhone.clear();
+		txtAdress.clear();
 	}
 	
 	/**
@@ -193,15 +194,15 @@ public class KundeWidget extends QWidget {
 	private void findCustomer() {
 		//Search after the given query and return information from kunde (table)
 		try {
-			String res[] = db.Search(txtSok.text(), false, false);
+			String res[] = db.Search(txtSearch.text(), false, false);
 			//Save current customer
 			tmpCustomer = res;
-			txtFornavn.setText(res[0]); 	//Fornavn
-			txtEtternavn.setText(res[1]); 	//Etternavn
-			txtAdresse.setText(res[2]);   	//Adresse
-			txtPoststed.setText(res[3]); 	//Sted
-			txtPostkode.setText(res[4]);	//Postkode
-			txtTelefonNr.setText(res[5]);	//Telefon 
+			txtFirstName.setText(res[0]); 	//Fornavn
+			txtLastName.setText(res[1]); 	//Etternavn
+			txtAdress.setText(res[2]);   	//Adresse
+			txtCity.setText(res[3]); 	//Sted
+			txtZipCode.setText(res[4]);	//Postkode
+			txtPhone.setText(res[5]);	//Telefon 
 		
 		}catch(RuntimeException err) {
 			System.out.println("SEARCH: findCustomer() failed");
@@ -228,17 +229,21 @@ public class KundeWidget extends QWidget {
 	 */
 	private String[] getFields(){
 		String[] data =  {
-			txtFornavn.text(),
-			txtEtternavn.text(),
-			txtAdresse.text(),
-			txtPoststed.text(),
-			txtPostkode.text(),
-			txtTelefonNr.text()	
+			txtFirstName.text(),
+			txtLastName.text(),
+			txtAdress.text(),
+			txtCity.text(),
+			txtZipCode.text(),
+			txtPhone.text()	
 		};
 		
 		return data;
 	}
 	
+	
+	/**
+	 *  
+	 */
 	private void sendCustomer() {
 		if(tmpCustomer == null) {
 			System.out.println("No customer");

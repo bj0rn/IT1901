@@ -17,8 +17,11 @@ import com.trolltech.qt.gui.QWidget;
 
 /**
  * 
- * Lager pizza objekter som kan legges i en liste
- * paa OrderGUI
+ * This class sets infoamtion about one single
+ * pizza together. Like pizzaname, ingridients,
+ * the user can choose size and amount. The user 
+ * can also make a comment, when ordering if the
+ * costumer is alergic
  * 
  * 
  * @author Linn, Susanne
@@ -54,6 +57,11 @@ import com.trolltech.qt.gui.QWidget;
 	//Send pizza information to pizzalist
 	public Signal1<String[]> signalPizza = new Signal1<String[]>();
 	
+	/**
+	 * The constructor sets up the widget,
+	 * and fetches the information from the database
+	 * @param liste
+	 */
 	public Pizza(String[] liste){
 		//image = new QPixmap(null);
 		start_price = Double.parseDouble(liste[2]);
@@ -65,6 +73,10 @@ import com.trolltech.qt.gui.QWidget;
 	}
 	
 	
+	/**
+	 * This method sets up the graphical user
+	 * interface, and formatting everything
+	 */
 	public void setup(){
 		
 		comments = new QLineEdit();
@@ -160,7 +172,6 @@ import com.trolltech.qt.gui.QWidget;
 			comments.text() // comments
 		};
 		//Send data
-		System.out.println("Signal sendt from pizza ");
 		signalPizza.emit(data);
 		
 		
