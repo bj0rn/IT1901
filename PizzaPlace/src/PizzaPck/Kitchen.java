@@ -72,13 +72,13 @@ public class Kitchen extends QWidget{
 	 * element in the over all orders 
 	 */
 	public void showOrder() {
+		row = orderList.currentIndex().row();
 		order.clear();
 		if(orderList == null) {
 			return;
 		}
 
 		StringBuilder sb = new StringBuilder();
-		int row = orderList.currentIndex().row();
 
 		String[] tmp = mirrorOrderList.get(row);
 		ArrayList <String[]> list = db.displayOrders(tmp[0]);
