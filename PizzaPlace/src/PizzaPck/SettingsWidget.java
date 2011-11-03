@@ -7,6 +7,7 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -78,31 +79,24 @@ public class SettingsWidget extends QWidget {
 		System.out.println("Signal emited");
 		singalInsertProduct.emit(true);
 	}
-	
-	public void readFromFile(){
-		try{
-			  
-			  FileInputStream fstream = new FileInputStream("bin/config.txt");
-			  
-			  DataInputStream in = new DataInputStream(fstream);
-			  BufferedReader br = new BufferedReader(new InputStreamReader(in));
-			  String strLine;
-			  ArrayList<String> lestInn = new ArrayList<String>();
-			  
-			  while ((strLine = br.readLine()) != null)   {
-				  lestInn.add(strLine);
-				
-			  }
-			  	DELIVERY_LIMIT = Float.valueOf(lestInn.get(0));
-			  	DELIVERY_PRICE = Float.valueOf(lestInn.get(1));
-			  
-			  //Close the input stream
-			  in.close();
-			}
-		catch (Exception e){
-			  System.err.println("Error: " + e.getMessage());
+
+	public void readFromFile() throws IOException{
+
+		FileInputStream fstream = new FileInputStream("bin/config.txt");
+		DataInputStream in = new DataInputStream(fstream);
+		BufferedReader br = new BufferedReader(new InputStreamReader(in));
+		String strLine;
+		ArrayList<String> lestInn = new ArrayList<String>();
+
+		while ((strLine = br.readLine()) != null)   {
+			lestInn.add(strLine);
+
 		}
-	 }
+		DELIVERY_LIMIT = Float.valueOf(lestInn.get(0));
+		DELIVERY_PRICE = Float.valueOf(lestInn.get(1));
+
+		in.close();
+}
 	
 	public void writeToFile(){
 		String ny = DELIVERY_LIMIT + "\n" + DELIVERY_PRICE;
@@ -150,7 +144,13 @@ public class SettingsWidget extends QWidget {
 	 */
 	private void setUp(){
 		//reading values for Free delivery limit and Delivery price 
-		readFromFile();
+		try{
+			readFromFile();
+		}
+		catch(Exception e){
+			System.out.println("Setting standard values");
+		}
+
 		
 		//creates new instances of buttons, labels, lineEdit, etc
 		box = new QVBoxLayout();
