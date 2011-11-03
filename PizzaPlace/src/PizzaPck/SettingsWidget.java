@@ -1,7 +1,15 @@
 package PizzaPck;
 
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QGroupBox;
@@ -26,13 +34,14 @@ public class SettingsWidget extends QWidget {
 	private QLabel labName,labContents,labPrice, labBorder, labDelivery, txtLimit;
 	private QGridLayout pizzaLayout;
 	private QGridLayout borderLayout;
-	QVBoxLayout box;
+	private QVBoxLayout box;
 	private QPushButton btnAddpizza, btnChange, btnChangeDelivey;
 	private QGroupBox groupBoxPizza;
 	private QGroupBox groupBoxPrice;
 	private DB db;
 	public static float DELIVERY_LIMIT = 500.0f;
 	public static float DELIVERY_PRICE = 50.0f;
+	
 	
 	
 	//Signal handler
@@ -70,8 +79,42 @@ public class SettingsWidget extends QWidget {
 		singalInsertProduct.emit(true);
 	}
 	
+	public void readFromFile(){
+		try{
+			  
+			  FileInputStream fstream = new FileInputStream("bin/config.txt");
+			  
+			  DataInputStream in = new DataInputStream(fstream);
+			  BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			  String strLine;
+			  ArrayList<String> lestInn = new ArrayList<String>();
+			  
+			  while ((strLine = br.readLine()) != null)   {
+				  lestInn.add(strLine);
+				
+			  }
+			  	DELIVERY_LIMIT = Float.valueOf(lestInn.get(0));
+			  	DELIVERY_PRICE = Float.valueOf(lestInn.get(1));
+			  
+			  //Close the input stream
+			  in.close();
+			}
+		catch (Exception e){
+			  System.err.println("Error: " + e.getMessage());
+		}
+	 }
 	
-	
+	public void writeToFile(){
+		String ny = DELIVERY_LIMIT + "\n" + DELIVERY_PRICE;
+		try {
+		    BufferedWriter out = new BufferedWriter(new FileWriter("bin/config.txt"));
+		    out.write(ny);
+		    out.close();
+		} 
+		catch (Exception e) {
+		}
+	}
+			
 	public void setDeliveyPrice(){
 		String var = txtDelivery.text();
 		if (Float.valueOf(var) < 0){
@@ -80,6 +123,7 @@ public class SettingsWidget extends QWidget {
 		}
 		else{
 		DELIVERY_PRICE = Float.valueOf(var);
+		writeToFile();
 		txtLimit.setStyleSheet("QLabel { color : black; }");
 		txtLimit.setText("Nåværende grense er " + DELIVERY_LIMIT+" og nåværende pris er " +DELIVERY_PRICE);
 		}
@@ -93,6 +137,7 @@ public class SettingsWidget extends QWidget {
 		}
 		else{
 		DELIVERY_LIMIT = Float.valueOf(var);
+		writeToFile();
 		txtLimit.setStyleSheet("QLabel { color : black; }");
 		txtLimit.setText("Nåværende grense er " + DELIVERY_LIMIT+" og nåværende pris er " +DELIVERY_PRICE);
 		}
@@ -104,7 +149,8 @@ public class SettingsWidget extends QWidget {
 	 * generates a new 
 	 */
 	private void setUp(){
-		
+		//reading values for Free delivery limit and Delivery price 
+		readFromFile();
 		
 		//creates new instances of buttons, labels, lineEdit, etc
 		box = new QVBoxLayout();
