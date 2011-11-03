@@ -75,10 +75,12 @@ public class SettingsWidget extends QWidget {
 	public void setDeliveyPrice(){
 		String var = txtDelivery.text();
 		if (Float.valueOf(var) < 0){
-			txtLimit.setText("Nåværende grense er " + DELIVERY_LIMIT+ "Kan ikke være negativ");
+			txtLimit.setStyleSheet("QLabel { color : red; }");
+			txtLimit.setText(" Kan ikke være negativ, pris er "+ DELIVERY_PRICE + " og nåværende grense er " + DELIVERY_LIMIT);
 		}
 		else{
 		DELIVERY_PRICE = Float.valueOf(var);
+		txtLimit.setStyleSheet("QLabel { color : black; }");
 		txtLimit.setText("Nåværende grense er " + DELIVERY_LIMIT+" og nåværende pris er " +DELIVERY_PRICE);
 		}
 	}
@@ -86,10 +88,12 @@ public class SettingsWidget extends QWidget {
 	public void setLimit(){
 		String var = txtBorder.text();
 		if (Float.valueOf(var) < 0){
-			txtLimit.setText("Kan ikke være negativ " + " og nåværende pris er " +DELIVERY_PRICE);
+			txtLimit.setStyleSheet("QLabel { color : red; }");
+			txtLimit.setText("Kan ikke være negativ, grense er " + DELIVERY_LIMIT + " og nåværende pris er " +DELIVERY_PRICE);
 		}
 		else{
 		DELIVERY_LIMIT = Float.valueOf(var);
+		txtLimit.setStyleSheet("QLabel { color : black; }");
 		txtLimit.setText("Nåværende grense er " + DELIVERY_LIMIT+" og nåværende pris er " +DELIVERY_PRICE);
 		}
 	}
