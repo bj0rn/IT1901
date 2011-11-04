@@ -2,29 +2,20 @@ package PizzaPck;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-
 import com.trolltech.qt.core.QDate;
-import com.trolltech.qt.core.QDateTime;
 import com.trolltech.qt.core.QTime;
 import com.trolltech.qt.gui.QDateEdit;
-import com.trolltech.qt.gui.QDateTimeEdit;
-import com.trolltech.qt.gui.QDialogButtonBox;
-import com.trolltech.qt.gui.QDialogButtonBox.StandardButton;
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QGroupBox;
 import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QListWidget;
-import com.trolltech.qt.gui.QMessageBox;
 import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QRadioButton;
-import com.trolltech.qt.gui.QScrollArea;
 import com.trolltech.qt.gui.QSizePolicy.Policy;
-import com.trolltech.qt.gui.QStringListModel;
 import com.trolltech.qt.gui.QTextBrowser;
 import com.trolltech.qt.gui.QTimeEdit;
 import com.trolltech.qt.gui.QVBoxLayout;
@@ -95,6 +86,7 @@ public class OrderGUI extends QWidget{
 	public void deleteOrder(){
 		db.deleteOrder(db.getOrderID());
 		signalCancel.emit(true);
+		textCustomer.clear();
 		
 	}
 
@@ -250,6 +242,8 @@ public class OrderGUI extends QWidget{
 		
 		listProductsMirror = new ArrayList<String[]>();
 		listProducts.clear();
+		textCustomer.clear();
+		
 	}
 	
 	/**
