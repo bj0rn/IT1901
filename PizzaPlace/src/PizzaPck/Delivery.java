@@ -30,7 +30,7 @@ public class Delivery extends QWidget{
 	private QListWidget deliveryList;
 	private QGridLayout layout;
 	private QDateTime dateTime;
-	private QPushButton btnDelivered,update;
+	private QPushButton btnDelivered, update;
 	private QPushButton receipt;
 	private Map map;
 	private QVBoxLayout map_lay;
@@ -40,7 +40,7 @@ public class Delivery extends QWidget{
 
 	
 	/**
-	 * Dthe constructor receives a reference to a
+	 * The constructor receives a reference to a
 	 * db class for accessing the database methods
 	 * @param db
 	 */

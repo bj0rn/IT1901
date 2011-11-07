@@ -157,66 +157,101 @@ public class DB {
 	}
 
 	/**
-	 * Multi purpose search function for the customer table. 
+	 *This is a helper function for the search function
+	 *This function takes the query entered by user and a boolean value, and builds a partial where statement
+	 *based on the query. The additional boolean value, if true, is used to build a partial query based on the customerID.
+	 *The function is able to build query's where the condition is: first name, last name, phone number, customer id or 
+	 *both the first name and the last name.
 	 * @param SearchQuery
-	 * @param key Boolean
-	 * @param customer Boolean
+	 * @param customer 
+	 * @return String where statement
+	 * @throws NumberFormatException silently ignores it
+	 */
+	private String determineType(String SearchQuery, boolean customer) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(" WHERE");
+		String[] tokens = SearchQuery.split(" ");
+		boolean correct = true;
+		if(tokens.length == 1) {
+			
+			try {
+				Integer.parseInt(tokens[0]);
+				if(customer) {
+					sb.append(" CustomerID = "+tokens[0]+"");
+					return sb.toString();
+				}
+				else {
+					sb.append(" phone = '"+tokens[0]+"'");
+					return sb.toString();
+				}
+				
+			}catch(NumberFormatException e) {
+				//Silently ignore
+			}
+			
+			sb.append(" first_name = '"+tokens[0].toLowerCase()+"' OR last_name = '"+tokens[0].toLowerCase()+"'");
+			return sb.toString();
+			
+		}
+		else if(tokens.length == 2) {
+			sb.append(" first_name = '"+tokens[0].toLowerCase()+"' and last_name = '"+tokens[1].toLowerCase()+"'");
+			return sb.toString();
+		}
+		else {
+			System.out.println("To many tokens");
+		}
+		
+		return "";
+	}
+	
+	/**
+	 * Multi purpose search function for the customer table. It uses the determineType function to build the Where
+	 * statement. 
+	 * @param SearchQuery
+	 * @param key Boolean if true retrieves the customerID
+	 * @param customer Boolean if true search a after an customer with the given customerID
 	 * @return String[]
 	 * @Throws {@link SQLException}
 	 */
-	public String[] Search(String SearchQuery, boolean key, boolean customer) {
-
-		String query = "";
-
-		if (customer) {
-			query = "SELECT customerID, first_name, last_name, adress, city, "+
-					"zipcode, phone FROM customer "+
-					"WHERE customerID = '"+SearchQuery+"'";
-			System.out.println(query);
-		}
-		else {
-			String[] tokens = SearchQuery.split(" ");
-			query = "SELECT customerID, first_name, last_name, adress, city, "+
-					"zipcode, phone FROM customer WHERE first_name = '" + tokens[0].toLowerCase() +"' and last_name = '"+ tokens[1].toLowerCase() +"'";
-		}
-
-
+	public ArrayList<String[]> Search(String SearchQuery, boolean key, boolean customer) {
+		ArrayList <String[]> list = new ArrayList<String[]>();
+		String query = "SELECT customerID, first_name, last_name, adress, city, "+
+				"zipcode, phone FROM customer "+determineType(SearchQuery, customer)+"";
+		System.out.println(query);
+		
 		try {
-
 			ResultSet rs = connect.createStatement().executeQuery(query);
-			//System.out.println("Got data from db "+rs+"");
-
-
-			//Return customer key 
 			if(key) {
 				rs.first();
-				String[] CustomerID = {rs.getString(1)};
-				System.out.println(CustomerID[0]);
-				return CustomerID;
+				list.add(new String[] {rs.getString(1)});
+				System.out.println("Dette skjer");
+				return list;
 			}
-
-
-			//Skip id field or return if no information is found
-			if (!rs.next()){
+			
+			//return null if no information is found
+			if (!rs.first()){
 				return null; 
 			}
-
-			String[] data = {
-					rs.getString(2), //fornavn
-					rs.getString(3), //etternavn
-					rs.getString(4), //addresse
-					rs.getString(5), //sted
-					rs.getString(6), // postkode
-					rs.getString(7) //telefon
-			};
-
-			return data;
-
-		} catch(Exception e) {
-			throw new RuntimeException(e);
+			boolean running = true;
+			while(running) {
+				String[] data = {
+						rs.getString(2), //fornavn
+						rs.getString(3), //etternavn
+						rs.getString(4), //addresse
+						rs.getString(5), //sted
+						rs.getString(6), // postkode
+						rs.getString(7) //telefon
+				};
+				list.add(data);
+				running = rs.next();
+			}
+			
+		}catch(SQLException sq) {
+			sq.printStackTrace();
 		}
-
+		return list;
 	}
+	
 
 
 	/**
