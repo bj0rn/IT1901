@@ -11,10 +11,7 @@ public class ErrorMessage {
 	public static void invalidInput(QWidget parent){
 		QMessageBox.information(parent, "Info", "Alle feltene er ikke utfylt");
 	}
-	
-	public static void DatabaseError(QWidget parent, String Msg) {
-		QMessageBox.information(parent, "Database Error", Msg);
-	}
+
 	
 	
 

@@ -210,7 +210,7 @@ public class DB {
 	 * @param SearchQuery
 	 * @param key Boolean if true retrieves the customerID
 	 * @param customer Boolean if true search a after an customer with the given customerID
-	 * @return String[]
+	 * @return ArrayList<String[]> contains the retrieved customers or the customerID
 	 * @Throws {@link SQLException}
 	 */
 	public ArrayList<String[]> Search(String SearchQuery, boolean key, boolean customer) {
@@ -246,7 +246,7 @@ public class DB {
 				running = rs.next();
 			}
 			
-		}catch(SQLException sq) {
+		}catch(SQLException sq ) {
 			sq.printStackTrace();
 		}
 		return list;
