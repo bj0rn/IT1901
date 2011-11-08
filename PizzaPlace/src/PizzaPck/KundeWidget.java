@@ -104,7 +104,7 @@ public class KundeWidget extends QWidget {
 		labCity = new QLabel("Poststed");
 		labZipCode = new QLabel("Postkode");
 		labPhone = new QLabel("Telefon");
-		labSearch = new QLabel("SÃ¸k");
+		labSearch = new QLabel("Søk");
 		
 		
 		words = new QStringListModel();
@@ -114,7 +114,7 @@ public class KundeWidget extends QWidget {
 		
 		
 		//knapper
-		btnSearch = new QPushButton("SÃ¸k");
+		btnSearch = new QPushButton("Søk");
 		btnOrder = new QPushButton("Bestill");
 		btnSave = new QPushButton("Lagre kunde");
 		btnUpdate = new QPushButton("Oppdater kunde");

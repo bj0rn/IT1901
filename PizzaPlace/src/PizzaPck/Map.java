@@ -23,7 +23,7 @@ public class Map extends QWebView{
 	public Map(){
 		url = new QUrl("http://maps.googleapis.com/maps/api/staticmap?center=Trondheim,NO"+
 	"&size=460x460&scale=3&markers=color:blue|"
-	+encodeUTF8("Elgseter Gate 1 7039 Trondheim")+"&maptype=roadmap&sensor=false");
+	+encodeUTF8("Bispegata 5  7032 Trondheim")+"&maptype=roadmap&sensor=false");
 		loadMap(url);
 		this.setFixedSize(460,470);
 	}
@@ -57,6 +57,17 @@ public class Map extends QWebView{
 	"&size=460x460&scale=3&markers=color:blue|"+encodeUTF8(addressFrom)+"|"+encodeUTF8(addressTo)+
 	"&path=color:red|weight:3|"+encodeUTF8(addressFrom)+"|"
 	+encodeUTF8(addressTo)+"&maptype=roadmap&sensor=false");
+	}
+	
+	/**
+	 * Sets a default map if the costumer pick up the
+	 * order by them selfs
+	 * @return
+	 */
+	public QUrl getDefaultMap(){
+		return new QUrl("http://maps.googleapis.com/maps/api/staticmap?center=Trondheim,NO"+
+				"&size=460x460&scale=3&markers=color:blue|"
+				+encodeUTF8("Bispegata 5  7032 Trondheim")+"&maptype=roadmap&sensor=false");
 	}
 	
 	/**

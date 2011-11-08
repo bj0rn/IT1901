@@ -69,7 +69,7 @@ public class MainFrame extends QWidget {
 		
 		//adds kitchen widget to main windows
 		kitchenWidget = new Kitchen(db);
-		tabMain.addTab(kitchenWidget, "Kjï¿½kken");
+		tabMain.addTab(kitchenWidget, "Kjøkken");
 		
 		//adds map
 		deliveryWidget = new Delivery(db);

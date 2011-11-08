@@ -3,10 +3,7 @@ package PizzaPck;
 import java.util.ArrayList;
 
 import com.trolltech.qt.core.QDateTime;
-import com.trolltech.qt.core.QTime;
-import com.trolltech.qt.gui.QFont;
 import com.trolltech.qt.gui.QGridLayout;
-import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QListWidget;
 import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QTextBrowser;
@@ -56,7 +53,7 @@ public class Kitchen extends QWidget{
 		mirrorOrderList = new ArrayList<String[]>();
 		
 		//knappen som fullfï¿½rer en ordre
-		btnFinish = new QPushButton("Fullfï¿½r ordre");
+		btnFinish = new QPushButton("Fullfør ordre");
 		update = new QPushButton("Oppdater");
 		layout.addWidget(order, 1, 1);
 
