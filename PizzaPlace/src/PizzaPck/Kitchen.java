@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.trolltech.qt.core.QDateTime;
 import com.trolltech.qt.core.QTime;
+import com.trolltech.qt.gui.QFont;
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QListWidget;
@@ -20,7 +21,7 @@ public class Kitchen extends QWidget{
 
 	private DB db;
 
-	private QTextBrowser order;
+	private QTextBrowser order,orders;
 	private PrintReceipt print;
 	private QGridLayout layout;
 	private QDateTime dateTime;
@@ -85,25 +86,31 @@ public class Kitchen extends QWidget{
 		String[] tmp = mirrorOrderList.get(row);
 		ArrayList <String[]> list = db.displayOrders(tmp[0]);
 		//System.out.println("Hello");
+		sb.append("<table>" +
+			"<tr>" +
+			"<td width=70><strong>Antall</strong></td>" +
+			"<td width=80><strong>Pizza</strong></td>" +
+			"<td width= 120><strong>Ingredienser</strong></td>" +
+			"<td width= 120><strong>Kommentarer</strong></td>" +
+			"</tr>" +
+			"<tr>" +
+			"<td colspan=2><strong><hr align=\"left\" "+
+				": width =\"700\" /></strong></td>" +
+			"</tr>");
+		
 		for (String[] strings : list) {
-			sb.append(strings[4] + " stk. ");
-			if (strings[3].equals("1")){
-				sb.append("Stor ");
-			}
-			else{
-				sb.append("Liten ");
-			}
-			sb.append(strings[5]);
-			sb.append("\n");
-			sb.append(" -");
-			sb.append(strings[6]);
-			sb.append("\n");
-			sb.append(" -");
-			sb.append(strings[2]);
-			sb.append("\n");
-			sb.append("-----------------------------");
-			sb.append("\n");
-
+			
+			sb.append("<tr style=\"font-size:10px\">"+ 
+			   "<td width=100>"+strings[4]+
+			   (strings[3].equals("1") ? " x Stor " : " x Liten ") 
+			   +"</td>"+
+			   "<td>" + strings[5]+"</td>"+
+			   "<td>" + strings[6]+"</td>"+
+			   "<td>" + strings[2]+"</td>"+
+			   "</tr>" );
+			
+			sb.append("<tr></tr>");
+			
 		}
 		order.setText(sb.toString());
 
@@ -118,6 +125,9 @@ public class Kitchen extends QWidget{
 		layout.addWidget(orderList, 1, 0);
 		mirrorOrderList = new ArrayList<String[]>();
 		ArrayList<String[]> list = db.getAllOrders();
+		
+		orderList.addItem("Ordre nummer: "+"\t\t" + "Skal være ferdig til:" 
+		+"\n------------------------------------------------------------");
 
 		if(list == null) {
 			return;
@@ -138,10 +148,7 @@ public class Kitchen extends QWidget{
 	 */
 	private String format(String[] data) {
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < data.length; i++) {
-			sb.append(data[i]);
-			sb.append(" ");
-		}
+		sb.append(""+data[0]+ "\t\t\t"+data[6]+"\n");
 		return sb.toString();
 	}
 

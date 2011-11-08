@@ -222,7 +222,8 @@ public class KundeWidget extends QWidget {
 			txtAdress.setText(res[2]);   	//Adresse
 			txtCity.setText(res[3]); 	//Sted
 			txtZipCode.setText(res[4]);	//Postkode
-			txtPhone.setText(res[5]);//Telefon 
+			txtPhone.setText(res[5]);//Telefon
+			
 			tmpCustomer = res;
 			}
 			else{
@@ -233,12 +234,12 @@ public class KundeWidget extends QWidget {
 				words.setStringList(liste);
 			}
 			
-			
+			//txtSearch.clear();
 			
 			
 			
 		}catch(RuntimeException err) {
-			ErrorMessage.noSuchUser(this);
+			//ErrorMessage.noSuchUser(this);
 		}
 		
 	}
@@ -264,7 +265,7 @@ public class KundeWidget extends QWidget {
 		
 		tmpCustomer = res;
 		
-		
+		//txtSearch.clear();
 	}
 	
 	/**
