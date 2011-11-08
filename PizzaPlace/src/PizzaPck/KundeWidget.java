@@ -39,6 +39,7 @@ public class KundeWidget extends QWidget {
 	private QStringListModel words;
 	//Current customer
 	private String[] tmpCustomer;
+	private String customerid;
 	
 	//Signal handler
 	public Signal1<Integer> signalCustomer = new Signal1<Integer>();
@@ -105,6 +106,7 @@ public class KundeWidget extends QWidget {
 		labPhone = new QLabel("Telefon");
 		labSearch = new QLabel("Søk");
 		
+		
 		words = new QStringListModel();
 		QCompleter completer = new QCompleter(words);
 		completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive);
@@ -138,7 +140,7 @@ public class KundeWidget extends QWidget {
 		layoutSearch.addWidget(txtSearch);
 		layoutSearch.addStretch(1);
 		layoutSearch.addWidget(btnSearch);
-
+		
 		layoutGrid.addWidget(labFirstName, 1, 0);
 		layoutGrid.addWidget(txtFirstName, 1, 1);
 
@@ -180,7 +182,6 @@ public class KundeWidget extends QWidget {
 			db.insert(c);
 		}catch(RuntimeException err) {
 			ErrorMessage.invalidInput(this);
-			System.out.println("INSERT: Invalid input");
 			
 		}
 		
@@ -198,6 +199,7 @@ public class KundeWidget extends QWidget {
 		txtZipCode.clear();
 		txtPhone.clear();
 		txtAdress.clear();
+
 	}
 	
 	/**
@@ -225,7 +227,7 @@ public class KundeWidget extends QWidget {
 			}
 			else{
 				for (String[] string : list) {
-					temp = string[1]+ " " + string[0] + " " + string[5];
+					temp = string[0]+ " " + string[1] + " " + string[5];
 					liste.add(temp);
 				}
 				words.setStringList(liste);
@@ -236,8 +238,7 @@ public class KundeWidget extends QWidget {
 			
 			
 		}catch(RuntimeException err) {
-			//ErrorMessage.noSuchUser(this);
-			System.out.println("SEARCH: findCustomer() failed");
+			ErrorMessage.noSuchUser(this);
 		}
 		
 	}
@@ -261,6 +262,8 @@ public class KundeWidget extends QWidget {
 		txtZipCode.setText(res[4]);	//Postkode
 		txtPhone.setText(res[5]); //telefon
 		
+		tmpCustomer = res;
+		
 		
 	}
 	
@@ -270,11 +273,10 @@ public class KundeWidget extends QWidget {
 	private void updateUser(){
 		try {
 			String[] customer = getFields();
-			String SearchQuery = ""+tmpCustomer[0]+" "+tmpCustomer[1]+"";
-			db.Update(customer, db.Search(SearchQuery, true, false).get(0));
+			
+			db.Update(customer, tmpCustomer[6]);
 		}catch(RuntimeException err) {
 			ErrorMessage.invalidInput(this);
-			System.out.println("SEARCH: updateUser() failed");
 		}
 	}
 	
@@ -305,18 +307,19 @@ public class KundeWidget extends QWidget {
 			System.out.println("No customer");
 			return;
 		}
+		for (int i = 0; i < tmpCustomer.length; i++) {
+			System.out.println(tmpCustomer[i]);
+		}
 		
 		try {
-			String SearchQuery = txtPhone.text();
-			ArrayList <String[]> tmp = db.Search(SearchQuery, true, false);
-			int customerID = Integer.parseInt(tmp.get(0)[0]);
+			
+			int customerID = Integer.parseInt(tmpCustomer[6]);
 			System.out.println(customerID);
 			signalCustomer.emit(customerID);
 			changeTab.emit(true);
 			
 		}catch(RuntimeException err) {
 			ErrorMessage.noSuchUser(this);
-			System.out.println("sendCustomer() failed");
 		}
 		
 		clearFields();

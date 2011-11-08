@@ -16,7 +16,7 @@ import com.trolltech.qt.gui.QWidget;
  * This class is used to contain several pizza dishes
  * in a list and shows them as a list.
  * 
- * @author Linn
+ * @author Everyone
  *
  */
 public class PizzaList extends QScrollArea implements Iterable<Pizza>{

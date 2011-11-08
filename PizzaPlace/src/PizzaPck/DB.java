@@ -8,12 +8,16 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.concurrent.Delayed;
+import java.util.concurrent.TimeUnit;
+
+import com.trolltech.qt.gui.QMessageBox;
 
 /**
  * This class creates the connection to the database and have all the methods for 
  * executing queries on the database
  * 
- * @author 
+ * @author Everyone
  *
  */
 public class DB {
@@ -36,14 +40,13 @@ public class DB {
 			Class.forName(driver);
 			connect = DriverManager.getConnection(host, user, pass);
 
-			System.out.println("Sucessfully connected to db");
-
 		} catch(ClassNotFoundException err){
-			System.out.println("Failed to load driver");
-			err.printStackTrace();
+			ErrorMessage.databaseError(null,"Failed to load driver"+
+					"\nPlease check your internet connection" );
 		} catch(SQLException sq) {
 			System.out.println("Failed to connect");
-			sq.printStackTrace();
+			ErrorMessage.databaseError(null,"Failed to connect"+
+					"\nPlease check your internet connection" );
 		}
 	}
 
@@ -99,8 +102,6 @@ public class DB {
 			sb.append(")");
 
 			String query1 = sb.toString();
-			System.out.println(query1);
-
 
 			connect.createStatement().execute(query1);	
 
@@ -152,7 +153,15 @@ public class DB {
 			return list;
 
 		} catch(SQLException sq) {
-			System.out.println("MENU: Retrival failed!!");
+			ErrorMessage.failMenu(null,"Major issue has occured!"+
+		"\nPlease restart the program.");
+			try {
+				wait(3);
+				System.exit(0);
+			} catch (InterruptedException e) {
+			}
+			
+			System.exit(0);
 
 		}
 		return list;
@@ -242,7 +251,8 @@ public class DB {
 						rs.getString(4), //addresse
 						rs.getString(5), //sted
 						rs.getString(6), // postkode
-						rs.getString(7) //telefon
+						rs.getString(7), //telefon
+						rs.getString(1) // id
 				};
 				list.add(data);
 				running = rs.next();
@@ -263,13 +273,13 @@ public class DB {
 	 * @param CustomerID the old customer(customer id is located at first position)
 	 * @throws SQLException
 	 */
-	public void Update(String[] customer, String [] CustomerID){
+	public void Update(String[] customer, String customerID){
 		String query = "UPDATE customer SET first_name = '"+customer[0]+"'"+
 				", last_name = '"+customer[1]+"'"+
 				", adress = '"+customer[2]+"'"+
 				", city = '"+customer[3]+"'"+
 				" , zipcode = '"+customer[4]+"'"+
-				", phone = '"+customer[5]+"' WHERE customerID = '"+CustomerID[0]+"'";
+				", phone = '"+customer[5]+"' WHERE customerID = '"+customerID+"'";
 
 		System.out.println(query);
 		try {

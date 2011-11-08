@@ -141,7 +141,7 @@ public class OrderGUI extends QWidget{
 			
 			StringBuilder build = new StringBuilder();
 			String[] fields = {"Fornavn: ","Etternavn: ","Adresse: ","Poststed: ","Postkode: ", "Telefon: "};
-			for (int i = 0; i < data.length; i++) {
+			for (int i = 0; i < data.length-1; i++) {
 				build.append(fields[i]+ data[i]+"\n");
 			}
 			textCustomer.setText(build.toString());
