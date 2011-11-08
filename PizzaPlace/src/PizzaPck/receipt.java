@@ -2,7 +2,7 @@ package PizzaPck;
 
 /**
  * this class is similar to receipt table in the database
- * 
+ * @author Everyone
  */
 public class receipt {
 	

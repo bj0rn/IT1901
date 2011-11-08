@@ -27,6 +27,7 @@ import com.trolltech.qt.gui.QWidget;
  * This class have the methods for adding products, 
  * for changing delivery price and for changing the limit
  * for free delivery 
+ * @author Everyone
  */
 public class SettingsWidget extends QWidget {
 	

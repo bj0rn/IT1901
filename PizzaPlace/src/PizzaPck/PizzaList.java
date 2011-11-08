@@ -93,7 +93,7 @@ public class PizzaList extends QScrollArea implements Iterable<Pizza>{
 	}
 
 	/**
-	 * 
+	 * forward data received from pizza to ordergui
 	 * @param data
 	 */
 	public void signalBridge(String [] data) {

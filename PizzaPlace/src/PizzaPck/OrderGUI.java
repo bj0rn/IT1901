@@ -171,6 +171,10 @@ public class OrderGUI extends QWidget{
 
 		System.out.println("Størrelsen på mirror list"+listProductsMirror.size()+"");
 	}
+	
+	/**
+	 * Removes a product from the productlist
+	 */
 
 	private void removeFromLists() {
 		int row = listProducts.currentIndex().row();

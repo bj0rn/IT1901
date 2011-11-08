@@ -9,9 +9,8 @@ import com.trolltech.qt.gui.QListWidget;
 import com.trolltech.qt.webkit.QWebView;
 
 /**
- * Klassen som for fram map og viser tag mellom to adresser
- * @author Linn
- *
+ * This class displays a map and shows a tag between two addresses.
+ * @author Everyone
  */
 public class Map extends QWebView{
 	private final QUrl url; 
