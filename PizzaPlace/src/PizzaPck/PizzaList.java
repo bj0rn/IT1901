@@ -6,10 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.trolltech.qt.core.Qt.ScrollBarPolicy;
-import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QLayout;
 import com.trolltech.qt.gui.QScrollArea;
-import com.trolltech.qt.gui.QSizePolicy.Policy;
 import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QWidget;
 

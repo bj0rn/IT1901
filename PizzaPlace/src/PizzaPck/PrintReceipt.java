@@ -4,14 +4,12 @@ package PizzaPck;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import com.trolltech.qt.core.QDateTime;
-
 /**
  * This class extends the TheReceipt class,
  * @see: TheReceipt
  * and formats the receipt depending on the
  * order that is marked when you click "Skriv ut".
- *
+ * @author Everyone
  */
 public class PrintReceipt extends TheReceipt{
 	//private DB db;

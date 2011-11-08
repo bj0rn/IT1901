@@ -1,11 +1,13 @@
 package PizzaPck;
 
 import java.lang.reflect.Field;
-import java.sql.*;
-import java.util.*;
-
-import javax.swing.JTextArea;
-import javax.swing.text.html.HTMLDocument.Iterator;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * This class creates the connection to the database and have all the methods for 

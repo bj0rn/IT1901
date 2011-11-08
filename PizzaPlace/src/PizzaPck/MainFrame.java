@@ -7,7 +7,7 @@ import com.trolltech.qt.gui.QSizePolicy.Policy;
  * This class contains the main method and acts as a boss.
  * Mainframe is setting up the entire program
  * 
- * @author 
+ * @author Everyone
  *
  */
 public class MainFrame extends QWidget {

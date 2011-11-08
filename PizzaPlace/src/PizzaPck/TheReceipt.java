@@ -14,7 +14,7 @@ import com.trolltech.qt.gui.QVBoxLayout;
  * ovverwritten the accept method so it can print
  * the acutal textfield we have edited.
  * 
- * @author Linn
+ * @author Everyone
  *
  */
 public class TheReceipt extends QDialog{

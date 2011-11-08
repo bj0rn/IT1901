@@ -13,7 +13,7 @@ import com.trolltech.qt.gui.QWidget;
 
 /**
  * Creates the kitchen widget for showing active orders
- * @author
+ * @author Everyone
  *
  */
 public class Kitchen extends QWidget{
