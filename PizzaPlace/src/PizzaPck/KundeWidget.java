@@ -180,7 +180,6 @@ public class KundeWidget extends QWidget {
 		//Insert throws exception
 		try {
 			db.insert(c);
-			clearFields();
 		}catch(RuntimeException err) {
 			ErrorMessage.invalidInput(this);
 			System.out.println("INSERT: Invalid input");
