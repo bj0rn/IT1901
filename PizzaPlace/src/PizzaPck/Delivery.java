@@ -81,7 +81,7 @@ public class Delivery extends QWidget{
 	}
 	
 	/**
-	 * Takes the selected element i deliveryList and sets the order status to delivered
+	 * Takes the selected element in deliveryList and sets the order status to delivered
 	 */
 	public void setOrderDelivered(){
 		String[] tmp = mirrorDeliveryList.get(row);
@@ -167,23 +167,5 @@ public class Delivery extends QWidget{
 			sb.append(data[13]+"\n");//telefonnummer
 		return sb.toString();
 		
-	}
-	
-	/**
-	 * Får signal om at en order er klikket på
-	 * og derifra kan man klikke på levering...
-	 */
-	public void highlight() {
-		int row = deliveryList.currentIndex().row();
-		QListWidgetItem test = deliveryList.item(row);
-		
-		/**
-		 * Dette kallet får opp en ny map på den aktuelle bestillingen
-		 * som blik klikket på i venstre kolonne. Vi må derfor ta inn 
-		 * info om adressen til kunden i denne metoden når vi skal loade nytt map
-		 */
-		map.loadMap(new QUrl(map.getMap("Kringsjåvegen 51 7032 Trondheim","Prinsens Gate 1 7011 Trondheim")));
-		//her må vi få ut adressen dit vi skal... slik at vi kan oppdatere kart
-		System.out.println(test.text());
 	}
 }
