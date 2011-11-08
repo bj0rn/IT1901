@@ -149,7 +149,7 @@ public class Kitchen extends QWidget{
 	}
 
 	/**
-	 * 
+	 * Updates status to finished, for the currently selected order
 	 */
 	public void finishOrder(){
 		String[] tmp = mirrorOrderList.get(row);
