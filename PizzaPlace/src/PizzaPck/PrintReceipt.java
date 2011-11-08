@@ -22,6 +22,7 @@ public class PrintReceipt extends TheReceipt{
 	private ArrayList<String[]> products;
 	private DecimalFormat format = new DecimalFormat("0.00");
 	private String deliveryTime;
+	private String[] temp;
 	
 	/**
 	 * The Constructor takes a set of parameters
@@ -33,8 +34,8 @@ public class PrintReceipt extends TheReceipt{
 	 * @param products
 	 * @throws NullPointerException
 	 */
-	public PrintReceipt(String orderID, String delivery,
-			ArrayList<String[]> products, String time) throws NullPointerException{
+	public PrintReceipt(
+			ArrayList<String[]> products, String[] tmp) throws NullPointerException{
 		
 		super();
 		super.setWindowTitle("Kvittering");
@@ -42,9 +43,10 @@ public class PrintReceipt extends TheReceipt{
 			throw new NullPointerException();
 		}
 		this.products = products;
-		this.orderID= orderID;
-		this.delivery = delivery;
-		this.deliveryTime = time.substring(0, time.length()-5);
+		this.orderID= tmp[0];
+		this.delivery = tmp[2];
+		this.deliveryTime = tmp[6].substring(0, tmp[6].length()-5);
+		temp = tmp;
 		System.out.println(delivery);
 		print();
 	}
@@ -87,10 +89,14 @@ public class PrintReceipt extends TheReceipt{
 	 */
 	public void print(){
 		
-		this.textbox.append("<b>Ordre nr : "+orderID+"</b>");
-		this.textbox.append("Skal være ferdig til : "/*orderID*/+deliveryTime);
-		this.textbox.append("Skal leveres: "+
-		(delivery.equals("1")? "Ja" : "Nei") +"\n");
+		this.textbox.append("<b style=\"font-size:12px\">Ordre nr : "+orderID+"</b>"+
+		"<br style=\"font-size:10px\"><b>Navn : </b>"+temp[8]+ " "+ temp[9]+"</br>"+
+		"<br style=\"font-size:10px\"><b>Adresse : </b>"+temp[10]+"</br>"	+
+		"<br style=\"font-size:10px\"><b>Skal være ferdig til : </b>"+deliveryTime+"</br>"+
+		"<br style=\"font-size:10px\"><b>Skal leveres : </b>"+(delivery.equals("1")? "Ja" : "Nei")
+		+"</br>");
+		
+		this.textbox.append("\n");
 		
 		this.textbox.append("<table>" +
 				"<tr>" +

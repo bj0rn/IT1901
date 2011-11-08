@@ -215,6 +215,8 @@ public class OrderGUI extends QWidget{
 			return;
 		}
 		
+		updateOrder();
+		
 		Iterator<String[]> iter = listProductsMirror.iterator();
 		while(iter.hasNext()) {
 			String[] tmp = iter.next();

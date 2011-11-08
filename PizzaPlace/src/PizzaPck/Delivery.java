@@ -1,20 +1,10 @@
 package PizzaPck;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import javax.swing.Timer;
-
-import com.trolltech.qt.core.QDateTime;
-import com.trolltech.qt.core.QTime;
 import com.trolltech.qt.core.QUrl;
 import com.trolltech.qt.gui.QGridLayout;
-import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QListWidget;
-import com.trolltech.qt.gui.QListWidgetItem;
 import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QWidget;
@@ -22,7 +12,7 @@ import com.trolltech.qt.gui.QWidget;
 /**
  * this class creates the gui for displaying the 
  * chef's user interface 
- *
+ * @author Everyone
  */
 public class Delivery extends QWidget{
 	
@@ -103,7 +93,7 @@ public class Delivery extends QWidget{
 		ArrayList<String[]> receiptProducts = db.getReceipt(tmp[0]);
 		
 		try {
-			print = new PrintReceipt(tmp[0],tmp[2], receiptProducts, tmp[6]);
+			print = new PrintReceipt( receiptProducts, tmp);
 		} catch (NullPointerException e) {
 			// TODO: handle exception
 			System.out.println("Det er en tom liste");
@@ -158,12 +148,11 @@ public class Delivery extends QWidget{
 		StringBuilder sb = new StringBuilder();
 			sb.append(data[0]+":  "); //Ordre nummer
 			sb.append((data[2].equals("1") ? "Skal leveres " : "Skal IKKE leveres "));
+			sb.append(data[6]+"\n         ");//leverings dato+ time
+			
 			sb.append(data[8]+" ");//Fornavn
 			sb.append(data[9]+" ");//Etternavn
-			sb.append(data[6]+"\n");//leverings dato+ time
-			sb.append(data[10]+", ");//adresse
-			sb.append(data[11]+" ");//postnummer 
-			sb.append(data[12]+", ");//zipcode
+
 			sb.append(data[13]+"\n");//telefonnummer
 		return sb.toString();
 		
