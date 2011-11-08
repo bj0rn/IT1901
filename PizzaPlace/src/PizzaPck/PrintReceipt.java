@@ -4,6 +4,8 @@ package PizzaPck;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import com.trolltech.qt.core.QDateTime;
+
 /**
  * This class extends the TheReceipt class,
  * @see: TheReceipt
@@ -21,6 +23,7 @@ public class PrintReceipt extends TheReceipt{
 	private String delivery;
 	private ArrayList<String[]> products;
 	private DecimalFormat format = new DecimalFormat("0.00");
+	private String deliveryTime;
 	
 	/**
 	 * The Constructor takes a set of parameters
@@ -33,7 +36,7 @@ public class PrintReceipt extends TheReceipt{
 	 * @throws NullPointerException
 	 */
 	public PrintReceipt(String orderID, String delivery,
-			ArrayList<String[]> products) throws NullPointerException{
+			ArrayList<String[]> products, String time) throws NullPointerException{
 		
 		super();
 		super.setWindowTitle("Kvittering");
@@ -43,6 +46,7 @@ public class PrintReceipt extends TheReceipt{
 		this.products = products;
 		this.orderID= orderID;
 		this.delivery = delivery;
+		this.deliveryTime = time.substring(0, time.length()-5);
 		System.out.println(delivery);
 		print();
 	}
@@ -86,7 +90,7 @@ public class PrintReceipt extends TheReceipt{
 	public void print(){
 		
 		this.textbox.append("<b>Ordre nr : "+orderID+"</b>");
-		this.textbox.append("Skal være ferdig til : "/*orderID*/+1600);
+		this.textbox.append("Skal være ferdig til : "/*orderID*/+deliveryTime);
 		this.textbox.append("Skal leveres: "+
 		(delivery.equals("1")? "Ja" : "Nei") +"\n");
 		

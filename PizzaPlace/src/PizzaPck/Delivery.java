@@ -29,7 +29,6 @@ public class Delivery extends QWidget{
 	private DB db;
 	private QListWidget deliveryList;
 	private QGridLayout layout;
-	private QDateTime dateTime;
 	private QPushButton btnDelivered, update;
 	private QPushButton receipt;
 	private Map map;
@@ -104,7 +103,7 @@ public class Delivery extends QWidget{
 		ArrayList<String[]> receiptProducts = db.getReceipt(tmp[0]);
 		
 		try {
-			print = new PrintReceipt(tmp[0],tmp[2], receiptProducts);
+			print = new PrintReceipt(tmp[0],tmp[2], receiptProducts, tmp[6]);
 		} catch (NullPointerException e) {
 			// TODO: handle exception
 			System.out.println("Det er en tom liste");
@@ -161,7 +160,7 @@ public class Delivery extends QWidget{
 			sb.append((data[2].equals("1") ? "Skal leveres " : "Skal IKKE leveres "));
 			sb.append(data[8]+" ");//Fornavn
 			sb.append(data[9]+" ");//Etternavn
-			sb.append(data[5]+"\n");//leverings dato+ time
+			sb.append(data[6]+"\n");//leverings dato+ time
 			sb.append(data[10]+", ");//adresse
 			sb.append(data[11]+" ");//postnummer 
 			sb.append(data[12]+", ");//zipcode
