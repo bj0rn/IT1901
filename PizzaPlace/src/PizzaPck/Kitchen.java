@@ -125,10 +125,6 @@ public class Kitchen extends QWidget{
 		layout.addWidget(orderList, 1, 0);
 		mirrorOrderList = new ArrayList<String[]>();
 		ArrayList<String[]> list = db.getAllOrders();
-		
-		orderList.addItem("Ordre nummer: "+"\t\t" + "Skal være ferdig til:" 
-		+"\n------------------------------------------------------------");
-
 		if(list == null) {
 			return;
 		}
