@@ -3,7 +3,7 @@ package PizzaPck;
 /**
  * This class is similar to orders table in the database
  * 
- * @author Vegard
+ * @author Everyone
  *
  */
 public class orders {

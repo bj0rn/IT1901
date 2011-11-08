@@ -5,6 +5,12 @@ import com.trolltech.qt.gui.QDialogButtonBox.StandardButtons;
 import com.trolltech.qt.gui.QMessageBox;
 import com.trolltech.qt.gui.QWidget;
 
+/**
+ * Collection of errormessages
+ * @author Everyone
+ *
+ */
+
 public class ErrorMessage {
 	
 	public static void noSuchUser(QWidget parent){

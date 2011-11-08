@@ -10,7 +10,7 @@ import com.trolltech.qt.webkit.QWebView;
 
 /**
  * This class displays a map and shows a tag between two addresses.
- *
+ * @author Everyone
  */
 public class Map extends QWebView{
 	private final QUrl url; 

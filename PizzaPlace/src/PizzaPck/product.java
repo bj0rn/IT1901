@@ -2,6 +2,7 @@ package PizzaPck;
 
 /**
  * this class is similar to the product table in the database
+ * @author Everyone
  */
 public class product {
 	//fields
