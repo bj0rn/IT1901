@@ -1,7 +1,11 @@
 package PizzaPck;
 
-import java.util.ArrayList;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.trolltech.qt.core.Qt;
+import com.trolltech.qt.gui.QCompleter;
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QGroupBox;
 import com.trolltech.qt.gui.QHBoxLayout;
@@ -34,7 +38,7 @@ public class KundeWidget extends QWidget {
 	private QListWidget list;
 	//Database instance
 	private DB db;
-
+	private QStringListModel words;
 	//Current customer
 	private String[] tmpCustomer;
 	
@@ -103,7 +107,12 @@ public class KundeWidget extends QWidget {
 		labPhone = new QLabel("Telefon");
 		labSearch = new QLabel("Søk");
 		
-
+		words = new QStringListModel();
+		QCompleter completer = new QCompleter(words);
+		completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive);
+		txtSearch.setCompleter(completer);
+		
+		
 		//knapper
 		btnSearch = new QPushButton("Søk");
 		btnOrder = new QPushButton("Bestill");
@@ -117,6 +126,8 @@ public class KundeWidget extends QWidget {
 		btnOrder.clicked.connect(this, "sendCustomer()");
 		//btnBestill.clicked.connect(this, "sendCustomer()");
 
+		txtSearch.textEdited.connect(this,"findCustomer()");
+		completer.activated.connect(this,"insertInfo(String)");
 		
 		/*
 		 * plasserer knapper, labels og tekstfelt slik i layout
@@ -201,7 +212,10 @@ public class KundeWidget extends QWidget {
 			ArrayList<String[]> list = db.Search(txtSearch.text(), false, false);
 			
 			//TODO: Gui needs to support the latest modifications
+			List<String> liste = new ArrayList<String>();
+			String temp = "";
 			//Save current customer
+			if(list.size() ==1){
 			String[] res = list.get(0);
 			tmpCustomer = res;
 			txtFirstName.setText(res[0]); 	//Fornavn
@@ -209,13 +223,41 @@ public class KundeWidget extends QWidget {
 			txtAdress.setText(res[2]);   	//Adresse
 			txtCity.setText(res[3]); 	//Sted
 			txtZipCode.setText(res[4]);	//Postkode
-			txtPhone.setText(res[5]);	//Telefon 
+			txtPhone.setText(res[5]);//Telefon 
 			tmpCustomer = res;
-		
+			}
+			else{
+				for (String[] string : list) {
+					temp = string[1]+ " " + string[0] + " " + string[5];
+					liste.add(temp);
+				}
+				words.setStringList(liste);
+			}
+			
+			
+			
+			
+			
 		}catch(RuntimeException err) {
-			ErrorMessage.noSuchUser(this);
+			//ErrorMessage.noSuchUser(this);
 			System.out.println("SEARCH: findCustomer() failed");
 		}
+		
+	}
+	
+	private void insertInfo(String text){
+		String phone = text.substring(text.length()-8);
+		ArrayList<String[]> result = db.Search(phone, false, false);
+		String[] res = result.get(0);
+		tmpCustomer = res;
+		
+		txtFirstName.setText(res[0]); 	//Fornavn
+		txtLastName.setText(res[1]); 	//Etternavn
+		txtAdress.setText(res[2]);   	//Adresse
+		txtCity.setText(res[3]); 	//Sted
+		txtZipCode.setText(res[4]);	//Postkode
+		txtPhone.setText(res[5]); //telefon
+		
 		
 	}
 	
@@ -262,7 +304,7 @@ public class KundeWidget extends QWidget {
 		}
 		
 		try {
-			String SearchQuery = ""+tmpCustomer[0]+" "+tmpCustomer[1]+"";
+			String SearchQuery = txtPhone.text();
 			ArrayList <String[]> tmp = db.Search(SearchQuery, true, false);
 			int customerID = Integer.parseInt(tmp.get(0)[0]);
 			System.out.println(customerID);
