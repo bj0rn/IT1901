@@ -24,7 +24,7 @@ import com.trolltech.qt.gui.QWidget;
  * costumer is alergic
  * 
  * 
- * @author Linn, Susanne
+ * @author Everyone
  * 
  * 	
  * 

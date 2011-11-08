@@ -6,15 +6,19 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.trolltech.qt.core.Qt.ScrollBarPolicy;
-import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QLayout;
 import com.trolltech.qt.gui.QScrollArea;
-import com.trolltech.qt.gui.QSizePolicy.Policy;
 import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QWidget;
 
 
-
+/**
+ * This class is used to contain several pizza dishes
+ * in a list and shows them as a list.
+ * 
+ * @author Linn
+ *
+ */
 public class PizzaList extends QScrollArea implements Iterable<Pizza>{
 
 	protected QLayout lay;
@@ -40,7 +44,9 @@ public class PizzaList extends QScrollArea implements Iterable<Pizza>{
 	public Signal1<String[]> signalPizza = new Signal1<String[]>();
 	public Signal1<String[]> signalBridge = new Signal1<String[]>();
 
-
+	/**
+	 * This methode iterates over the list with pizza dishes
+	 */
 	@Override
 	public Iterator<Pizza> iterator() {
 		// TODO Auto-generated method stub
@@ -48,7 +54,9 @@ public class PizzaList extends QScrollArea implements Iterable<Pizza>{
 	}
 
 	/**
-	 * This method fills the list with pizzas from the database
+	 * This method fills the list with pizzas from the database.
+	 * And sets up the layout and look of the list that will be shown
+	 * in the OrderGUI.
 	 */
 	public void fillList() {
 		pizza_list = new ArrayList<Pizza>();

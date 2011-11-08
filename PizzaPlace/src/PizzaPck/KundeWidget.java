@@ -10,19 +10,17 @@ import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QGroupBox;
 import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QLabel;
-import com.trolltech.qt.gui.QListWidget;
-import com.trolltech.qt.gui.QStringListModel;
-import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QLayout.SizeConstraint;
 import com.trolltech.qt.gui.QLineEdit;
+import com.trolltech.qt.gui.QListWidget;
 import com.trolltech.qt.gui.QPushButton;
-import com.trolltech.qt.gui.QSizePolicy;
-import com.trolltech.qt.gui.QSizePolicy.Policy;
+import com.trolltech.qt.gui.QStringListModel;
+import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QWidget;
 
 /**
  * This class handle all customer registration
- * @author Vegard
+ * @author Everyone
  *
  */
 public class KundeWidget extends QWidget {
@@ -243,7 +241,13 @@ public class KundeWidget extends QWidget {
 		}
 		
 	}
-	
+	/**
+	 * This methode is used when a search is done,
+	 * to get the customer information in the different
+	 * fields.
+	 * 
+	 * @param text
+	 */
 	private void insertInfo(String text){
 		String phone = text.substring(text.length()-8);
 		ArrayList<String[]> result = db.Search(phone, false, false);
