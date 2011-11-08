@@ -24,9 +24,9 @@ import com.trolltech.qt.gui.QWidget;
 
 
 /**
- * 
- * @author Vegard
- *
+ * This class have the methods for adding products, 
+ * for changing delivery price and for changing the limit
+ * for free delivery 
  */
 public class SettingsWidget extends QWidget {
 	
@@ -50,7 +50,7 @@ public class SettingsWidget extends QWidget {
 	
 	
 	/**
-	 * DB objektet ordner slik at man f�r tilgang metoder som jobber mot databasen
+	 * The DB object gives access to methods working towards the database
 	 * @param db
 	 */
 	public SettingsWidget(DB db){
@@ -79,7 +79,12 @@ public class SettingsWidget extends QWidget {
 		System.out.println("Signal emited");
 		singalInsertProduct.emit(true);
 	}
-
+	
+	/**
+	 * Reads existing values for DELIVERY_LIMIT and DELIVERY_PRICE when
+	 * program starts
+	 * @throws IOException
+	 */
 	public void readFromFile() throws IOException{
 
 		FileInputStream fstream = new FileInputStream("bin/config.txt");
@@ -96,8 +101,12 @@ public class SettingsWidget extends QWidget {
 		DELIVERY_PRICE = Float.valueOf(lestInn.get(1));
 
 		in.close();
-}
+	}
 	
+	/**
+	 * Writes current values for DELIVERY_LIMIT and DELIVERY_PRICE to file.
+	 * If file doesn't exist, a new file is created.
+	 */
 	public void writeToFile(){
 		String ny = DELIVERY_LIMIT + "\n" + DELIVERY_PRICE;
 		try {
@@ -108,7 +117,12 @@ public class SettingsWidget extends QWidget {
 		catch (Exception e) {
 		}
 	}
-			
+	
+	/**
+	 * Updates the Delivery price. Use the writeToFile() method to
+	 * save the change to file. If incorrect values are used, an error-message
+	 * is displayed, and no changes are made.		
+	 */
 	public void setDeliveyPrice(){
 		String var = txtDelivery.text();
 		if (Float.valueOf(var) < 0){
@@ -123,6 +137,11 @@ public class SettingsWidget extends QWidget {
 		}
 	}
 	
+	/**
+	 * Updates the Delivery limit. Use the writeToFile() method to
+	 * save the change to file. If incorrect values are used, an error-message
+	 * is displayed, and no changes are made.
+	 */
 	public void setLimit(){
 		String var = txtBorder.text();
 		if (Float.valueOf(var) < 0){
@@ -143,7 +162,8 @@ public class SettingsWidget extends QWidget {
 	 * generates a new 
 	 */
 	private void setUp(){
-		//reading values for Free delivery limit and Delivery price 
+		//reading values for Free delivery limit and Delivery price.
+		//If they haven't been changed, standard values are used
 		try{
 			readFromFile();
 		}
