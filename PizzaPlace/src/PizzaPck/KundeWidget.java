@@ -1,9 +1,13 @@
 package PizzaPck;
 
+import java.util.ArrayList;
+
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QGroupBox;
 import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QLabel;
+import com.trolltech.qt.gui.QListWidget;
+import com.trolltech.qt.gui.QStringListModel;
 import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QLayout.SizeConstraint;
 import com.trolltech.qt.gui.QLineEdit;
@@ -27,10 +31,10 @@ public class KundeWidget extends QWidget {
 	private QGroupBox groupbox;
 	private QHBoxLayout layoutSearch;
 	private QVBoxLayout layoutMain;
-	
+	private QListWidget list;
 	//Database instance
 	private DB db;
-	
+
 	//Current customer
 	private String[] tmpCustomer;
 	
@@ -98,8 +102,7 @@ public class KundeWidget extends QWidget {
 		labZipCode = new QLabel("Postkode");
 		labPhone = new QLabel("Telefon");
 		labSearch = new QLabel("Søk");
-
-
+		
 
 		//knapper
 		btnSearch = new QPushButton("Søk");
@@ -113,7 +116,7 @@ public class KundeWidget extends QWidget {
 		btnUpdate.clicked.connect(this, "updateUser()");
 		btnOrder.clicked.connect(this, "sendCustomer()");
 		//btnBestill.clicked.connect(this, "sendCustomer()");
-		
+
 		
 		/*
 		 * plasserer knapper, labels og tekstfelt slik i layout
@@ -194,8 +197,11 @@ public class KundeWidget extends QWidget {
 	private void findCustomer() {
 		//Search after the given query and return information from kunde (table)
 		try {
-			String res[] = db.Search(txtSearch.text(), false, false);
+			ArrayList<String[]> list = db.Search(txtSearch.text(), false, false);
+			
+			//TODO: Gui needs to support the latest modifications
 			//Save current customer
+			String[] res = list.get(0);
 			tmpCustomer = res;
 			txtFirstName.setText(res[0]); 	//Fornavn
 			txtLastName.setText(res[1]); 	//Etternavn
@@ -203,6 +209,7 @@ public class KundeWidget extends QWidget {
 			txtCity.setText(res[3]); 	//Sted
 			txtZipCode.setText(res[4]);	//Postkode
 			txtPhone.setText(res[5]);	//Telefon 
+			tmpCustomer = res;
 		
 		}catch(RuntimeException err) {
 			ErrorMessage.noSuchUser(this);
@@ -218,7 +225,7 @@ public class KundeWidget extends QWidget {
 		try {
 			String[] customer = getFields();
 			String SearchQuery = ""+tmpCustomer[0]+" "+tmpCustomer[1]+"";
-			db.Update(customer, db.Search(SearchQuery, true, false));
+			db.Update(customer, db.Search(SearchQuery, true, false).get(0));
 		}catch(RuntimeException err) {
 			ErrorMessage.invalidInput(this);
 			System.out.println("SEARCH: updateUser() failed");
@@ -255,8 +262,9 @@ public class KundeWidget extends QWidget {
 		
 		try {
 			String SearchQuery = ""+tmpCustomer[0]+" "+tmpCustomer[1]+"";
-			String[]tmp = db.Search(SearchQuery, true, false);
-			int customerID = Integer.parseInt(tmp[0]);
+			ArrayList <String[]> tmp = db.Search(SearchQuery, true, false);
+			int customerID = Integer.parseInt(tmp.get(0)[0]);
+			System.out.println(customerID);
 			signalCustomer.emit(customerID);
 			changeTab.emit(true);
 			

@@ -1,8 +1,12 @@
 package PizzaPck;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+
+import javax.swing.Timer;
 
 import com.trolltech.qt.core.QDateTime;
 import com.trolltech.qt.core.QTime;
@@ -26,17 +30,17 @@ public class Delivery extends QWidget{
 	private QListWidget deliveryList;
 	private QGridLayout layout;
 	private QDateTime dateTime;
-	private QPushButton btnDelivered,update;
+	private QPushButton btnDelivered, update;
 	private QPushButton receipt;
 	private Map map;
 	private QVBoxLayout map_lay;
 	private ArrayList<String[]> mirrorDeliveryList; 
 	private int row;
 	private PrintReceipt print;
-	
+
 	
 	/**
-	 * Dthe constructor receives a reference to a
+	 * The constructor receives a reference to a
 	 * db class for accessing the database methods
 	 * @param db
 	 */
@@ -52,7 +56,9 @@ public class Delivery extends QWidget{
 	 * 
 	 */
 	protected void setup(){
+		
 		deliveryList = new QListWidget();
+		
 		
 		mirrorDeliveryList = new ArrayList<String[]>();
 		layout = new QGridLayout(this);

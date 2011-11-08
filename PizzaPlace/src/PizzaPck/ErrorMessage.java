@@ -12,4 +12,7 @@ public class ErrorMessage {
 		QMessageBox.information(parent, "Info", "Alle feltene er ikke utfylt");
 	}
 
+	
+	
+
 }
