@@ -19,7 +19,7 @@ public class MainFrame extends QWidget {
 	private Kitchen kitchenWidget;
 	private SettingsWidget settingWidget;
 	private Delivery deliveryWidget;
-	private KundeWidget customerWidget;
+	private CustomerWidget customerWidget;
 	private DB db;
 	
 	public Signal1<Boolean> changeTab = new Signal1<Boolean>();
@@ -56,7 +56,7 @@ public class MainFrame extends QWidget {
 
 
 		//adds customer widget to main window
-		customerWidget = new KundeWidget(db);
+		customerWidget = new CustomerWidget(db);
 		tabMain.addTab(customerWidget, null);
 		tabMain.addTab(customerWidget,"Kunde");
 		
@@ -69,7 +69,7 @@ public class MainFrame extends QWidget {
 		
 		//adds kitchen widget to main windows
 		kitchenWidget = new Kitchen(db);
-		tabMain.addTab(kitchenWidget, "Kjøkken");
+		tabMain.addTab(kitchenWidget, "Kjï¿½kken");
 		
 		//adds map
 		deliveryWidget = new Delivery(db);

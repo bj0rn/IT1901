@@ -137,7 +137,7 @@ public class OrderGUI extends QWidget{
 			this.customerID = customerID;
 			String query = Integer.toString(customerID);
 			System.out.println(query);
-			String[] data = db.Search(query, false, true).get(0);
+			String[] data = db.search(query, false, true).get(0);
 			
 			StringBuilder build = new StringBuilder();
 			String[] fields = {"Fornavn: ","Etternavn: ","Adresse: ","Poststed: ","Postkode: ", "Telefon: "};
