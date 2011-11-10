@@ -174,12 +174,12 @@ public class CustomerWidget extends QWidget {
 		String [] data = getFields();
 		//Remember the last customer
 		tmpCustomer = data;
-		
 		customer c = new customer(data);
 		
-		//Insert throws exception
 		try {
 			db.insert(c);
+			ArrayList <String[]> tmp = db.search(data[5], false, false);
+			tmpCustomer = tmp.get(0);
 		}catch(RuntimeException err) {
 			ErrorMessage.invalidInput(this);
 			

@@ -104,7 +104,7 @@ public class DB {
 			String query1 = sb.toString();
 
 			connect.createStatement().execute(query1);	
-
+			
 		}catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -610,7 +610,6 @@ public class DB {
 			for (String[] strings : products) {
 				try {
 					query = "SELECT * FROM product WHERE productID = '"+strings[1]+"'";
-					System.out.println(query);
 					rs = connect.createStatement().executeQuery(query);
 					rs.first();
 					strings[4] = rs.getString(2);	//name
@@ -642,9 +641,7 @@ public class DB {
 		try {
 			connect.createStatement().execute(query);
 			
-			
 		} catch (SQLException e) {
-			// TODO: handle eception
 			e.printStackTrace();
 		}
 	}
