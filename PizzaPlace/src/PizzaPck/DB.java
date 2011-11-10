@@ -590,8 +590,9 @@ public class DB {
 		String query = "SELECT * FROM receipt WHERE orderID='"+orderID+"'";
 		ArrayList<String[]> products = new ArrayList<String[]>();
 		boolean running = true;
+		ResultSet rs;
 		try {
-			ResultSet rs = connect.createStatement().executeQuery(query);
+			rs = connect.createStatement().executeQuery(query);
 			rs.first();
 			while (running) {
 				String[] data = {
@@ -609,9 +610,11 @@ public class DB {
 			for (String[] strings : products) {
 				try {
 					query = "SELECT * FROM product WHERE productID = '"+strings[1]+"'";
-					ResultSet fu = connect.createStatement().executeQuery(query);
-					strings[4] = fu.getString(2);	//name
-					strings[5] = fu.getString(3);	//price
+					System.out.println(query);
+					rs = connect.createStatement().executeQuery(query);
+					rs.first();
+					strings[4] = rs.getString(2);	//name
+					strings[5] = rs.getString(3);	//price
 				}catch(SQLException sq) {
 					sq.printStackTrace();
 				}
