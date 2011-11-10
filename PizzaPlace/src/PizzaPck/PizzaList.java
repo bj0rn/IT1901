@@ -13,8 +13,8 @@ import com.trolltech.qt.gui.QWidget;
 
 
 /**
- * This class is used to contain several pizza dishes
- * in a list and shows them as a list.
+ * This class is used to contain several pizzadishes
+ * in a list and show them as a list in a scrollarea.
  * 
  * @author Everyone
  *
@@ -93,7 +93,7 @@ public class PizzaList extends QScrollArea implements Iterable<Pizza>{
 	}
 
 	/**
-	 * forward data received from pizza to ordergui
+	 * Forwards data received from Pizza to the OrderGUI
 	 * @param data
 	 */
 	public void signalBridge(String [] data) {

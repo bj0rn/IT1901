@@ -8,10 +8,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.concurrent.Delayed;
-import java.util.concurrent.TimeUnit;
-
-import com.trolltech.qt.gui.QMessageBox;
 
 /**
  * This class creates the connection to the database and have all the methods for 

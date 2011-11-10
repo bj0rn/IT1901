@@ -57,7 +57,8 @@ public class OrderGUI extends QWidget{
 
 	
 	/**
-	 * Create a new instance of ordergui with a reference to a DB obejct.
+	 * Create a new instance of OrderGUI
+	 * with a reference to a DB object.
 	 * @param db
 	 * @see DB
 	 */
@@ -69,7 +70,7 @@ public class OrderGUI extends QWidget{
 
 	
 	/**
-	 * creates the necessary signals 
+	 * This method creates the necessary signals. 
 	 */
 	private void createSignals(){
 
@@ -81,7 +82,8 @@ public class OrderGUI extends QWidget{
 	}
 	
 	/**
-	 * Deletes the latest inserted order in the database. 
+	 * This method deletes the latest inserted 
+	 * order in the database.
 	 */
 	public void deleteOrder(){
 		db.deleteOrder(db.getOrderID());
@@ -92,8 +94,8 @@ public class OrderGUI extends QWidget{
 
 
 	/**
-	 * This method inserts a order into the database
-	 * 
+	 * This method inserts a order into the database,
+	 * with a timestamp so we know when a order is made. 
 	 * 
 	 * @throws RuntimeException
 	 */
@@ -120,15 +122,16 @@ public class OrderGUI extends QWidget{
 		try {
 			db.insert(new orders(data));
 		}catch(RuntimeException err) {
-			System.out.println("INSERT: insert order failed ");
 			err.printStackTrace();
 		}
 	}
 
 
 	/**
-	 * Displays the customer in the upper left textbox in OrderGUI. Takes an Integer as parameter and
-	 * searches the database for the customer with the integer as customerID 
+	 * This method displays the customer in the upper left
+	 * textbox in OrderGUI. Takes an Integer as parameter and
+	 * searches the database for the customer with the 
+	 * integer as customerID. 
 	 * @param customerID
 	 * @see DB  
 	 */
@@ -149,49 +152,41 @@ public class OrderGUI extends QWidget{
 			insertOrder();
 
 		}catch(RuntimeException err) {
-			System.out.println("SEARCH: displayCustomer() failed");
 			err.printStackTrace();
 		}
 	}
 
 
 	/**
-	 * This method adds data into the product list and the mirror product list
-	 * This method is usually called when a button in the productlist is clicked.
+	 * This method adds data into the product list 
+	 * and the mirror product list. This method is 
+	 * usually called when a button in the 
+	 * productlist is clicked.
 	 * 
 	 * @param data
 	 */
 	private void handleListProducts(String[] data) {
 		System.out.println("Insert completed");
 		listProductsMirror.add(data);
-		//Iterator<String[]> iter = listProductsMirror.iterator();
+
 		String tmp = format(data);
 		listProducts.addItem(tmp);
-
-
-		System.out.println("Størrelsen på mirror list"+listProductsMirror.size()+"");
 	}
 	
 	/**
-	 * Removes a product from the productlist
+	 * This method removes a product from the productlist.
 	 */
 
 	private void removeFromLists() {
 		int row = listProducts.currentIndex().row();
 		listProducts.takeItem(row);
 		listProductsMirror.remove(row);
-		System.out.println("Størrelse på listen"+listProductsMirror.size()+"");
 	}
 
-	//Pizza_name
-	//size 
-	//Amount
-	//Price
-	//ingridients
-	//comments
 	/**
 	 * 
-	 * Iterates over the String[] and returns a string created by a StringBuilder
+	 * This method iterates over the String[] 
+	 * and returns a string created by a StringBuilder.
 	 * Usually used for formating the text in QListWidget
 	 * @param data
 	 * @return
@@ -208,14 +203,21 @@ public class OrderGUI extends QWidget{
 
 
 	/**
-	 * This method iterates over the mirrorOrderList and inserts the products into the database.
+	 * This method iterates over the mirrorOrderList 
+	 * and inserts the products into the database. 
+	 * This method will also clear the data in 
+	 * orderlist and the mirrorOrderList.
+	 * If the orderList is empty, a messagebox
+	 * will appear.
+	 * This method also sends signal to
+	 * @see Kitchen witch is adding the order to 
+	 * its orderlist.
 	 * 
-	 * This method will also clear the data in orderlist and the mirrorOrderList
 	 */
 	private void confirmOrders() {
 		//TODO: m� fikse hva som skal komme ut n�r man ikke har lagt til produkter og trykker p� bekreft
 		if (listProductsMirror.size() ==0) {
-			System.out.println("ikke greit");
+			ErrorMessage.noDishAdded(this);
 			return;
 		}
 		
@@ -240,8 +242,6 @@ public class OrderGUI extends QWidget{
 			};
 
 			db.insert(new receipt(data));
-			System.out.println(db.getPizzaID(tmp[0]));
-			System.out.println(db.getOrderID());
 			
 		}
 		signalKitchen.emit(true);
@@ -254,7 +254,9 @@ public class OrderGUI extends QWidget{
 	}
 	
 	/**
-	 * updates the list of products. Usually called when a product has been inserted into the database.
+	 * This method updates and fills the list of products. 
+	 * Usually called when a product has been 
+	 * inserted into the database.
 	 */
 	public void updatePizzaList() {
 		order_list.fillList();
@@ -262,7 +264,8 @@ public class OrderGUI extends QWidget{
 	
 	
 	/**
-	 *  Changes the time and delivery status in the database
+	 *  This method changes the time 
+	 *  and delivery status in the database.
 	 *  @see DB
 	 */
 	private void updateOrder() {
@@ -279,14 +282,15 @@ public class OrderGUI extends QWidget{
 	}
 	
 	/**
-	 * Creates and setup's the GUI in 
+	 * This method creates and setup's the GUI in
+	 * the OrderGUI. 
 	 */
 	private void setUpGUI(){
 		
 		listProductsMirror = new ArrayList<String[]>();
 		
 		/**
-		 * creates the bar at the top
+		 * Creates the bar at the top
 		 */
 		//create instances
 		QHBoxLayout top = new QHBoxLayout();
@@ -315,7 +319,7 @@ public class OrderGUI extends QWidget{
 		
 		
 		/**
-		 * creating the left box
+		 * Creating the left box
 		 */
 		//creates instances
 		QGroupBox boxLeft = new QGroupBox();
@@ -337,7 +341,7 @@ public class OrderGUI extends QWidget{
 
 		
 		/**
-		 * creating the right box
+		 * Creating the right box
 		 */
 		//create instances
 		QVBoxLayout layoutRight= new QVBoxLayout();
@@ -356,7 +360,7 @@ public class OrderGUI extends QWidget{
 		
 		
 		/**
-		 * bottom box
+		 * Bottom box
 		 */
 		//create instances
 		btnConfirm = new QPushButton("Bekreft");
@@ -365,7 +369,7 @@ public class OrderGUI extends QWidget{
 		
 		
 		/**
-		 * create the main layout where all the layouts and boxes are added
+		 * Create the main layout where all the layouts and boxes are added
 		 */
 		//create instances
 		main = new QGridLayout(this); 

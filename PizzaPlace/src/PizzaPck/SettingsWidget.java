@@ -4,12 +4,10 @@ package PizzaPck;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.trolltech.qt.gui.QGridLayout;
@@ -26,7 +24,7 @@ import com.trolltech.qt.gui.QWidget;
 /**
  * This class have the methods for adding products, 
  * for changing delivery price and for changing the limit
- * for free delivery 
+ * for free delivery. 
  * @author Everyone
  */
 public class SettingsWidget extends QWidget {
@@ -51,7 +49,8 @@ public class SettingsWidget extends QWidget {
 	
 	
 	/**
-	 * The DB object gives access to methods working towards the database
+	 * The DB object gives access to methods 
+	 * working towards the database
 	 * @param db
 	 */
 	public SettingsWidget(DB db){
@@ -62,7 +61,8 @@ public class SettingsWidget extends QWidget {
 	
 	
 	/**
-	 * Insert a new product from textfields into the database and then emits a signal whenever the button is clicked
+	 * Insert a new product from textfields into the database
+	 * and then emits a signal whenever the button is clicked.
 	 */
 	public void insertIntoDB(){
 
@@ -82,8 +82,8 @@ public class SettingsWidget extends QWidget {
 	}
 	
 	/**
-	 * Reads existing values for DELIVERY_LIMIT and DELIVERY_PRICE when
-	 * program starts
+	 * Reads existing values for DELIVERY_LIMIT 
+	 * and DELIVERY_PRICE when program starts.
 	 * @throws IOException
 	 */
 	public void readFromFile() throws IOException{
@@ -105,7 +105,8 @@ public class SettingsWidget extends QWidget {
 	}
 	
 	/**
-	 * Writes current values for DELIVERY_LIMIT and DELIVERY_PRICE to file.
+	 * This method writes current values for 
+	 * DELIVERY_LIMIT and DELIVERY_PRICE to file.
 	 * If file doesn't exist, a new file is created.
 	 */
 	public void writeToFile(){
@@ -120,47 +121,57 @@ public class SettingsWidget extends QWidget {
 	}
 	
 	/**
-	 * Updates the Delivery price. Use the writeToFile() method to
-	 * save the change to file. If incorrect values are used, an error-message
-	 * is displayed, and no changes are made.		
+	 * Updates the Delivery price. It uses the 
+	 * @see writeToFile() method to save the 
+	 * change to file. If incorrect values are used,
+	 * an error-message is displayed, and no changes 
+	 * are made.		
 	 */
 	public void setDeliveyPrice(){
 		String var = txtDelivery.text();
 		if (Float.valueOf(var) < 0){
 			txtLimit.setStyleSheet("QLabel { color : red; }");
-			txtLimit.setText(" Kan ikke være negativ, pris er "+ DELIVERY_PRICE + " og nåværende grense er " + DELIVERY_LIMIT);
+			txtLimit.setText(" Kan ikke v�re negativ, pris er "
+			+ DELIVERY_PRICE + " og n�rende grense er " + DELIVERY_LIMIT);
 		}
 		else{
 		DELIVERY_PRICE = Float.valueOf(var);
 		writeToFile();
 		txtLimit.setStyleSheet("QLabel { color : black; }");
-		txtLimit.setText("Nåværende grense er " + DELIVERY_LIMIT+" og nåværende pris er " +DELIVERY_PRICE);
+		txtLimit.setText("N�rende grense er " +
+		DELIVERY_LIMIT+" og n�rende pris er " +DELIVERY_PRICE);
 		}
 	}
 	
 	/**
-	 * Updates the Delivery limit. Use the writeToFile() method to
-	 * save the change to file. If incorrect values are used, an error-message
+	 * This method updates the Delivery limit. 
+	 * It uses the @see writeToFile() 
+	 * method to save the change to file. 
+	 * If incorrect values are used, an error-message
 	 * is displayed, and no changes are made.
 	 */
 	public void setLimit(){
 		String var = txtBorder.text();
 		if (Float.valueOf(var) < 0){
 			txtLimit.setStyleSheet("QLabel { color : red; }");
-			txtLimit.setText("Kan ikke være negativ, grense er " + DELIVERY_LIMIT + " og nåværende pris er " +DELIVERY_PRICE);
+			txtLimit.setText("Kan ikke v�re negativ, grense er "
+			+ DELIVERY_LIMIT + " og n�rende pris er " +DELIVERY_PRICE);
 		}
 		else{
 		DELIVERY_LIMIT = Float.valueOf(var);
 		writeToFile();
 		txtLimit.setStyleSheet("QLabel { color : black; }");
-		txtLimit.setText("Nåværende grense er " + DELIVERY_LIMIT+" og nåværende pris er " +DELIVERY_PRICE);
+		txtLimit.setText("N�rende grense er " + 
+		DELIVERY_LIMIT+" og n�rende pris er " +DELIVERY_PRICE);
 		}
 	}
 	
 	
 	
 	/**
-	 * generates a new 
+	 * This method gets the information about the limit prices
+	 * according to what is set earlier. And it also setup
+	 * the graphical user interface for the widget.
 	 */
 	private void setUp(){
 		//reading values for Free delivery limit and Delivery price.
@@ -169,7 +180,7 @@ public class SettingsWidget extends QWidget {
 			readFromFile();
 		}
 		catch(Exception e){
-			System.out.println("Setting standard values");
+			ErrorMessage.couldNotReadFromFile(this);
 		}
 
 		

@@ -10,8 +10,8 @@ import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QWidget;
 
 /**
- * this class creates the gui for displaying the 
- * chef's user interface 
+ * This class creates the GUI for displaying the 
+ * chef's user interface. And inherit from QWidget. 
  * @author Everyone
  */
 public class Delivery extends QWidget{
@@ -30,8 +30,9 @@ public class Delivery extends QWidget{
 
 	
 	/**
-	 * The constructor receives a reference to a
-	 * db class for accessing the database methods
+	 * The constructor receives a reference through
+	 * db for accessing the database methods it need to
+	 * get the information about the orders.
 	 * @param db
 	 */
 	public Delivery(DB db){
@@ -42,7 +43,7 @@ public class Delivery extends QWidget{
 	
 	
 	/**
-	 * this method setup the interface for the delivery
+	 * This method setup the interface for the delivery.
 	 * 
 	 */
 	protected void setup(){
@@ -72,7 +73,9 @@ public class Delivery extends QWidget{
 	}
 	
 	/**
-	 * Takes the selected element in deliveryList and sets the order status to delivered
+	 * This method takes the selected element in deliveryList
+	 * and sets the order status to delivered. And makes the map in
+	 * the QWebView change to the default address.
 	 */
 	public void setOrderDelivered(){
 		String[] tmp = mirrorDeliveryList.get(row);
@@ -85,7 +88,8 @@ public class Delivery extends QWidget{
 	
 	
 	/**
-	 * creates a print receipt and displays it
+	 * This method creates a print receipt and displays it. 
+	 * And to do that it gets the information from the database.
 	 *  
 	 */
 	public void print(){
@@ -97,13 +101,16 @@ public class Delivery extends QWidget{
 			print = new PrintReceipt(receiptProducts, tmp);
 		} catch (NullPointerException e) {
 			// TODO: handle exception
-			System.out.println("Det er en tom liste");
 		}		
 		print.show();
 	}
 	
 	/**
-	 * get all orders from the database where the finish status is set to true
+	 * This method get all orders from the database
+	 * where the finish status is set to true. And
+	 * sends a signal to the method @see showDeliveries()
+	 * which shows the orders that are ready to be delivered/ 
+	 * picked up by costumer.
 	 */
 	public void getDeliveries() {
 		
@@ -126,7 +133,10 @@ public class Delivery extends QWidget{
 	}
 	
 	/**
-	 * displays the map for delivery 
+	 * This method displays the map for the current picked 
+	 * delivery form the delivery list. If the costumer wants 
+	 * to pick up the order by them self, a default map is shown.
+	 * Else a map with start address and costumer address is shown.  
 	 */
 	public void showDeliveries(){
 		row = deliveryList.currentIndex().row();
@@ -144,9 +154,13 @@ public class Delivery extends QWidget{
 	}
 	
 	/**
-	 * formats the string displayed in deliverylist 
+	 * This method formats the string displayed in delivery list.
+	 * A really easy formatting on the order string, just showing
+	 * the ordernumber, if the order should be delivered or picked up,
+	 * the name of the costumer and phonenumber.
+	 *  
 	 * @param data
-	 * @return
+	 * @return String
 	 */
 	private String format(String[] data) {
 		StringBuilder sb = new StringBuilder();

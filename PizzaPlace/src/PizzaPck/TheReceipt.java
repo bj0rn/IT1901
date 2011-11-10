@@ -11,8 +11,8 @@ import com.trolltech.qt.gui.QVBoxLayout;
 /**
  * This class sets up a QDialog that communicates
  * with the printer. This class has
- * ovverwritten the accept method so it can print
- * the acutal textfield we have edited.
+ * overwritten the accept method so it can print
+ * the actual text field we have edited.
  * 
  * @author Everyone
  *
@@ -25,16 +25,16 @@ public class TheReceipt extends QDialog{
 	
 	/**
 	 * This method is the constructor,
-	 * and sets up the whole dialogbox
+	 * and sets up the whole dialog box.
 	 */
 	public TheReceipt(){
 		setup();
 	}
 	
 	/**
-	 * This method sets up the printview, with
-	 * a dialogbox. Where the user can choose to
-	 * print the receipt or cancel the action
+	 * This method sets up the print view, with
+	 * a dialog box. Where the user can choose to
+	 * print the receipt or cancel the action.
 	 */
 	public void setup(){
 		this.setFixedSize(400, 400);
@@ -67,8 +67,8 @@ public class TheReceipt extends QDialog{
 		
 	}
 	/**
-	 * Ovverride method, that print the actual
-	 * textbox/receipt.
+	 * Override method, that print the actual
+	 * text box/receipt.
 	 */
 	@Override
 	public void accept(){

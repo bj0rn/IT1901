@@ -1,8 +1,10 @@
 package PizzaPck;
 
-import com.trolltech.qt.core.QProcess.ExitStatus;
-import com.trolltech.qt.gui.*;
+import com.trolltech.qt.gui.QApplication;
+import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QSizePolicy.Policy;
+import com.trolltech.qt.gui.QTabWidget;
+import com.trolltech.qt.gui.QWidget;
 
 /**
  * This class contains the main method and acts as a boss.

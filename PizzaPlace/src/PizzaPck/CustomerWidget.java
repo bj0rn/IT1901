@@ -59,7 +59,8 @@ public class CustomerWidget extends QWidget {
 	}
 
 	/**
-	 * Creates the user interface for customer registration
+	 * This mehod creates the user interface 
+	 * for the customer registration. 
 	 */
 	private void setUp(){
 
@@ -167,7 +168,9 @@ public class CustomerWidget extends QWidget {
 	}
 	
 	/**
-	 * DATA IS PROTECTED!!! Wrapper functions are used to perform tasks on the gui
+	 * DATA IS PROTECTED!!! 
+	 * Wrapper functions are used to perform 
+	 * tasks on the GUI.
 	 */
 	private void insertCustomer() {
 		//Get information from gui
@@ -188,7 +191,7 @@ public class CustomerWidget extends QWidget {
 	}
 	
 	/**
-	 * clear fields
+	 * this method clear all fields.
 	 */
 	private void clearFields(){
 		txtSearch.clear();
@@ -203,7 +206,10 @@ public class CustomerWidget extends QWidget {
 	}
 	
 	/**
-	 * finds the customer in the database
+	 * This method finds the customer in the database.
+	 * And add the firsname, lastname and phonenumber
+	 * to a wordlist witch is used to build a autocompleter.
+	 * 
 	 */
 	private void findCustomer() {
 		//Search after the given query and return information from kunde (table)
@@ -244,7 +250,7 @@ public class CustomerWidget extends QWidget {
 		
 	}
 	/**
-	 * This methode is used when a search is done,
+	 * This method is used when a search is done,
 	 * to get the customer information in the different
 	 * fields.
 	 * 
@@ -270,7 +276,7 @@ public class CustomerWidget extends QWidget {
 	}
 	
 	/**
-	 * Update user based on CustomerID
+	 * This method update user based on CustomerID
 	 */
 	private void updateUser(){
 		try {
@@ -283,7 +289,8 @@ public class CustomerWidget extends QWidget {
 	}
 	
 	/**
-	 * Return information from txtBoxes
+	 * This method return information 
+	 * from the textboxes.
 	 * @return
 	 */
 	private String[] getFields(){
@@ -301,12 +308,12 @@ public class CustomerWidget extends QWidget {
 	
 	
 	/**
-	 *  
+	 *  This method sends a signal about changes in
+	 *  a costumer at a given costumer id.
 	 */
 	private void sendCustomer() {
 		if(tmpCustomer == null) {
 			ErrorMessage.noSuchUser(this);
-			System.out.println("No customer");
 			return;
 		}
 		for (int i = 0; i < tmpCustomer.length; i++) {

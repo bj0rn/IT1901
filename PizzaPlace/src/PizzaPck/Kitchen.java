@@ -68,8 +68,10 @@ public class Kitchen extends QWidget{
 	}
 	
 	/**
-	 * showOrder retrieves all products from the database according to the selected 
-	 * element in the over all orders 
+	 * This method showOrder, retrieves all products 
+	 * from the database according to the selected 
+	 * element in the over all orders. And displays
+	 * the information about the current order. 
 	 */
 	public void showOrder() {
 		row = orderList.currentIndex().row();
@@ -115,7 +117,14 @@ public class Kitchen extends QWidget{
 
 
 	/**
-	 * Retrieves all orders and put them into the list over all active orders
+	 * This method retrieves all orders and put them 
+	 * into the list over all active orders. Adds them
+	 * to a list over orders that should be cooked.
+	 * The only information that are shown is the ordernumber
+	 * and when it should be finished. When a order is clicked
+	 * a signal is sent to @see showOrder()
+	 * that shows the information about the current order.
+	 * 
 	 */
 	public void getOrders() {
 		orderList = new QListWidget();
@@ -134,7 +143,10 @@ public class Kitchen extends QWidget{
 	}
 	
 	/**
-	 * Transform a string array to a string
+	 * This method transform a string array to a string.
+	 * And is used to formatting the string which is used 
+	 * in the orderList to display a simple text with
+	 * ordernumber, date and time for a order to be finished. 
 	 * See {@link StringBuilder}
 	 * @param data
 	 * @return
@@ -146,7 +158,10 @@ public class Kitchen extends QWidget{
 	}
 
 	/**
-	 * Updates status to finished, for the currently selected order
+	 * This method updates status to finished,
+	 *  for the currently selected order. And sends
+	 *  a signal to the @see Delivery class, that a 
+	 *  order is ready to be picked up or delivered.
 	 */
 	public void finishOrder(){
 		String[] tmp = mirrorOrderList.get(row);

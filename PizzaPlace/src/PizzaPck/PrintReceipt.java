@@ -6,9 +6,9 @@ import java.util.ArrayList;
 
 /**
  * This class extends the TheReceipt class,
- * @see: TheReceipt
- * and formats the receipt depending on the
- * order that is marked when you click "Skriv ut".
+ * @see: TheReceipt and formats the receipt 
+ * depending on the order that is marked 
+ * when you click "Skriv ut".
  * @author Everyone
  */
 public class PrintReceipt extends TheReceipt{
@@ -55,9 +55,9 @@ public class PrintReceipt extends TheReceipt{
 	 * size and price for each product,
 	 * and insert each product to the receipt.
 	 * The method returns a String with HTML formated
-	 * text, wich is used to build the receipt in the
+	 * text, witch is used to build the receipt in the
 	 * print method. 
-	 * @see:print
+	 * @see print
 	 * @param product
 	 * @return
 	 */
@@ -76,15 +76,12 @@ public class PrintReceipt extends TheReceipt{
 	}
 	
 	/**
-	 * This method formates the whole receipt with;
-	 * order id,
-	 * time set to deliver,
+	 * This method is formatting the whole receipt with;
+	 * order id, time set to deliver, 
 	 * if it should be delivered or not,
-	 * a list of the products with amount,size,pizza name and price,
-	 * delivery price,
-	 * price without mva,
-	 * mva,
-	 * total price
+	 * a list of the products with amount,size,
+	 * pizza name and price,delivery price, 
+	 * price without mva, with mva and total price.
 	 */
 	public void print(){
 		
@@ -165,7 +162,7 @@ public class PrintReceipt extends TheReceipt{
 	}
 	
 	/**
-	 * This methode calculates the final total price
+	 * This method calculates the final total price of the order.
 	 * of the order
 	 * @return
 	 */

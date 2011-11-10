@@ -21,7 +21,7 @@ import com.trolltech.qt.gui.QWidget;
  * pizza together. Like pizzaname, ingridients,
  * the user can choose size and amount. The user 
  * can also make a comment, when ordering if the
- * costumer is alergic
+ * costumer is alergic.
  * 
  * 
  * @author Everyone
@@ -58,7 +58,7 @@ import com.trolltech.qt.gui.QWidget;
 	
 	/**
 	 * The constructor sets up the widget,
-	 * and fetches the information from the database
+	 * and fetches the information from the database.
 	 * @param liste
 	 */
 	public Pizza(String[] liste){
