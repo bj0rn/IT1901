@@ -27,6 +27,7 @@ public class Delivery extends QWidget{
 	private int row;
 	private PrintReceipt print;
 
+
 	
 	/**
 	 * The constructor receives a reference to a
@@ -136,7 +137,10 @@ public class Delivery extends QWidget{
 		toAdress.append(tmp[10]+" ");
 		toAdress.append(tmp[11]+" ");
 		toAdress.append(tmp[12]+" ");
-		map.loadMap(new QUrl(map.getMap("Bispegata 5  7032 Trondheim",toAdress.toString())));
+		
+		if(tmp[2].equals("1"))
+			map.loadMap(new QUrl(map.getMap("Bispegata 5  7032 Trondheim",toAdress.toString())));
+		else map.loadMap(map.getDefaultMap());
 	}
 	
 	/**
