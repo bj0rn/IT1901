@@ -301,9 +301,11 @@ public class OrderGUI extends QWidget{
 		changeTime.setTime(time);
 		if (time.hour()>1) {
 			changeDate.setDate(QDate.currentDate().addDays(1));
+		}else{
+			changeDate.setDate(QDate.currentDate());
 		}
-		changeDate.setDate(QDate.currentDate());
 	}
+	
 	/**
 	 * This method creates and setup's the GUI in
 	 * the OrderGUI. 
