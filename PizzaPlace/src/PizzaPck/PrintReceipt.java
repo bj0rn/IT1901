@@ -34,8 +34,7 @@ public class PrintReceipt extends TheReceipt{
 	 * @param products
 	 * @throws NullPointerException
 	 */
-	public PrintReceipt(
-			ArrayList<String[]> products, String[] tmp) throws NullPointerException{
+	public PrintReceipt(ArrayList<String[]> products, String[] tmp) throws NullPointerException{
 		
 		super();
 		super.setWindowTitle("Kvittering");

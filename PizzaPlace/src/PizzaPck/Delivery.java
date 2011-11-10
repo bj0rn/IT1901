@@ -94,7 +94,7 @@ public class Delivery extends QWidget{
 		ArrayList<String[]> receiptProducts = db.getReceipt(tmp[0]);
 		
 		try {
-			print = new PrintReceipt( receiptProducts, tmp);
+			print = new PrintReceipt(receiptProducts, tmp);
 		} catch (NullPointerException e) {
 			// TODO: handle exception
 			System.out.println("Det er en tom liste");

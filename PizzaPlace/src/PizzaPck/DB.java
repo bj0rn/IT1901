@@ -224,7 +224,7 @@ public class DB {
 	 * @return ArrayList<String[]> contains the retrieved customers or the customerID
 	 * @Throws {@link SQLException}
 	 */
-	public ArrayList<String[]> Search(String SearchQuery, boolean key, boolean customer) {
+	public ArrayList<String[]> search(String SearchQuery, boolean key, boolean customer) {
 		ArrayList <String[]> list = new ArrayList<String[]>();
 		String query = "SELECT customerID, first_name, last_name, adress, city, "+
 				"zipcode, phone FROM customer "+determineType(SearchQuery, customer)+"";
@@ -235,7 +235,6 @@ public class DB {
 			if(key) {
 				rs.first();
 				list.add(new String[] {rs.getString(1)});
-				System.out.println("Dette skjer");
 				return list;
 			}
 			
@@ -273,7 +272,7 @@ public class DB {
 	 * @param CustomerID the old customer(customer id is located at first position)
 	 * @throws SQLException
 	 */
-	public void Update(String[] customer, String customerID){
+	public void update(String[] customer, String customerID){
 		String query = "UPDATE customer SET first_name = '"+customer[0]+"'"+
 				", last_name = '"+customer[1]+"'"+
 				", adress = '"+customer[2]+"'"+
@@ -345,7 +344,7 @@ public class DB {
 					query = "SELECT * FROM customer WHERE customerID = '"+strings[1]+"' ";
 					ResultSet fu = connect.createStatement().executeQuery(query);
 					if(fu.first() == false) {
-						System.out.println("FU!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+						
 					}
 					strings[7] = fu.getString(1);	//customerID
 					strings[8] = fu.getString(2);	//first_name
@@ -356,7 +355,7 @@ public class DB {
 					strings[13] = fu.getString(7);	//phone
 
 				}catch(SQLException sq) {
-					System.out.println("FU!!!");
+					
 					sq.printStackTrace();
 				}
 			}
@@ -380,7 +379,7 @@ public class DB {
 	 * @throws SQLException
 	 */
 	public ArrayList <String[]> getAllOrders() {
-		String query = "SELECT * FROM orders WHERE finish = '0' ORDER BY time DESC";
+		String query = "SELECT * FROM orders WHERE finish = '0' ORDER BY currentTime ASC";
 
 		ArrayList<String[]> list = new ArrayList<String[]>();
 		boolean running = true;
@@ -458,13 +457,11 @@ public class DB {
 				try {
 					query = "SELECT * FROM product WHERE productID = '"+strings[1]+"' ";
 					ResultSet fu = connect.createStatement().executeQuery(query);
-					if(fu.first() == false) {
-						System.out.println("FU!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+					if(fu.first() == false) {		
 					}
 					strings[5] = fu.getString(2);	//name
 					strings[6] = fu.getString(4);	//ingridents
 				}catch(SQLException sq) {
-					System.out.println("FU!!!");
 					sq.printStackTrace();
 				}
 			}
@@ -613,13 +610,9 @@ public class DB {
 				try {
 					query = "SELECT * FROM product WHERE productID = '"+strings[1]+"'";
 					ResultSet fu = connect.createStatement().executeQuery(query);
-					if(fu.first() == false) {
-						System.out.println("FU!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-					}
 					strings[4] = fu.getString(2);	//name
 					strings[5] = fu.getString(3);	//price
 				}catch(SQLException sq) {
-					System.out.println("FU!!!");
 					sq.printStackTrace();
 				}
 			}
@@ -627,7 +620,6 @@ public class DB {
 			
 		} catch (SQLException e) {
 			// TODO: handle exception
-			System.out.println("men i helvete");
 			e.printStackTrace();
 		}
 		return null;
@@ -646,7 +638,7 @@ public class DB {
 		
 		try {
 			connect.createStatement().execute(query);
-			System.out.println("Det funket yey");
+			
 			
 		} catch (SQLException e) {
 			// TODO: handle eception
