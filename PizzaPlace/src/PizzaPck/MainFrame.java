@@ -1,5 +1,6 @@
 package PizzaPck;
 
+import com.trolltech.qt.core.QProcess.ExitStatus;
 import com.trolltech.qt.gui.*;
 import com.trolltech.qt.gui.QSizePolicy.Policy;
 
@@ -23,6 +24,7 @@ public class MainFrame extends QWidget {
 	private DB db;
 	
 	public Signal1<Boolean> changeTab = new Signal1<Boolean>();
+
 	
 	
 	/**
@@ -69,7 +71,7 @@ public class MainFrame extends QWidget {
 		
 		//adds kitchen widget to main windows
 		kitchenWidget = new Kitchen(db);
-		tabMain.addTab(kitchenWidget, "Kjøkken");
+		tabMain.addTab(kitchenWidget, "Kjï¿½kken");
 		
 		//adds map
 		deliveryWidget = new Delivery(db);

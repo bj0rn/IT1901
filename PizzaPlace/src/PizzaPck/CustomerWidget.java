@@ -251,8 +251,9 @@ public class CustomerWidget extends QWidget {
 	 * @param text
 	 */
 	private void insertInfo(String text){
-		String phone = text.substring(text.length()-8);
-		ArrayList<String[]> result = db.search(phone, false, false);
+		String data[] = text.split(" ");
+		System.out.println(data[2]);
+		ArrayList<String[]> result = db.search(data[2], false, false);
 		String[] res = result.get(0);
 		tmpCustomer = res;
 		
