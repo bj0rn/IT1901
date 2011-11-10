@@ -53,7 +53,7 @@ public class Kitchen extends QWidget{
 		mirrorOrderList = new ArrayList<String[]>();
 		
 		//knappen som fullfï¿½rer en ordre
-		btnFinish = new QPushButton("Fullfør ordre");
+		btnFinish = new QPushButton("Fullfï¿½r ordre");
 		update = new QPushButton("Oppdater");
 		layout.addWidget(order, 1, 1);
 

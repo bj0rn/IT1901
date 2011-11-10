@@ -296,7 +296,7 @@ public class DB {
 	 * @throws {@link SQLException}
 	 */
 	public ArrayList <String[]> getAllDeliveries(){
-		String query = "SELECT * FROM orders WHERE finish ='1' AND delivered = '0'";
+		String query = "SELECT * FROM orders WHERE finish ='1' AND delivered = '0' ORDER BY currentTime ASC";
 		ArrayList<String[]> list = new ArrayList<String[]>();
 		boolean running = true;
 		try{
@@ -558,7 +558,7 @@ public class DB {
 	 * @param orderID
 	 */
 	public void updateTime(Timestamp time, int delivery, String orderID) {
-		String query = "UPDATE orders SET time = '"+time.toString()+"'"+
+		String query = "UPDATE orders SET currentTime = '"+time.toString()+"'"+
 				", delivery = '"+delivery+"'  WHERE orderID = '"+orderID+"'";
 
 		try {

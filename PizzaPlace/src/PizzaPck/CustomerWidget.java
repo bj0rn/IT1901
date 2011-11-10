@@ -26,9 +26,9 @@ import com.trolltech.qt.gui.QWidget;
 public class CustomerWidget extends QWidget {
 
 
-	private QPushButton btnSearch, btnOrder, btnUpdate, btnSave;
+	private QPushButton btnOrder, btnUpdate, btnSave;
 	private QLineEdit txtFirstName, txtLastName, txtAdress, txtCity, txtZipCode, txtPhone, txtSearch;
-	private QLabel labFirstName, labLastName, labAdress, labCity, labZipCode, labPhone, labSearch;
+	private QLabel labFirstName, labLastName, labAdress, labCity, labZipCode, labPhone;
 	private QGridLayout layoutGrid;
 	private QGroupBox groupbox;
 	private QHBoxLayout layoutSearch;
@@ -105,7 +105,6 @@ public class CustomerWidget extends QWidget {
 		labCity = new QLabel("Poststed");
 		labZipCode = new QLabel("Postkode");
 		labPhone = new QLabel("Telefon");
-		labSearch = new QLabel("S�k");
 		
 		
 		words = new QStringListModel();
@@ -115,13 +114,11 @@ public class CustomerWidget extends QWidget {
 		
 		
 		//knapper
-		btnSearch = new QPushButton("S�k");
 		btnOrder = new QPushButton("Bestill");
 		btnSave = new QPushButton("Lagre kunde");
 		btnUpdate = new QPushButton("Oppdater kunde");
 		
 		//Clicked
-		btnSearch.clicked.connect(this, "findCustomer()");
 		btnSave.clicked.connect(this, "insertCustomer()");
 		btnUpdate.clicked.connect(this, "updateUser()");
 		btnOrder.clicked.connect(this, "sendCustomer()");
@@ -140,7 +137,6 @@ public class CustomerWidget extends QWidget {
 		layoutSearch.addStretch(5);
 		layoutSearch.addWidget(txtSearch);
 		layoutSearch.addStretch(1);
-		layoutSearch.addWidget(btnSearch);
 		
 		layoutGrid.addWidget(labFirstName, 1, 0);
 		layoutGrid.addWidget(txtFirstName, 1, 1);

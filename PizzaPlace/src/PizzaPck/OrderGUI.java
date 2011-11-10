@@ -51,7 +51,7 @@ public class OrderGUI extends QWidget{
 	private QTimeEdit changeTime;
 	private QDateEdit changeDate;
 	
-	private QPushButton btnConfirm, btnDelete, btnUpdate;
+	private QPushButton btnConfirm, btnDelete;
 	private QListWidget listProducts;
 	private QTextBrowser textCustomer;
 
@@ -77,7 +77,6 @@ public class OrderGUI extends QWidget{
 		order_list.signalBridge.connect(this, "handleListProducts(String[])");
 		listProducts.doubleClicked.connect(this, "removeFromLists()");
 		btnConfirm.clicked.connect(this, "confirmOrders()");
-		btnUpdate.clicked.connect(this,"updateOrder()");
 		btnDelete.clicked.connect(this,"deleteOrder()");
 	}
 	
@@ -100,10 +99,10 @@ public class OrderGUI extends QWidget{
 	 * @throws RuntimeException
 	 */
 	public void insertOrder() {
-		String currentTime = new java.sql.Timestamp(new java.util.Date().getTime()).toString();
-		Timestamp time = new java.sql.Timestamp(new java.util.Date().getTime());
-		int h = time.getHours();
-		time.setHours(h +1);
+		String time = new java.sql.Timestamp(new java.util.Date().getTime()).toString();
+		Timestamp currentTime = new java.sql.Timestamp(new java.util.Date().getTime());
+		int h = currentTime.getHours();
+		currentTime.setHours(h +1);
 		String del = delivery.isChecked()? "1":"0";
 
 		String test = "0";
@@ -116,8 +115,9 @@ public class OrderGUI extends QWidget{
 				del,
 				"0",
 				"0",
-				time.toString(),
-				currentTime
+				time,
+				currentTime.toString()
+				
 		};
 		try {
 			db.insert(new orders(data));
@@ -246,10 +246,21 @@ public class OrderGUI extends QWidget{
 		}
 		signalKitchen.emit(true);
 		signalCancel.emit(true);
+		//resets the gui
+		resetGUI();
 		
+
+		
+	}
+	
+	/**
+	 * Resets all values in orderGUI
+	 */
+	private void resetGUI(){
 		listProductsMirror = new ArrayList<String[]>();
 		listProducts.clear();
 		textCustomer.clear();
+		setTime();
 		
 	}
 	
@@ -270,17 +281,29 @@ public class OrderGUI extends QWidget{
 	 */
 	private void updateOrder() {
 		int date = changeDate.date().day();
-		int month = changeDate.date().month();
+		int month = changeDate.date().month()-1;
 		int year = changeDate.date().year()-1900;
-		int hour = changeTime.time().hour()-1;
+		int hour = changeTime.time().hour();
 		int minute = changeTime.time().minute();
 		int seconds = changeTime.time().second();
 		int nano = 0;
 		Timestamp time = new java.sql.Timestamp(year, month, date, hour, minute, seconds, nano);
 		db.updateTime(time, delivery.isChecked()? 1 : 0 , db.getOrderID());
+		System.out.println("den printet ut");
 		
 	}
 	
+	/**
+	 * sets currentTime in ordergui
+	 */
+	private void setTime(){
+		QTime time = QTime.currentTime().addSecs(3600);
+		changeTime.setTime(time);
+		if (time.hour()>1) {
+			changeDate.setDate(QDate.currentDate().addDays(1));
+		}
+		changeDate.setDate(QDate.currentDate());
+	}
 	/**
 	 * This method creates and setup's the GUI in
 	 * the OrderGUI. 
@@ -295,7 +318,6 @@ public class OrderGUI extends QWidget{
 		//create instances
 		QHBoxLayout top = new QHBoxLayout();
 		
-		btnUpdate = new QPushButton("Oppdater");
 		delivery = new QRadioButton("Levering");
 		delivery.setChecked(true);
 		pickup = new QRadioButton("Hente selv");
@@ -305,8 +327,8 @@ public class OrderGUI extends QWidget{
 		
 		//sets the time and date
 		changeDate.setCalendarPopup(true);
-		changeDate.setDate(QDate.currentDate());
-		changeTime.setTime(QTime.currentTime());
+		setTime();
+		
 		
 		//adds to the top layout
 		top.addWidget(delivery);
@@ -314,7 +336,6 @@ public class OrderGUI extends QWidget{
 		top.addWidget(new QLabel("Dato for levering:"));
 		top.addWidget(changeTime);
 		top.addWidget(changeDate);
-		top.addWidget(btnUpdate);
 		
 		
 		
