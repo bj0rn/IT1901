@@ -74,10 +74,10 @@ public class SettingsWidget extends QWidget {
 			db.insert(new product(data));
 		}catch (RuntimeException e) {
 			// TODO: handle exception
-			System.out.println("insert gikk til dundass");
+			//System.out.println("insert gikk til dundass");
 		}
 		//Send signal indicating change in DB 
-		System.out.println("Signal emited");
+		//System.out.println("Signal emited");
 		singalInsertProduct.emit(true);
 	}
 	
@@ -131,15 +131,15 @@ public class SettingsWidget extends QWidget {
 		String var = txtDelivery.text();
 		if (Float.valueOf(var) < 0){
 			txtLimit.setStyleSheet("QLabel { color : red; }");
-			txtLimit.setText(" Kan ikke være negativ, pris er "
-			+ DELIVERY_PRICE + " og nårende grense er " + DELIVERY_LIMIT);
+			txtLimit.setText(" Kan ikke vï¿½re negativ, pris er "
+			+ DELIVERY_PRICE + " og nï¿½rende grense er " + DELIVERY_LIMIT);
 		}
 		else{
 		DELIVERY_PRICE = Float.valueOf(var);
 		writeToFile();
 		txtLimit.setStyleSheet("QLabel { color : black; }");
-		txtLimit.setText("Nå¦rende grense er " +
-		DELIVERY_LIMIT+" og nårende pris er " +DELIVERY_PRICE);
+		txtLimit.setText("Nï¿½rende grense er " +
+		DELIVERY_LIMIT+" og nï¿½rende pris er " +DELIVERY_PRICE);
 		}
 	}
 	
@@ -154,15 +154,15 @@ public class SettingsWidget extends QWidget {
 		String var = txtBorder.text();
 		if (Float.valueOf(var) < 0){
 			txtLimit.setStyleSheet("QLabel { color : red; }");
-			txtLimit.setText("Kan ikke være negativ, grense er "
-			+ DELIVERY_LIMIT + " og nårende pris er " +DELIVERY_PRICE);
+			txtLimit.setText("Kan ikke vï¿½re negativ, grense er "
+			+ DELIVERY_LIMIT + " og nï¿½rende pris er " +DELIVERY_PRICE);
 		}
 		else{
 		DELIVERY_LIMIT = Float.valueOf(var);
 		writeToFile();
 		txtLimit.setStyleSheet("QLabel { color : black; }");
-		txtLimit.setText("Nårende grense er " + 
-		DELIVERY_LIMIT+" og nårende pris er " +DELIVERY_PRICE);
+		txtLimit.setText("Nï¿½rende grense er " + 
+		DELIVERY_LIMIT+" og nï¿½rende pris er " +DELIVERY_PRICE);
 		}
 	}
 	
@@ -180,7 +180,7 @@ public class SettingsWidget extends QWidget {
 			readFromFile();
 		}
 		catch(Exception e){
-			ErrorMessage.couldNotReadFromFile(this);
+			//ErrorMessage.couldNotReadFromFile(this);
 		}
 
 		
