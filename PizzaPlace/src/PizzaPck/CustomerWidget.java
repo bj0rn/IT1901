@@ -4,6 +4,8 @@ package PizzaPck;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.GroupLayout.Alignment;
+
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QCompleter;
 import com.trolltech.qt.gui.QGridLayout;
@@ -28,7 +30,7 @@ public class CustomerWidget extends QWidget {
 
 	private QPushButton btnOrder, btnUpdate, btnSave;
 	private QLineEdit txtFirstName, txtLastName, txtAdress, txtCity, txtZipCode, txtPhone, txtSearch;
-	private QLabel labFirstName, labLastName, labAdress, labCity, labZipCode, labPhone;
+	private QLabel labFirstName, labLastName, labAdress, labCity, labZipCode, labPhone, search;
 	private QGridLayout layoutGrid;
 	private QGroupBox groupbox;
 	private QHBoxLayout layoutSearch;
@@ -105,6 +107,7 @@ public class CustomerWidget extends QWidget {
 		labCity = new QLabel("Poststed");
 		labZipCode = new QLabel("Postkode");
 		labPhone = new QLabel("Telefon");
+		search = new QLabel("Søk");
 		
 		
 		words = new QStringListModel();
@@ -134,7 +137,9 @@ public class CustomerWidget extends QWidget {
 
 		//oppsett av layout
 		txtSearch.setFixedWidth(200);
-		layoutSearch.addStretch(5);
+		layoutSearch.addStretch(1);
+		layoutSearch.addWidget(search);
+		layoutSearch.addStretch(3);
 		layoutSearch.addWidget(txtSearch);
 		layoutSearch.addStretch(1);
 		
