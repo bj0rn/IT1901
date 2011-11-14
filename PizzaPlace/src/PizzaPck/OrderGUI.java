@@ -299,7 +299,7 @@ public class OrderGUI extends QWidget{
 	private void setTime(){
 		QTime time = QTime.currentTime().addSecs(3600);
 		changeTime.setTime(time);
-		if (time.hour()>1) {
+		if (time.hour()<1) {
 			changeDate.setDate(QDate.currentDate().addDays(1));
 		}else{
 			changeDate.setDate(QDate.currentDate());
