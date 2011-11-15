@@ -24,7 +24,7 @@ public class ErrorMessage {
 	 * @param parent
 	 */
 	public static void invalidInput(QWidget parent){
-		QMessageBox.information(parent, "Info", "Alle feltene er ikke utfylt");
+		QMessageBox.information(parent, "Info", "Alle feltene er ikke utfylt eller ikke riktig utfylt");
 	}
 	
 	/**

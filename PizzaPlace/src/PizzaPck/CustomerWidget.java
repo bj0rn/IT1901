@@ -177,12 +177,12 @@ public class CustomerWidget extends QWidget {
 	 */
 	private void insertCustomer() {
 		//Get information from gui
-		String [] data = getFields();
-		//Remember the last customer
-		tmpCustomer = data;
-		customer c = new customer(data);
-
 		try {
+			String [] data = getFields();
+			//Remember the last customer
+			tmpCustomer = data;
+			customer c = new customer(data);
+			
 			db.insert(c);
 			ArrayList <String[]> tmp = db.search(data[5], false, false);
 			tmpCustomer = tmp.get(0);
@@ -288,21 +288,31 @@ public class CustomerWidget extends QWidget {
 	}
 
 	/**
-	 * This method return information 
-	 * from the textboxes.
+	 * This method return information from the textboxes.
+	 * Throws exception if either zipcode or phone number is typed wrong,
+	 * i.e not integers
+	 * @throws RuntimeException
 	 * @return
 	 */
 	private String[] getFields(){
-		String[] data =  {
-				txtFirstName.text(),
-				txtLastName.text(),
-				txtAdress.text(),
-				txtCity.text(),
-				txtZipCode.text(),
-				txtPhone.text()	
-		};
+		try {
+			Integer.parseInt(txtZipCode.text());
+			Integer.parseInt(txtPhone.text());
+			String[] data =  {
+					txtFirstName.text(),
+					txtLastName.text(),
+					txtAdress.text(),
+					txtCity.text(),
+					txtZipCode.text(),
+					txtPhone.text()	
+			};
 
-		return data;
+			return data;
+			
+		}catch(RuntimeException e) {
+			throw new RuntimeException(e);
+		}
+		
 	}
 
 
