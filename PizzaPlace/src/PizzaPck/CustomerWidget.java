@@ -3,6 +3,7 @@ package PizzaPck;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.swing.GroupLayout.Alignment;
 
@@ -31,28 +32,28 @@ public class CustomerWidget extends QWidget {
 	private QPushButton btnOrder, btnUpdate, btnSave;
 	private QLineEdit txtFirstName, txtLastName, txtAdress, 
 	txtCity, txtZipCode, txtPhone, txtSearch;
-	
+
 	private QLabel labFirstName, labLastName, 
 	labAdress, labCity, labZipCode, labPhone, search;
-	
+
 	private QGridLayout layoutGrid;
 	private QGroupBox groupbox;
 	private QHBoxLayout layoutSearch;
 	private QVBoxLayout layoutMain;
 	private QListWidget list;
-	
+
 	//Database instance
 	private DB db;
 	private QStringListModel words;
-	
+
 	//Current customer
 	private String[] tmpCustomer;
 	private String customerid;
-	
+
 	//Signal handler
 	public Signal1<Integer> signalCustomer = new Signal1<Integer>();
 	public Signal1<Boolean> changeTab = new Signal1<Boolean>();
-	
+
 	/**
 	 * Creates a new instance of "kundeWidget" and 
 	 * @param db
@@ -69,7 +70,7 @@ public class CustomerWidget extends QWidget {
 	private void setUp(){
 
 		//setter opp de akutelle layoutene
-		
+
 		groupbox = new QGroupBox();
 		layoutGrid = new QGridLayout();
 		layoutSearch = new QHBoxLayout();
@@ -109,19 +110,19 @@ public class CustomerWidget extends QWidget {
 		labZipCode = new QLabel("Postkode");
 		labPhone = new QLabel("Telefon");
 		search = new QLabel("Søk");
-		
-		
+
+
 		words = new QStringListModel();
 		QCompleter completer = new QCompleter(words);
 		completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive);
 		txtSearch.setCompleter(completer);
-		
-		
+
+
 		//knapper
 		btnOrder = new QPushButton("Bestill");
 		btnSave = new QPushButton("Lagre kunde");
 		btnUpdate = new QPushButton("Oppdater kunde");
-		
+
 		//Clicked
 		btnSave.clicked.connect(this, "insertCustomer()");
 		btnUpdate.clicked.connect(this, "updateUser()");
@@ -130,11 +131,11 @@ public class CustomerWidget extends QWidget {
 
 		txtSearch.textEdited.connect(this,"findCustomer()");
 		completer.activated.connect(this,"insertInfo(String)");
-		
+
 		/*
 		 * plasserer knapper, labels og tekstfelt slik i layout
 		 */
-		
+
 
 		//oppsett av layout
 		txtSearch.setFixedWidth(200);
@@ -143,7 +144,7 @@ public class CustomerWidget extends QWidget {
 		layoutSearch.addStretch(3);
 		layoutSearch.addWidget(txtSearch);
 		layoutSearch.addStretch(1);
-		
+
 		layoutGrid.addWidget(labFirstName, 1, 0);
 		layoutGrid.addWidget(txtFirstName, 1, 1);
 
@@ -168,7 +169,7 @@ public class CustomerWidget extends QWidget {
 		layoutGrid.addWidget(btnOrder, 8, 2);
 
 	}
-	
+
 	/**
 	 * DATA IS PROTECTED!!! 
 	 * Wrapper functions are used to perform 
@@ -180,18 +181,18 @@ public class CustomerWidget extends QWidget {
 		//Remember the last customer
 		tmpCustomer = data;
 		customer c = new customer(data);
-		
+
 		try {
 			db.insert(c);
 			ArrayList <String[]> tmp = db.search(data[5], false, false);
 			tmpCustomer = tmp.get(0);
 		}catch(RuntimeException err) {
 			ErrorMessage.invalidInput(this);
-			
+
 		}
-		
+
 	}
-	
+
 	/**
 	 * this method clear all fields.
 	 */
@@ -206,7 +207,7 @@ public class CustomerWidget extends QWidget {
 		txtAdress.clear();
 
 	}
-	
+
 	/**
 	 * This method finds the customer in the database.
 	 * And add the firsname, lastname and phonenumber
@@ -222,16 +223,16 @@ public class CustomerWidget extends QWidget {
 			String temp = "";
 			//Save current customer
 			if(list.size() ==1){
-			String[] res = list.get(0);
-			tmpCustomer = res;
-			txtFirstName.setText(res[0]); 	//Fornavn
-			txtLastName.setText(res[1]); 	//Etternavn
-			txtAdress.setText(res[2]);   	//Adresse
-			txtCity.setText(res[3]); 	//Sted
-			txtZipCode.setText(res[4]);	//Postkode
-			txtPhone.setText(res[5]);//Telefon
-			
-			tmpCustomer = res;
+				String[] res = list.get(0);
+				tmpCustomer = res;
+				txtFirstName.setText(res[0]); 	//Fornavn
+				txtLastName.setText(res[1]); 	//Etternavn
+				txtAdress.setText(res[2]);   	//Adresse
+				txtCity.setText(res[3]); 	//Sted
+				txtZipCode.setText(res[4]);	//Postkode
+				txtPhone.setText(res[5]);//Telefon
+
+				tmpCustomer = res;
 			}
 			else{
 				for (String[] string : list) {
@@ -240,11 +241,11 @@ public class CustomerWidget extends QWidget {
 				}
 				words.setStringList(liste);
 			}
-				
+
 		}catch(RuntimeException err) {
 			//ErrorMessage.noSuchUser(this);
 		}
-		
+
 	}
 	/**
 	 * This method is used when a search is done,
@@ -254,35 +255,38 @@ public class CustomerWidget extends QWidget {
 	 * @param text
 	 */
 	private void insertInfo(String text){
-		String data[] = text.split(" ");
-		System.out.println(data[2]);
-		ArrayList<String[]> result = db.search(data[2], false, false);
+	     StringTokenizer st = new StringTokenizer(text);
+	     ArrayList<String> list = new ArrayList<String>();
+	     while (st.hasMoreTokens()) {
+	    	 list.add(st.nextToken());
+	     }
+		ArrayList<String[]> result = db.search(list.get(2), false, false);
 		String[] res = result.get(0);
 		tmpCustomer = res;
-		
+
 		txtFirstName.setText(res[0]); 	//Fornavn
 		txtLastName.setText(res[1]); 	//Etternavn
 		txtAdress.setText(res[2]);   	//Adresse
 		txtCity.setText(res[3]); 	//Sted
 		txtZipCode.setText(res[4]);	//Postkode
 		txtPhone.setText(res[5]); //telefon
-		
+
 		tmpCustomer = res;
 	}
-	
+
 	/**
 	 * This method update user based on CustomerID
 	 */
 	private void updateUser(){
 		try {
 			String[] customer = getFields();
-			
+
 			db.update(customer, tmpCustomer[6]);
 		}catch(RuntimeException err) {
 			ErrorMessage.invalidInput(this);
 		}
 	}
-	
+
 	/**
 	 * This method return information 
 	 * from the textboxes.
@@ -290,18 +294,18 @@ public class CustomerWidget extends QWidget {
 	 */
 	private String[] getFields(){
 		String[] data =  {
-			txtFirstName.text(),
-			txtLastName.text(),
-			txtAdress.text(),
-			txtCity.text(),
-			txtZipCode.text(),
-			txtPhone.text()	
+				txtFirstName.text(),
+				txtLastName.text(),
+				txtAdress.text(),
+				txtCity.text(),
+				txtZipCode.text(),
+				txtPhone.text()	
 		};
-		
+
 		return data;
 	}
-	
-	
+
+
 	/**
 	 *  This method sends a signal about changes in
 	 *  a costumer at a given costumer id.
@@ -312,15 +316,15 @@ public class CustomerWidget extends QWidget {
 			return;
 		}
 		try {
-			
+
 			int customerID = Integer.parseInt(tmpCustomer[6]);
 			signalCustomer.emit(customerID);
 			changeTab.emit(true);
-			
+
 		}catch(RuntimeException err) {
 			ErrorMessage.noSuchUser(this);
 		}
-		
+
 		clearFields();
 	}
 
