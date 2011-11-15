@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import javax.swing.GroupLayout.Alignment;
-
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QCompleter;
 import com.trolltech.qt.gui.QGridLayout;
@@ -187,7 +185,9 @@ public class CustomerWidget extends QWidget {
 			ArrayList <String[]> tmp = db.search(data[5], false, false);
 			tmpCustomer = tmp.get(0);
 		}catch(RuntimeException err) {
-			ErrorMessage.invalidInput(this, "Ikke gyldig format på innsetting. Telefon nummer eller postnummer er feil");
+			ErrorMessage.invalidInput(this, 
+			"Ikke gyldig format på innsetting. "+
+			"Telefon nummer eller postnummer er feil");
 
 		}
 
@@ -283,7 +283,9 @@ public class CustomerWidget extends QWidget {
 
 			db.update(customer, tmpCustomer[6]);
 		}catch(RuntimeException err) {
-			ErrorMessage.invalidInput(this, "Oppdatering feilet grunnet feil format på input. Telefon nummer eller postnummer er feil");
+			ErrorMessage.invalidInput(this, 
+			"Oppdatering feilet grunnet feil format på input."+
+			" Telefon nummer eller postnummer er feil");
 		}
 	}
 
