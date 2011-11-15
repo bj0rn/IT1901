@@ -56,7 +56,7 @@ public class ErrorMessage {
 	 */
 	public static void noDishAdded(QWidget parent){
 		QMessageBox.information(parent, "Info", "Ingen ordre er lagt til."+
-		"\nHvis du ikke ønsker å legge inn en ordre trykk avbryt"+
+		"\nHvis du ikke Ã¸nsker Ã¥ legge inn en ordre trykk avbryt"+
 		"\nnederst i vinduet.");
 	}
 	

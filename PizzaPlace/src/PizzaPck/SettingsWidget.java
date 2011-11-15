@@ -131,15 +131,15 @@ public class SettingsWidget extends QWidget {
 		String var = txtDelivery.text();
 		if (Float.valueOf(var) < 0){
 			txtLimit.setStyleSheet("QLabel { color : red; }");
-			txtLimit.setText(" Kan ikke v�re negativ, pris er "
-			+ DELIVERY_PRICE + " og n�rende grense er " + DELIVERY_LIMIT);
+			txtLimit.setText(" Kan ikke være negativ, pris er "
+			+ DELIVERY_PRICE + " og nåværende grense er " + DELIVERY_LIMIT);
 		}
 		else{
 		DELIVERY_PRICE = Float.valueOf(var);
 		writeToFile();
 		txtLimit.setStyleSheet("QLabel { color : black; }");
-		txtLimit.setText("N�rende grense er " +
-		DELIVERY_LIMIT+" og n�rende pris er " +DELIVERY_PRICE);
+		txtLimit.setText("Nåværende grense er " +
+		DELIVERY_LIMIT+" og nåværende pris er " +DELIVERY_PRICE);
 		}
 	}
 	
@@ -154,15 +154,15 @@ public class SettingsWidget extends QWidget {
 		String var = txtBorder.text();
 		if (Float.valueOf(var) < 0){
 			txtLimit.setStyleSheet("QLabel { color : red; }");
-			txtLimit.setText("Kan ikke v�re negativ, grense er "
-			+ DELIVERY_LIMIT + " og n�rende pris er " +DELIVERY_PRICE);
+			txtLimit.setText("Kan ikke være negativ, grense er "
+			+ DELIVERY_LIMIT + " og nåværende pris er " +DELIVERY_PRICE);
 		}
 		else{
 		DELIVERY_LIMIT = Float.valueOf(var);
 		writeToFile();
 		txtLimit.setStyleSheet("QLabel { color : black; }");
-		txtLimit.setText("N�rende grense er " + 
-		DELIVERY_LIMIT+" og n�rende pris er " +DELIVERY_PRICE);
+		txtLimit.setText("Nåværende grense er " + 
+		DELIVERY_LIMIT+" og nåværende pris er " +DELIVERY_PRICE);
 		}
 	}
 	
@@ -207,7 +207,7 @@ public class SettingsWidget extends QWidget {
 		btnChangeDelivey = new QPushButton("Endre leveringspris");
 		
 		
-		labName = new QLabel("Navn p� pizza:");
+		labName = new QLabel("Navn på pizza:");
 		txtName = new QLineEdit();
 		txtName.setFixedWidth(200);
 		labContents = new QLabel("Ingredienser");
@@ -217,7 +217,8 @@ public class SettingsWidget extends QWidget {
 		txtPrice = new QLineEdit();
 		txtPrice.setFixedWidth(200);
 		btnAddpizza = new QPushButton("Legg til pizza i DB");
-		txtLimit = new QLabel("Nåværende grense er " + DELIVERY_LIMIT + " og nåværende pris er " +DELIVERY_PRICE);
+		txtLimit = new QLabel("Nåværende grense er " + DELIVERY_LIMIT +
+				" og nåværende pris er " +DELIVERY_PRICE);
 		
 		
 		box.addWidget(groupBoxPizza);

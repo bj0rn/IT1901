@@ -34,7 +34,8 @@ public class PrintReceipt extends TheReceipt{
 	 * @param products
 	 * @throws NullPointerException
 	 */
-	public PrintReceipt(ArrayList<String[]> products, String[] tmp) throws NullPointerException{
+	public PrintReceipt(ArrayList<String[]> products, String[] tmp) 
+			throws NullPointerException{
 		
 		super();
 		super.setWindowTitle("Kvittering");
@@ -103,8 +104,6 @@ public class PrintReceipt extends TheReceipt{
 				"<td colspan=2><strong><hr align=\"left\" "+
 				": width =\"320\" /></strong></td>" +
 				"</tr>");
-
-		//Her må ordrene legges inn slik at de dukker opp på kviteringen
 		
 		for (String[] string : products) {
 			textbox.append(calculate(string));
@@ -119,7 +118,7 @@ public class PrintReceipt extends TheReceipt{
 				": width =\"300\" /></b></td>" +
 				"</tr>" +
 				"<p style=\"width: 20px;\">"+
-				"<strong>Bestillingsinfo</strong></p>" +
+				"<strong>Bestillingsinformasjon</strong></p>" +
 				"<table style=\"font-size: 9px;\">" +
 				"<tr>" +
 				"<td width=\"220\">" +

@@ -108,8 +108,6 @@ public class OrderGUI extends QWidget{
 		String test = "0";
 		String test1 = "0";
 
-		System.out.println("CustomerID "+customerID+"");
-
 		String [] data = {
 				Integer.toString(customerID),
 				del,
@@ -139,7 +137,6 @@ public class OrderGUI extends QWidget{
 		try {
 			this.customerID = customerID;
 			String query = Integer.toString(customerID);
-			System.out.println(query);
 			String[] data = db.search(query, false, true).get(0);
 			
 			StringBuilder build = new StringBuilder();
@@ -166,7 +163,6 @@ public class OrderGUI extends QWidget{
 	 * @param data
 	 */
 	private void handleListProducts(String[] data) {
-		System.out.println("Insert completed");
 		listProductsMirror.add(data);
 
 		String tmp = format(data);
@@ -287,9 +283,9 @@ public class OrderGUI extends QWidget{
 		int minute = changeTime.time().minute();
 		int seconds = changeTime.time().second();
 		int nano = 0;
-		Timestamp time = new java.sql.Timestamp(year, month, date, hour, minute, seconds, nano);
+		Timestamp time = new java.sql.Timestamp(year,
+					month, date, hour, minute, seconds, nano);
 		db.updateTime(time, delivery.isChecked()? 1 : 0 , db.getOrderID());
-		System.out.println("den printet ut");
 		
 	}
 	
@@ -379,7 +375,6 @@ public class OrderGUI extends QWidget{
 		boxRight.setLayout(layoutRight);
 		
 		layoutRight.addWidget(order_list);
-		//layoutRight.addWidget(scroll);
 		
 		
 		/**

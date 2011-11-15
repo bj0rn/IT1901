@@ -62,7 +62,7 @@ import com.trolltech.qt.gui.QWidget;
 	 * @param liste
 	 */
 	public Pizza(String[] liste){
-		//image = new QPixmap(null);
+
 		start_price = Double.parseDouble(liste[2]);
 		pizza_name = new QLabel(liste[1]);
 		ingridients = new QLabel(liste[3]);
@@ -123,11 +123,6 @@ import com.trolltech.qt.gui.QWidget;
 		size_layout.addWidget(size_label);
 		size_layout.addWidget(size);
 		this.setStyleSheet("QLineEdit { font-size: 11px; }");
-		//sender signal om at size er endret
-		//size.currentStringChanged.connect(this,"pizzaSizeChanged(String)");
-		
-		//Sender signal om at antallet pizzaer er endret
-		//amount.valueChanged.connect(this,"amountValueChanged(int)");
 		
 		//legge til de forskjellige tingene til griden
 		this.grid.addWidget(pizza_name,1,0);
@@ -161,12 +156,12 @@ import com.trolltech.qt.gui.QWidget;
 	 */
 	public void signalBtnAdd() {
 		String [] data = {
-			pizza_name.text(),       //Pizza name
-			size.currentText(),		//Size
-			amount.currentText(),	//Amount
+			pizza_name.text(),      	 //Pizza name
+			size.currentText(),			//Size
+			amount.currentText(),		//Amount
 			Double.toString(start_price),//start_prize
-			ingridients.text(), //ingridients
-			comments.text() // comments
+			ingridients.text(), 		//ingridients
+			comments.text() 			// comments
 		};
 		//Send data
 		signalPizza.emit(data);

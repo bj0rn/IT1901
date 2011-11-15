@@ -52,8 +52,8 @@ public class Kitchen extends QWidget{
 
 		mirrorOrderList = new ArrayList<String[]>();
 		
-		//knappen som fullf�rer en ordre
-		btnFinish = new QPushButton("Fullf�r ordre");
+		//knappen som fullfører en ordre
+		btnFinish = new QPushButton("Fullfør ordre");
 		update = new QPushButton("Oppdater");
 		layout.addWidget(order, 1, 1);
 
@@ -62,8 +62,6 @@ public class Kitchen extends QWidget{
 		getOrders();
 		btnFinish.clicked.connect(this, "finishOrder()");
 		update.clicked.connect(this, "getOrders()");
-		//layout.addWidget(reciept,2,2);
-		//reciept.clicked.connect(this,"print()");
 
 	}
 	
@@ -84,7 +82,7 @@ public class Kitchen extends QWidget{
 
 		String[] tmp = mirrorOrderList.get(row);
 		ArrayList <String[]> list = db.displayOrders(tmp[0]);
-		//System.out.println("Hello");
+		
 		sb.append("<table>" +
 			"<tr>" +
 			"<td width=70><strong>Antall</strong></td>" +
@@ -131,10 +129,11 @@ public class Kitchen extends QWidget{
 		layout.addWidget(orderList, 1, 0);
 		mirrorOrderList = new ArrayList<String[]>();
 		ArrayList<String[]> list = db.getAllOrders();
+		
 		if(list == null) {
 			return;
 		}
-		//sortOrders(list);
+
 		for(int i = 0; i <= list.size()-1; i++) {
 			orderList.addItem(format(list.get(i)));
 			mirrorOrderList.add(list.get(i));
@@ -166,7 +165,7 @@ public class Kitchen extends QWidget{
 	public void finishOrder(){
 		String[] tmp = mirrorOrderList.get(row);
 		String orderID = tmp[0];
-		System.out.println(orderID);
+
 		db.updateFinishStatus(orderID);
 		getOrders();
 		order.clear();

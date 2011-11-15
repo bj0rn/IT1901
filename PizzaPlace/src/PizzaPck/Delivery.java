@@ -164,14 +164,16 @@ public class Delivery extends QWidget{
 	 */
 	private String format(String[] data) {
 		StringBuilder sb = new StringBuilder();
-			sb.append(data[0]+":  "); //Ordre nummer
-			sb.append((data[2].equals("1") ? "Skal leveres " : "Skal IKKE leveres "));
-			sb.append(data[6]+"\n         ");//leverings dato+ time
+			sb.append(data[0]+":  "); 					//Ordre nummer
+			sb.append((data[2].equals("1") ? 
+			"Skal leveres " : "Skal IKKE leveres "));
+			sb.append(data[6]+"\n         ");			//leverings dato+ time
 			
-			sb.append(data[8]+" ");//Fornavn
-			sb.append(data[9]+" ");//Etternavn
+			sb.append(data[8]+" ");						//Fornavn
+			sb.append(data[9]+" ");						//Etternavn
 
-			sb.append(data[13]+"\n");//telefonnummer
+			sb.append(data[13]+"\n");					//telefonnummer
+			
 		return sb.toString();
 		
 	}

@@ -29,16 +29,22 @@ public class CustomerWidget extends QWidget {
 
 
 	private QPushButton btnOrder, btnUpdate, btnSave;
-	private QLineEdit txtFirstName, txtLastName, txtAdress, txtCity, txtZipCode, txtPhone, txtSearch;
-	private QLabel labFirstName, labLastName, labAdress, labCity, labZipCode, labPhone, search;
+	private QLineEdit txtFirstName, txtLastName, txtAdress, 
+	txtCity, txtZipCode, txtPhone, txtSearch;
+	
+	private QLabel labFirstName, labLastName, 
+	labAdress, labCity, labZipCode, labPhone, search;
+	
 	private QGridLayout layoutGrid;
 	private QGroupBox groupbox;
 	private QHBoxLayout layoutSearch;
 	private QVBoxLayout layoutMain;
 	private QListWidget list;
+	
 	//Database instance
 	private DB db;
 	private QStringListModel words;
+	
 	//Current customer
 	private String[] tmpCustomer;
 	private String customerid;
@@ -46,11 +52,7 @@ public class CustomerWidget extends QWidget {
 	//Signal handler
 	public Signal1<Integer> signalCustomer = new Signal1<Integer>();
 	public Signal1<Boolean> changeTab = new Signal1<Boolean>();
-	//Not used at the moment
-	//public Signal1<String[]> customerInfo = new Signal1<String[]>();
 	
-
-	//TODO: we will have to refactor the kundewidget class to customer widget
 	/**
 	 * Creates a new instance of "kundeWidget" and 
 	 * @param db
@@ -74,21 +76,20 @@ public class CustomerWidget extends QWidget {
 		layoutMain = new QVBoxLayout(groupbox);
 		layoutMain.addLayout(layoutSearch);
 		layoutMain.addLayout(layoutGrid);
-//		groupbox.setLayout(sok);
-//		groupbox.setLayout(layout);
 		groupbox.setParent(this);
 
 		/*
 		 * Denne linjen gjør at ting ikke blir strekt ut det som er plassert på layout. 
 		 * Da vil alt som er addet til layout også få samme policy. 
-		 * Vil du få dette til å gjelde for label eller lineedit, da kan du burke setSizePolicy
+		 * Vil du få dette til å gjelde for label eller lineedit, 
+		 * da kan du burke setSizePolicy
 		 */
 		layoutGrid.setSizeConstraint(SizeConstraint.SetFixedSize); // 
 
 
 
 		/*
-		 * oppretter 
+		 * Oppretter de forskjellige info feltene 
 		 */
 
 		//tekstfelt
@@ -216,8 +217,7 @@ public class CustomerWidget extends QWidget {
 		//Search after the given query and return information from kunde (table)
 		try {
 			ArrayList<String[]> list = db.search(txtSearch.text(), false, false);
-			
-			//TODO: Gui needs to support the latest modifications
+
 			List<String> liste = new ArrayList<String>();
 			String temp = "";
 			//Save current customer
@@ -240,11 +240,7 @@ public class CustomerWidget extends QWidget {
 				}
 				words.setStringList(liste);
 			}
-			
-			//txtSearch.clear();
-			
-			
-			
+				
 		}catch(RuntimeException err) {
 			//ErrorMessage.noSuchUser(this);
 		}
@@ -272,8 +268,6 @@ public class CustomerWidget extends QWidget {
 		txtPhone.setText(res[5]); //telefon
 		
 		tmpCustomer = res;
-		
-		//txtSearch.clear();
 	}
 	
 	/**
@@ -317,14 +311,9 @@ public class CustomerWidget extends QWidget {
 			ErrorMessage.noSuchUser(this);
 			return;
 		}
-		for (int i = 0; i < tmpCustomer.length; i++) {
-			System.out.println(tmpCustomer[i]);
-		}
-		
 		try {
 			
 			int customerID = Integer.parseInt(tmpCustomer[6]);
-			System.out.println(customerID);
 			signalCustomer.emit(customerID);
 			changeTab.emit(true);
 			

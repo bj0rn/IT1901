@@ -63,7 +63,6 @@ public class PizzaList extends QScrollArea implements Iterable<Pizza>{
 		LinkedList<String[]> llProdukter;
 		llProdukter = db.getMenu();
 		Iterator<String[]> iter = llProdukter.iterator();
-		System.out.println(llProdukter);
 		
 		while(iter.hasNext()){
 			String[] a = iter.next();
@@ -97,7 +96,6 @@ public class PizzaList extends QScrollArea implements Iterable<Pizza>{
 	 * @param data
 	 */
 	public void signalBridge(String [] data) {
-		System.out.println("Signal forwared from pizza list");
 		signalBridge.emit(data);
 	}
 

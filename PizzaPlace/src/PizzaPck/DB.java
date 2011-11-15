@@ -40,7 +40,6 @@ public class DB {
 			ErrorMessage.databaseError(null,"Failed to load driver"+
 					"\nPlease check your internet connection" );
 		} catch(SQLException sq) {
-			System.out.println("Failed to connect");
 			ErrorMessage.databaseError(null,"Failed to connect"+
 					"\nPlease check your internet connection" );
 		}
@@ -165,9 +164,12 @@ public class DB {
 
 	/**
 	 *This is a helper function for the search function
-	 *This function takes the query entered by user and a boolean value, and builds a partial where statement
-	 *based on the query. The additional boolean value, if true, is used to build a partial query based on the customerID.
-	 *The function is able to build query's where the condition is: first name, last name, phone number, customer id or 
+	 *This function takes the query entered by user and a 
+	 *boolean value, and builds a partial where statement
+	 *based on the query. The additional boolean value, if true, 
+	 *is used to build a partial query based on the customerID.
+	 *The function is able to build query's where the condition is: 
+	 *first name, last name, phone number, customer id or 
 	 *both the first name and the last name.
 	 * @param SearchQuery
 	 * @param customer 
@@ -196,23 +198,26 @@ public class DB {
 				//Silently ignore
 			}
 			
-			sb.append(" first_name = '"+tokens[0].toLowerCase()+"' OR last_name = '"+tokens[0].toLowerCase()+"'");
+			sb.append(" first_name = '"+tokens[0].toLowerCase()+
+					"' OR last_name = '"+tokens[0].toLowerCase()+"'");
 			return sb.toString();
 			
 		}
 		else if(tokens.length == 2) {
-			sb.append(" first_name = '"+tokens[0].toLowerCase()+"' and last_name = '"+tokens[1].toLowerCase()+"'");
+			sb.append(" first_name = '"+tokens[0].toLowerCase()+
+					"' and last_name = '"+tokens[1].toLowerCase()+"'");
 			return sb.toString();
 		}
 		else {
-			System.out.println("To many tokens");
+			//to many tokens
 		}
 		
 		return "";
 	}
 	
 	/**
-	 * Multi purpose search function for the customer table. It uses the determineType function to build the Where
+	 * Multi purpose search function for the customer table. 
+	 * It uses the determineType function to build the Where
 	 * statement. 
 	 * @param SearchQuery
 	 * @param key Boolean if true retrieves the customerID
@@ -224,7 +229,6 @@ public class DB {
 		ArrayList <String[]> list = new ArrayList<String[]>();
 		String query = "SELECT customerID, first_name, last_name, adress, city, "+
 				"zipcode, phone FROM customer "+determineType(SearchQuery, customer)+"";
-		System.out.println(query);
 		
 		try {
 			ResultSet rs = connect.createStatement().executeQuery(query);
@@ -276,11 +280,9 @@ public class DB {
 				" , zipcode = '"+customer[4]+"'"+
 				", phone = '"+customer[5]+"' WHERE customerID = '"+customerID+"'";
 
-		System.out.println(query);
 		try {
 			connect.createStatement().execute(query);
 		}catch(SQLException sq) {
-			System.out.println("UPDATE: Failed!!");
 			sq.printStackTrace();
 		}
 	}
@@ -359,7 +361,6 @@ public class DB {
 
 		}catch (SQLException e) {
 			// TODO: handle exception
-			System.out.println(e);
 		}
 
 		return null;
@@ -405,7 +406,7 @@ public class DB {
 			return list;
 
 		}catch(SQLException sq) {
-			System.out.println("getAllOrders() failed");
+			//orders failed
 			sq.printStackTrace();
 		}
 		return null;
@@ -463,7 +464,7 @@ public class DB {
 			}
 			return aList;
 		}catch (SQLException sq) {
-			System.out.println("diplayOrder() failed");
+			//displayed order failed
 			sq.printStackTrace();
 		}
 
@@ -488,7 +489,7 @@ public class DB {
 			rs.first();
 			return rs.getString(1);
 		}catch(SQLException sq) {
-			System.out.println("ERROR: getPizzaID()");
+			//error på pizza ID
 			sq.printStackTrace();
 		}
 		return "";
@@ -507,7 +508,6 @@ public class DB {
 		}
 		catch (SQLException e) {
 			// TODO: handle exception
-			System.out.println(e);
 		}
 	}
 	
@@ -524,7 +524,6 @@ public class DB {
 		}
 		catch (SQLException e) {
 			// TODO: handle exception
-			System.out.println(e);
 		}
 	}
 
@@ -542,7 +541,7 @@ public class DB {
 			rs.first();
 			return rs.getString(1);
 		}catch(SQLException sq) {
-			System.out.println("ERROR: getOrderID()");
+			//error orderID
 			sq.printStackTrace();
 		}
 		return "";
@@ -565,7 +564,7 @@ public class DB {
 			connect.createStatement().execute(query);
 
 		}catch(SQLException sq) {
-			System.out.println("updateTime() failed!!");
+			//Error update Time
 			sq.printStackTrace();
 		}
 	}
