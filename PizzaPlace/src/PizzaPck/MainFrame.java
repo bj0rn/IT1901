@@ -115,7 +115,6 @@ public class MainFrame extends QWidget {
 	 */
 	public void setCurrentTab (){
 		int index = tabMain.currentIndex();
-		System.out.println(index);
 		if(index == 0){
 			tabMain.setCurrentIndex(1);
 			
