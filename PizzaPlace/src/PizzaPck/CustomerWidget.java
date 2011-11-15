@@ -187,7 +187,7 @@ public class CustomerWidget extends QWidget {
 			ArrayList <String[]> tmp = db.search(data[5], false, false);
 			tmpCustomer = tmp.get(0);
 		}catch(RuntimeException err) {
-			ErrorMessage.invalidInput(this);
+			ErrorMessage.invalidInput(this, "Ikke gyldig format på innsetting. Telefon nummer eller postnummer er feil");
 
 		}
 
@@ -283,7 +283,7 @@ public class CustomerWidget extends QWidget {
 
 			db.update(customer, tmpCustomer[6]);
 		}catch(RuntimeException err) {
-			ErrorMessage.invalidInput(this);
+			ErrorMessage.invalidInput(this, "Oppdatering feilet grunnet feil format på input. Telefon nummer eller postnummer er feil");
 		}
 	}
 
