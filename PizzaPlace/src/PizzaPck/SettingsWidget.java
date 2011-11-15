@@ -77,8 +77,7 @@ public class SettingsWidget extends QWidget {
 		try{
 			db.insert(new product(data));
 		}catch (RuntimeException e) {
-			// TODO: handle exception
-			//System.out.println("insert gikk til dundass");
+			
 		}
 		//Send signal indicating change in DB 
 		//System.out.println("Signal emited");
@@ -134,19 +133,30 @@ public class SettingsWidget extends QWidget {
 	 * are made.		
 	 */
 	public void setDeliveyPrice(){
-		String var = txtDelivery.text();
-		if (Float.valueOf(var) < 0){
-			labLimit.setStyleSheet("QLabel { color : red; }");
-			labLimit.setText(" Kan ikke være negativ, pris er "
-			+ DELIVERY_PRICE + " og nåværende grense er " + DELIVERY_LIMIT);
+		
+		try {
+			Float.parseFloat(txtDelivery.text());
+			String var = txtDelivery.text();
+			
+			if (Float.valueOf(var) < 0){
+				labLimit.setStyleSheet("QLabel { color : red; }");
+				labLimit.setText(" Kan ikke være negativ, pris er "
+				+ DELIVERY_PRICE + " og nåværende grense er " + DELIVERY_LIMIT);
+			}
+			else{
+				DELIVERY_PRICE = Float.valueOf(var);
+				writeToFile();
+				labLimit.setStyleSheet("QLabel { color : black; }");
+				labLimit.setText("Nåværende grense er " +
+				DELIVERY_LIMIT+" og nåværende pris er " +DELIVERY_PRICE);
+			}
+			
+			
+		}catch(NumberFormatException e) {
+			//TODO: Error checking
+			return;
 		}
-		else{
-		DELIVERY_PRICE = Float.valueOf(var);
-		writeToFile();
-		labLimit.setStyleSheet("QLabel { color : black; }");
-		labLimit.setText("Nåværende grense er " +
-		DELIVERY_LIMIT+" og nåværende pris er " +DELIVERY_PRICE);
-		}
+		
 	}
 	
 	/**
@@ -157,19 +167,28 @@ public class SettingsWidget extends QWidget {
 	 * is displayed, and no changes are made.
 	 */
 	public void setLimit(){
-		String var = txtBorder.text();
-		if (Float.valueOf(var) < 0){
-			labLimit.setStyleSheet("QLabel { color : red; }");
-			labLimit.setText("Kan ikke være negativ, grense er "
-			+ DELIVERY_LIMIT + " og nåværende pris er " +DELIVERY_PRICE);
+		try {
+			Float.parseFloat(txtBorder.text());
+			String var = txtBorder.text();
+			if (Float.valueOf(var) < 0){
+				labLimit.setStyleSheet("QLabel { color : red; }");
+				labLimit.setText("Kan ikke være negativ, grense er "
+				+ DELIVERY_LIMIT + " og nåværende pris er " +DELIVERY_PRICE);
+			}
+			else{
+				DELIVERY_LIMIT = Float.valueOf(var);
+				writeToFile();
+				labLimit.setStyleSheet("QLabel { color : black; }");
+				labLimit.setText("Nåværende grense er " + 
+				DELIVERY_LIMIT+" og nåværende pris er " +DELIVERY_PRICE);
+			}
+		
+		}catch(NumberFormatException e) {
+			//TODO: Error print
+			return;
 		}
-		else{
-		DELIVERY_LIMIT = Float.valueOf(var);
-		writeToFile();
-		labLimit.setStyleSheet("QLabel { color : black; }");
-		labLimit.setText("Nåværende grense er " + 
-		DELIVERY_LIMIT+" og nåværende pris er " +DELIVERY_PRICE);
-		}
+		
+		
 	}
 	
 	
