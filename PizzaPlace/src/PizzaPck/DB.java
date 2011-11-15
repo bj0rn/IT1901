@@ -18,11 +18,11 @@ import java.util.LinkedList;
  */
 public class DB {
 	//Fields 
-	String driver = "org.gjt.mm.mysql.Driver";
-	String host = "jdbc:mysql://mysql.stud.ntnu.no/batunges_data";
-	String user = "batunges_uber13";
-	String pass = "uber13";
-	Connection connect;
+	private String driver = "org.gjt.mm.mysql.Driver";
+	private String host = "jdbc:mysql://mysql.stud.ntnu.no/batunges_data";
+	private String user = "batunges_uber13";
+	private String pass = "uber13";
+	private Connection connect;
 
 
 	/**

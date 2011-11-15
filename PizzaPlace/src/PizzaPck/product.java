@@ -9,7 +9,7 @@ public class product {
 	private String name;
 	private String price;
 	private String ingredients;
-	private String pict;
+
 	
 	/**
 	 * data must be a String[] of length 4 and consist of
@@ -20,7 +20,6 @@ public class product {
 		name = data[0];
 		price = data[1];
 		ingredients = data[2];
-		pict = data[3];
 		}
 }
 
