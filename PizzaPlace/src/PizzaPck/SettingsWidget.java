@@ -154,7 +154,8 @@ public class SettingsWidget extends QWidget {
 			
 		}catch(NumberFormatException e) {
 			//TODO: Error checking
-			return;
+			ErrorMessage.invalidInput(this,"Formatet du skrev inn var ikke riktig."+
+			"\nVær så snill å skriv inn et siffer!");
 		}
 		
 	}
@@ -185,7 +186,8 @@ public class SettingsWidget extends QWidget {
 		
 		}catch(NumberFormatException e) {
 			//TODO: Error print
-			return;
+			ErrorMessage.invalidInput(this,"Formatet du skrev inn var ikke riktig."+
+			"\nVær så snill å skriv inn et siffer!");
 		}
 		
 		

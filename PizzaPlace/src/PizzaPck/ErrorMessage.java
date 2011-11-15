@@ -23,8 +23,8 @@ public class ErrorMessage {
 	 * Invalid input/No input, message box is displayed.
 	 * @param parent
 	 */
-	public static void invalidInput(QWidget parent){
-		QMessageBox.information(parent, "Info", "Alle feltene er ikke utfylt eller ikke riktig utfylt");
+	public static void invalidInput(QWidget parent,String s){
+		QMessageBox.information(parent, "Info", s);
 	}
 	
 	/**
