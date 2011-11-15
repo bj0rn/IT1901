@@ -25,7 +25,6 @@ public class MainFrame extends QWidget {
 	private CustomerWidget customerWidget;
 	private DB db;
 	
-	public Signal1<Boolean> changeTab = new Signal1<Boolean>();
 
 	
 	
@@ -43,7 +42,6 @@ public class MainFrame extends QWidget {
 	 * Creates the Main GUI and connects all parts of the program in this class
 	 */
 	private void setUp(){
-
 		//Connect to database
 		db = new DB();
 		

@@ -31,7 +31,7 @@ public class SettingsWidget extends QWidget {
 	
 	//knapper, tekstfelt og labels
 	private QLineEdit txtName, txtContents, txtPrice, txtBorder, txtDelivery;
-	private QLabel labName,labContents,labPrice, labBorder, labDelivery, txtLimit;
+	private QLabel labName,labContents,labPrice, labBorder, labDelivery, labLimit;
 	private QGridLayout pizzaLayout;
 	private QGridLayout borderLayout;
 	private QVBoxLayout box;
@@ -58,14 +58,18 @@ public class SettingsWidget extends QWidget {
 		this.db = db;
 	}
 	
-	
+	private void clearFields(){
+		txtName.clear();
+		txtContents.clear();
+		txtPrice.clear();
+	}
 	
 	/**
 	 * Insert a new product from textfields into the database
 	 * and then emits a signal whenever the button is clicked.
 	 */
 	public void insertIntoDB(){
-
+		
 		String[] data ={
 				txtName.text(),txtPrice.text(),txtContents.text()," "
 		};
@@ -79,6 +83,8 @@ public class SettingsWidget extends QWidget {
 		//Send signal indicating change in DB 
 		//System.out.println("Signal emited");
 		singalInsertProduct.emit(true);
+		labLimit.setText("produkt lagt til i database");
+		clearFields();
 	}
 	
 	/**
@@ -130,15 +136,15 @@ public class SettingsWidget extends QWidget {
 	public void setDeliveyPrice(){
 		String var = txtDelivery.text();
 		if (Float.valueOf(var) < 0){
-			txtLimit.setStyleSheet("QLabel { color : red; }");
-			txtLimit.setText(" Kan ikke være negativ, pris er "
+			labLimit.setStyleSheet("QLabel { color : red; }");
+			labLimit.setText(" Kan ikke være negativ, pris er "
 			+ DELIVERY_PRICE + " og nåværende grense er " + DELIVERY_LIMIT);
 		}
 		else{
 		DELIVERY_PRICE = Float.valueOf(var);
 		writeToFile();
-		txtLimit.setStyleSheet("QLabel { color : black; }");
-		txtLimit.setText("Nåværende grense er " +
+		labLimit.setStyleSheet("QLabel { color : black; }");
+		labLimit.setText("Nåværende grense er " +
 		DELIVERY_LIMIT+" og nåværende pris er " +DELIVERY_PRICE);
 		}
 	}
@@ -153,15 +159,15 @@ public class SettingsWidget extends QWidget {
 	public void setLimit(){
 		String var = txtBorder.text();
 		if (Float.valueOf(var) < 0){
-			txtLimit.setStyleSheet("QLabel { color : red; }");
-			txtLimit.setText("Kan ikke være negativ, grense er "
+			labLimit.setStyleSheet("QLabel { color : red; }");
+			labLimit.setText("Kan ikke være negativ, grense er "
 			+ DELIVERY_LIMIT + " og nåværende pris er " +DELIVERY_PRICE);
 		}
 		else{
 		DELIVERY_LIMIT = Float.valueOf(var);
 		writeToFile();
-		txtLimit.setStyleSheet("QLabel { color : black; }");
-		txtLimit.setText("Nåværende grense er " + 
+		labLimit.setStyleSheet("QLabel { color : black; }");
+		labLimit.setText("Nåværende grense er " + 
 		DELIVERY_LIMIT+" og nåværende pris er " +DELIVERY_PRICE);
 		}
 	}
@@ -207,7 +213,7 @@ public class SettingsWidget extends QWidget {
 		btnChangeDelivey = new QPushButton("Endre leveringspris");
 		
 		
-		labName = new QLabel("Navn på pizza:");
+		labName = new QLabel("Navn paa produkt:");
 		txtName = new QLineEdit();
 		txtName.setFixedWidth(200);
 		labContents = new QLabel("Ingredienser");
@@ -216,8 +222,8 @@ public class SettingsWidget extends QWidget {
 		labPrice = new QLabel("Pris");
 		txtPrice = new QLineEdit();
 		txtPrice.setFixedWidth(200);
-		btnAddpizza = new QPushButton("Legg til pizza i DB");
-		txtLimit = new QLabel("Nåværende grense er " + DELIVERY_LIMIT +
+		btnAddpizza = new QPushButton("Legg til produkt i DB");
+		labLimit = new QLabel("Nåværende grense er " + DELIVERY_LIMIT +
 				" og nåværende pris er " +DELIVERY_PRICE);
 		
 		
@@ -225,11 +231,11 @@ public class SettingsWidget extends QWidget {
 		box.addWidget(groupBoxPrice);
 		
 		//add buttons, labels and lineedits to borderlayout
-		borderLayout.addWidget(txtLimit, 0, 0, 1, 0);
+		borderLayout.addWidget(labLimit, 0, 0, 1, 0);
 		borderLayout.addWidget(labBorder, 1, 0);
 		borderLayout.addWidget(txtBorder, 1, 1);
 		borderLayout.addWidget(btnChange, 1, 2);
-		txtLimit.setSizePolicy(Policy.Fixed, Policy.Fixed);
+		labLimit.setSizePolicy(Policy.Fixed, Policy.Fixed);
 		btnChange.clicked.connect(this, "setLimit()");
 		
 		borderLayout.addWidget(labDelivery, 2, 0);

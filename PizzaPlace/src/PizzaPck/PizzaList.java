@@ -41,7 +41,6 @@ public class PizzaList extends QScrollArea implements Iterable<Pizza>{
 	}
 
 
-	public Signal1<String[]> signalPizza = new Signal1<String[]>();
 	public Signal1<String[]> signalBridge = new Signal1<String[]>();
 
 	/**
