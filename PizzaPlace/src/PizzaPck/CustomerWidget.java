@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import javax.swing.GroupLayout.Alignment;
-
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QCompleter;
 import com.trolltech.qt.gui.QGridLayout;
@@ -177,17 +175,19 @@ public class CustomerWidget extends QWidget {
 	 */
 	private void insertCustomer() {
 		//Get information from gui
-		String [] data = getFields();
-		//Remember the last customer
-		tmpCustomer = data;
-		customer c = new customer(data);
-
 		try {
+			String [] data = getFields();
+			//Remember the last customer
+			tmpCustomer = data;
+			customer c = new customer(data);
+			
 			db.insert(c);
 			ArrayList <String[]> tmp = db.search(data[5], false, false);
 			tmpCustomer = tmp.get(0);
 		}catch(RuntimeException err) {
-			ErrorMessage.invalidInput(this);
+			ErrorMessage.invalidInput(this, 
+			"Ikke gyldig format på innsetting. "+
+			"Telefon nummer eller postnummer er feil");
 
 		}
 
@@ -283,26 +283,38 @@ public class CustomerWidget extends QWidget {
 
 			db.update(customer, tmpCustomer[6]);
 		}catch(RuntimeException err) {
-			ErrorMessage.invalidInput(this);
+			ErrorMessage.invalidInput(this, 
+			"Oppdatering feilet grunnet feil format på input."+
+			" Telefon nummer eller postnummer er feil");
 		}
 	}
 
 	/**
-	 * This method return information 
-	 * from the textboxes.
+	 * This method return information from the textboxes.
+	 * Throws exception if either zipcode or phone number is typed wrong,
+	 * i.e not integers
+	 * @throws RuntimeException
 	 * @return
 	 */
 	private String[] getFields(){
-		String[] data =  {
-				txtFirstName.text(),
-				txtLastName.text(),
-				txtAdress.text(),
-				txtCity.text(),
-				txtZipCode.text(),
-				txtPhone.text()	
-		};
+		try {
+			Integer.parseInt(txtZipCode.text());
+			Integer.parseInt(txtPhone.text());
+			String[] data =  {
+					txtFirstName.text(),
+					txtLastName.text(),
+					txtAdress.text(),
+					txtCity.text(),
+					txtZipCode.text(),
+					txtPhone.text()	
+			};
 
-		return data;
+			return data;
+			
+		}catch(RuntimeException e) {
+			throw new RuntimeException(e);
+		}
+		
 	}
 
 
