@@ -88,6 +88,7 @@ public class OrderGUI extends QWidget{
 		db.deleteOrder(db.getOrderID());
 		signalCancel.emit(true);
 		textCustomer.clear();
+		resetGUI();
 		
 	}
 
