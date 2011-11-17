@@ -147,7 +147,6 @@ public class OrderGUI extends QWidget{
 			}
 			textCustomer.setText(build.toString());
 
-			insertOrder();
 
 		}catch(RuntimeException err) {
 			err.printStackTrace();
@@ -217,7 +216,7 @@ public class OrderGUI extends QWidget{
 			ErrorMessage.noDishAdded(this);
 			return;
 		}
-		
+		insertOrder();
 		updateOrder();
 		
 		Iterator<String[]> iter = listProductsMirror.iterator();
