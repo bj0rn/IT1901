@@ -46,7 +46,7 @@ public class Delivery extends QWidget{
 	 * This method setup the interface for the delivery.
 	 * 
 	 */
-	protected void setup(){
+	private void setup(){
 		
 		deliveryList = new QListWidget();
 		
@@ -77,7 +77,7 @@ public class Delivery extends QWidget{
 	 * and sets the order status to delivered. And makes the map in
 	 * the QWebView change to the default address.
 	 */
-	public void setOrderDelivered(){
+	private void setOrderDelivered(){
 		String[] tmp = mirrorDeliveryList.get(row);
 		String orderID = tmp[0];
 		
@@ -92,7 +92,7 @@ public class Delivery extends QWidget{
 	 * And to do that it gets the information from the database.
 	 *  
 	 */
-	public void print(){
+	private void print(){
 		String[] tmp = mirrorDeliveryList.get(row);
 		
 		ArrayList<String[]> receiptProducts = db.getReceipt(tmp[0]);
@@ -138,7 +138,7 @@ public class Delivery extends QWidget{
 	 * to pick up the order by them self, a default map is shown.
 	 * Else a map with start address and costumer address is shown.  
 	 */
-	public void showDeliveries(){
+	private void showDeliveries(){
 		row = deliveryList.currentIndex().row();
 		
 		StringBuilder toAdress = new StringBuilder();

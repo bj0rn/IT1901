@@ -21,11 +21,10 @@ import com.trolltech.qt.gui.QWidget;
  */
 public class PizzaList extends QScrollArea implements Iterable<Pizza>{
 
-	protected QLayout lay;
-	protected QVBoxLayout v_box;
-	protected List<Pizza> pizza_list;
-	protected QWidget main;
-	protected QScrollArea scrollarea;
+	private QLayout lay;
+	private QVBoxLayout v_box;
+	private List<Pizza> pizza_list;
+	private QWidget main;
 	private DB db;
 
 	/**

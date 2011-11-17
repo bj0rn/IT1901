@@ -84,7 +84,7 @@ public class OrderGUI extends QWidget{
 	 * This method deletes the latest inserted 
 	 * order in the database.
 	 */
-	public void deleteOrder(){
+	private void deleteOrder(){
 		signalCancel.emit(true);
 		textCustomer.clear();
 		resetGUI();
@@ -98,7 +98,7 @@ public class OrderGUI extends QWidget{
 	 * 
 	 * @throws RuntimeException
 	 */
-	public void insertOrder() {
+	private void insertOrder() {
 		String time = new java.sql.Timestamp(new java.util.Date().getTime()).toString();
 		Timestamp currentTime = new java.sql.Timestamp(new java.util.Date().getTime());
 		int h = currentTime.getHours();

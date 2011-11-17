@@ -30,28 +30,28 @@ import com.trolltech.qt.gui.QWidget;
  * 
  * */
 
- class Pizza extends QWidget{
+ public class Pizza extends QWidget{
 	
-	protected QPixmap image;
-	protected QComboBox amount;
-	protected QComboBox size;
-	protected QLabel amount_label;
-	protected QLabel size_label;
-	protected QLabel price_label;
-	protected QLabel pizza_name;
-	protected QLabel ingridients;
-	protected QGridLayout grid;
-	protected DecimalFormat price_format;
-	protected double start_price;
-	protected List<String> amountList;
-	protected QGroupBox box;
-	protected QLabel image_label;
-	protected QLineEdit comments;
-	protected QLabel labComments;
-	public QPushButton btnAdd;
+	private QPixmap image;
+	private QComboBox amount;
+	private QComboBox size;
+	private QLabel amount_label;
+	private QLabel size_label;
+	private QLabel price_label;
+	private QLabel pizza_name;
+	private QLabel ingridients;
+	private QGridLayout grid;
+	private DecimalFormat price_format;
+	private double start_price;
+	private List<String> amountList;
+	private QGroupBox box;
+	private QLabel image_label;
+	private QLineEdit comments;
+	private QLabel labComments;
+	private QPushButton btnAdd;
 	
-	protected QHBoxLayout size_layout;
-	protected QHBoxLayout amount_layout;
+	private QHBoxLayout size_layout;
+	private QHBoxLayout amount_layout;
 	
 	//Send pizza information to pizzalist
 	public Signal1<String[]> signalPizza = new Signal1<String[]>();
@@ -76,7 +76,7 @@ import com.trolltech.qt.gui.QWidget;
 	 * This method sets up the graphical user
 	 * interface, and formatting everything
 	 */
-	public void setup(){
+	private void setup(){
 		
 		comments = new QLineEdit();
 		comments.setFixedWidth(150);
@@ -138,23 +138,12 @@ import com.trolltech.qt.gui.QWidget;
 		
 	}
 
-	/**
-	 * This method changes the price on the order pizza if the size is changed
-	 * @param newSize
-	 */
-	public void pizzaSizeChanged(String newSize){
-		double newPrice = start_price;
-		if (newSize.equals("Stor")) {
-			newPrice = 250;
-		}
-		price_label.setText("Pris: "+price_format.format(newPrice));
-	}
 	
 	/**
 	 * This method is activated when the user push the add button,
 	 * and adds a pizza order to the orderlist.
 	 */
-	public void signalBtnAdd() {
+	private void signalBtnAdd() {
 		String [] data = {
 			pizza_name.text(),      	 //Pizza name
 			size.currentText(),			//Size

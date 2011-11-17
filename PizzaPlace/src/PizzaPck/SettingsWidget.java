@@ -68,7 +68,7 @@ public class SettingsWidget extends QWidget {
 	 * Insert a new product from textfields into the database
 	 * and then emits a signal whenever the button is clicked.
 	 */
-	public void insertIntoDB(){
+	private void insertIntoDB(){
 		
 		String[] data ={
 				txtName.text(),txtPrice.text(),txtContents.text()," "
@@ -91,7 +91,7 @@ public class SettingsWidget extends QWidget {
 	 * and DELIVERY_PRICE when program starts.
 	 * @throws IOException
 	 */
-	public void readFromFile() throws IOException{
+	private void readFromFile() throws IOException{
 
 		FileInputStream fstream = new FileInputStream("bin/config.txt");
 		DataInputStream in = new DataInputStream(fstream);
@@ -114,7 +114,7 @@ public class SettingsWidget extends QWidget {
 	 * DELIVERY_LIMIT and DELIVERY_PRICE to file.
 	 * If file doesn't exist, a new file is created.
 	 */
-	public void writeToFile(){
+	private void writeToFile(){
 		String ny = DELIVERY_LIMIT + "\n" + DELIVERY_PRICE;
 		try {
 		    BufferedWriter out = new BufferedWriter(new FileWriter("bin/config.txt"));
@@ -132,7 +132,7 @@ public class SettingsWidget extends QWidget {
 	 * an error-message is displayed, and no changes 
 	 * are made.		
 	 */
-	public void setDeliveyPrice(){
+	private void setDeliveyPrice(){
 		
 		try {
 			Float.parseFloat(txtDelivery.text());
@@ -167,7 +167,7 @@ public class SettingsWidget extends QWidget {
 	 * If incorrect values are used, an error-message
 	 * is displayed, and no changes are made.
 	 */
-	public void setLimit(){
+	private void setLimit(){
 		try {
 			Float.parseFloat(txtBorder.text());
 			String var = txtBorder.text();
