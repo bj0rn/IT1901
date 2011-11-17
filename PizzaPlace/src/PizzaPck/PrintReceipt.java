@@ -89,6 +89,7 @@ public class PrintReceipt extends TheReceipt{
 		this.textbox.append("<b style=\"font-size:12px\">Ordre nr : "+orderID+"</b>"+
 		"<br style=\"font-size:10px\"><b>Navn : </b>"+temp[8]+ " "+ temp[9]+"</br>"+
 		"<br style=\"font-size:10px\"><b>Adresse : </b>"+temp[10]+"</br>"	+
+		"<br style=\"font-size:10px\"><b>Telefonnummer : </b>"+temp[13]+"</br>"	+
 		"<br style=\"font-size:10px\"><b>Skal være ferdig til : </b>"+deliveryTime+"</br>"+
 		"<br style=\"font-size:10px\"><b>Skal leveres : </b>"+(delivery.equals("1")? "Ja" : "Nei")
 		+"</br>");
