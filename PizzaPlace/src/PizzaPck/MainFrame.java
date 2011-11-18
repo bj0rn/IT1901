@@ -76,7 +76,7 @@ public class MainFrame extends QWidget {
 		
 		//adds map
 		deliveryWidget = new Delivery(db);
-		tabMain.addTab(deliveryWidget, "Kartet");
+		tabMain.addTab(deliveryWidget, "Levering");
 		
 		//adds settings widget to main window
 		settingWidget = new SettingsWidget(db);
