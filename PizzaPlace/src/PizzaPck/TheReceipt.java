@@ -37,7 +37,7 @@ public class TheReceipt extends QDialog{
 	 * print the receipt or cancel the action.
 	 */
 	public void setup(){
-		this.setFixedSize(400, 460);
+		this.setFixedSize(400, 440);
 		printer = new QPrinter();
 		textbox = new QTextEdit();
 		

@@ -188,10 +188,14 @@ public class OrderGUI extends QWidget{
 	 */
 	private String format(String[] data) {
 		StringBuilder sb = new StringBuilder();
-		for(int i = 0; i < 4; i++) {
-			sb.append(data[i]);
+			
+			sb.append(data[2]+" x ");
+			sb.append(data[1]+" ");
+			sb.append(data[0]+" ");
+			sb.append((Double.parseDouble(data[2])*
+					Double.parseDouble(data[3])));
 			sb.append("  ");
-		}
+		
 
 		return sb.toString();
 	}
