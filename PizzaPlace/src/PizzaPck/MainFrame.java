@@ -1,6 +1,5 @@
 package PizzaPck;
 
-import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QSizePolicy.Policy;
@@ -47,7 +46,9 @@ public class MainFrame extends QWidget {
 		db = new DB();
 		
 		
-		//oppretter layout og QtabWidget der vi kan plassere widgeter i hver fane
+		/*oppretter layout og QtabWidget der vi kan 
+		 * plassere widgeter i hver fane
+		 */
 		layout = new QGridLayout(this); 
 		tabMain = new QTabWidget();
 		layout.addWidget(tabMain);
@@ -63,7 +64,6 @@ public class MainFrame extends QWidget {
 		tabMain.addTab(customerWidget, null);
 		tabMain.addTab(customerWidget,"Kunde");
 		
-
 
 		//adds ordergui to main window
 		orderGui = new OrderGUI(db);
@@ -85,14 +85,18 @@ public class MainFrame extends QWidget {
 		
 		//Connect Settingswidget to ordergui
 		
-		settingWidget.singalInsertProduct.connect(orderGui, " updatePizzaList()");
-		//kunde.customer.connect(tab2, "insertOrder(int)");
-		customerWidget.signalCustomer.connect(orderGui, "displayCustomer(int)");
-		customerWidget.changeTab.connect(this, "setCurrentTab()");
+		settingWidget.singalInsertProduct.connect(orderGui, 
+				"updatePizzaList()");
+		
+		customerWidget.signalCustomer.connect(orderGui, 
+				"displayCustomer(int)");
+		
+		customerWidget.changeTab.connect(this, 
+				"setCurrentTab()");
 		
 		orderGui.signalKitchen.connect(kitchenWidget, "getOrders()");
 		orderGui.signalCancel.connect(this,"setCurrentTab()");
-		kitchenWidget.signalDelivery.connect(deliveryWidget, "getDeliveries()");
+		kitchenWidget.signalDelivery.connect(deliveryWidget,"getDeliveries()");
 		
 
 		
@@ -108,8 +112,10 @@ public class MainFrame extends QWidget {
 	/**
 	 * Changes the tab according to which tab the user i currently working in
 	 * 
-	 * The program limits the user to just working with order as long as there is a customer who are
-	 * ordering. As a result this will make the user to either decline or finish ordering products before continuing.
+	 * The program limits the user to just working with order as long as there 
+	 * is a customer who are
+	 * ordering. As a result this will make the user to either decline 
+	 * or finish ordering products before continuing.
 	 * 
 	 */
 	private void setCurrentTab (){
@@ -141,7 +147,7 @@ public class MainFrame extends QWidget {
     public static void main(String[] args) {
     	
         QApplication.initialize(args);
-        new MainFrame(); // oppretter seg selv og kjører setUp() gjennom constructoren;
+        new MainFrame(); 
         QApplication.exec();
 
        

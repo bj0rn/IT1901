@@ -33,6 +33,7 @@ public class PizzaList extends QScrollArea implements Iterable<Pizza>{
 	 * @see fillList
 	 */
 	public PizzaList(DB db){
+		
 		this.db = db;
 		//Init 
 		fillList();
@@ -47,7 +48,6 @@ public class PizzaList extends QScrollArea implements Iterable<Pizza>{
 	 */
 	@Override
 	public Iterator<Pizza> iterator() {
-		// TODO Auto-generated method stub
 		return pizza_list.iterator();
 	}
 
@@ -57,17 +57,20 @@ public class PizzaList extends QScrollArea implements Iterable<Pizza>{
 	 * in the OrderGUI.
 	 */
 	public void fillList() {
+		
 		pizza_list = new ArrayList<Pizza>();
 		LinkedList<String[]> llProdukter;
 		llProdukter = db.getMenu();
 		Iterator<String[]> iter = llProdukter.iterator();
 		
 		while(iter.hasNext()){
+			
 			String[] a = iter.next();
 			Pizza p = new Pizza(a);
 			p.setFixedWidth(500);
 			p.signalPizza.connect(this, "signalBridge(String[])");
 			pizza_list.add(p);
+			
 		}
 		
 
@@ -84,9 +87,9 @@ public class PizzaList extends QScrollArea implements Iterable<Pizza>{
 	
 		//Update gui
 		for (Pizza p: pizza_list) {
-			
 			v_box.addWidget(p);
 		}
+		
 	}
 
 	/**

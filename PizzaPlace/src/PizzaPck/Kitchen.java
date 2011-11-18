@@ -43,14 +43,14 @@ public class Kitchen extends QWidget{
 	 * creates the kitchen GUI
 	 */
 	private void setUp() {
-		
+
 		layout = new QGridLayout(this);
 
 		order = new QTextBrowser();
 		orderList = new QListWidget();
 
 		mirrorOrderList = new ArrayList<String[]>();
-		
+
 		//knappen som fullfører en ordre
 		btnFinish = new QPushButton("Fullfør ordre");
 		update = new QPushButton("Oppdater");
@@ -63,7 +63,7 @@ public class Kitchen extends QWidget{
 		update.clicked.connect(this, "getOrders()");
 
 	}
-	
+
 	/**
 	 * This method showOrder, retrieves all products 
 	 * from the database according to the selected 
@@ -81,34 +81,34 @@ public class Kitchen extends QWidget{
 
 		String[] tmp = mirrorOrderList.get(row);
 		ArrayList <String[]> list = db.displayOrders(tmp[0]);
-		
+
 		sb.append("<table>" +
-			"<tr>" +
-			"<td width=70><strong>Antall</strong></td>" +
-			"<td width=80><strong>Pizza</strong></td>" +
-			"<td width= 120><strong>Ingredienser</strong></td>" +
-			"<td width= 10></td>" +
-			"<td width= 120><strong>Kommentarer</strong></td>" +
-			"</tr>" +
-			"<tr>" +
-			"<td colspan=2><strong><hr align=\"left\" "+
+				"<tr>" +
+				"<td width=70><strong>Antall</strong></td>" +
+				"<td width=80><strong>Pizza</strong></td>" +
+				"<td width= 120><strong>Ingredienser</strong></td>" +
+				"<td width= 10></td>" +
+				"<td width= 120><strong>Kommentarer</strong></td>" +
+				"</tr>" +
+				"<tr>" +
+				"<td colspan=2><strong><hr align=\"left\" "+
 				": width =\"700\" /></strong></td>" +
-			"</tr>");
-		
+				"</tr>");
+
 		for (String[] strings : list) {
-			
+
 			sb.append("<tr style=\"font-size:10px\">"+ 
-			   "<td width=100>"+strings[4]+
-			   (strings[3].equals("1") ? " x Stor " : " x Liten ") 
-			   +"</td>"+
-			   "<td>" + strings[5]+"</td>"+
-			   "<td>" + strings[6]+"</td>"+
-			   "<td>"+"</td>"+
-			   "<td>" + strings[2]+"</td>"+
-			   "</tr>" );
-			
+					"<td width=100>"+strings[4]+
+					(strings[3].equals("1") ? " x Stor " : " x Liten ") 
+					+"</td>"+
+					"<td>" + strings[5]+"</td>"+
+					"<td>" + strings[6]+"</td>"+
+					"<td>"+"</td>"+
+					"<td>" + strings[2]+"</td>"+
+					"</tr>" );
+
 			sb.append("<tr></tr>");
-			
+
 		}
 		order.setText(sb.toString());
 
@@ -130,7 +130,7 @@ public class Kitchen extends QWidget{
 		layout.addWidget(orderList, 1, 0);
 		mirrorOrderList = new ArrayList<String[]>();
 		ArrayList<String[]> list = db.getAllOrders();
-		
+
 		if(list == null) {
 			return;
 		}
@@ -141,7 +141,7 @@ public class Kitchen extends QWidget{
 		}
 		orderList.clicked.connect(this, "showOrder()");
 	}
-	
+
 	/**
 	 * This method transform a string array to a string.
 	 * And is used to formatting the string which is used 

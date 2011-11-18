@@ -14,6 +14,7 @@ import com.trolltech.qt.gui.QTextEdit;
  * @author Everyone
  */
 public class PrintReceipt extends TheReceipt{
+
 	//private DB db;
 	private float delivery_price;
 	private float tot;
@@ -26,7 +27,7 @@ public class PrintReceipt extends TheReceipt{
 	private String deliveryTime;
 	private String[] temp;
 	private QTextEdit textbox;
-	
+
 	/**
 	 * The Constructor takes a set of parameters
 	 * to get the information it needs to build 
@@ -39,21 +40,25 @@ public class PrintReceipt extends TheReceipt{
 	 */
 	public PrintReceipt(ArrayList<String[]> products, String[] tmp) 
 			throws NullPointerException{
-		
+
 		super();
 		textbox = super.getTextbox();
 		super.setWindowTitle("Kvittering");
+
 		if (products == null) {
 			throw new NullPointerException();
 		}
+
 		this.products = products;
 		this.orderID= tmp[0];
 		this.delivery = tmp[2];
 		this.deliveryTime = tmp[6].substring(0, tmp[6].length()-5);
 		temp = tmp;
+
 		print();
+
 	}
-	
+
 	/**
 	 * This method fetches the orders, amount,
 	 * size and price for each product,
@@ -67,18 +72,18 @@ public class PrintReceipt extends TheReceipt{
 	 */
 	private String calculate(String[] product){
 		Float price = Float.parseFloat(product[3])
-					*(product[2].equals("1") ? 1.25f : 1.00f)* 
-					Float.parseFloat(product[5]);
+				*(product[2].equals("1") ? 1.25f : 1.00f)* 
+				Float.parseFloat(product[5]);
 		tot += price;
 		return 
-		"<tr style=\"font-size:10px\">"+ 
-				   "<td width=220>"+ product[3] + " x " 
-				   +(product[2].equals("1") ? "Stor " : "Liten ") 
-				   + product[4]+"</td>"+
-				   "<td>"+ format.format(price)+"</td>"+
-				   "</tr>";
+				"<tr style=\"font-size:10px\">"+ 
+				"<td width=220>"+ product[3] + " x " 
+				+(product[2].equals("1") ? "Stor " : "Liten ") 
+				+ product[4]+"</td>"+
+				"<td>"+ format.format(price)+"</td>"+
+				"</tr>";
 	}
-	
+
 	/**
 	 * This method is formatting the whole receipt with;
 	 * order id, time set to deliver, 
@@ -88,17 +93,21 @@ public class PrintReceipt extends TheReceipt{
 	 * price without mva, with mva and total price.
 	 */
 	private void print(){
-		
+
 		this.textbox.append("<b style=\"font-size:12px\">Ordre nr : "+orderID+"</b>"+
-		"<br style=\"font-size:10px\"><b>Navn : </b>"+temp[8]+ " "+ temp[9]+"</br>"+
-		"<br style=\"font-size:10px\"><b>Adresse : </b>"+temp[10]+"</br>"	+
-		"<br style=\"font-size:10px\"><b>Telefonnummer : </b>"+temp[13]+"</br>"	+
-		"<br style=\"font-size:10px\"><b>Skal være ferdig til : </b>"+deliveryTime+"</br>"+
-		"<br style=\"font-size:10px\"><b>Skal leveres : </b>"+(delivery.equals("1")? "Ja" : "Nei")
-		+"</br>");
-		
+				"<br style=\"font-size:10px\"><b>Navn : </b>"+temp[8]+
+				" "+ temp[9]+"</br>"+
+				"<br style=\"font-size:10px\"><b>Adresse : </b>"+
+				temp[10]+"</br>"	+
+				"<br style=\"font-size:10px\"><b>Telefonnummer : </b>"+
+				temp[13]+"</br>"	+
+				"<br style=\"font-size:10px\"><b>Skal være ferdig til : </b>"+
+				deliveryTime+"</br>"+
+				"<br style=\"font-size:10px\"><b>Skal leveres : </b>"+
+				(delivery.equals("1")? "Ja" : "Nei")+"</br>");
+
 		this.textbox.append("\n");
-		
+
 		this.textbox.append("<table>" +
 				"<tr>" +
 				"<td width=220><strong>Pizza</strong></td>" +
@@ -108,15 +117,15 @@ public class PrintReceipt extends TheReceipt{
 				"<td colspan=2><strong><hr align=\"left\" "+
 				": width =\"320\" /></strong></td>" +
 				"</tr>");
-		
+
 		for (String[] string : products) {
 			textbox.append(calculate(string));
 		}
-		
-		
+
+
 		tot_u_mva = (tot)/(1.25);
 		mva = (tot-tot_u_mva);
-		
+
 		this.textbox.append("<tr>"+
 				"<td colspan=2><b><hr align=\"left\" "+
 				": width =\"300\" /></b></td>" +
@@ -127,11 +136,10 @@ public class PrintReceipt extends TheReceipt{
 				"<tr>" +
 				"<td width=\"220\">" +
 				"	Leveringspris:</td>" +
-				"<td> " +(tot > SettingsWidget.DELIVERY_LIMIT ?
-						format.format((delivery_price = 0.0f)) : 
-						format.format((delivery_price = SettingsWidget.DELIVERY_PRICE))) 
-						+ "</td>" +
-				"</tr>" +
+				"<td> " +(tot > SettingsWidget.DELIVERY_LIMIT 
+						? format.format((delivery_price = 0.0f)) 
+						: format.format((delivery_price = SettingsWidget.DELIVERY_PRICE))) 
+						+ "</td> </tr>" +
 
 				"<tr>" +
 				"<td width=\"220\">Totalpris med mva:</td>" + 
@@ -147,7 +155,7 @@ public class PrintReceipt extends TheReceipt{
 				"<td width=\"220\">Merverdiavgift:</td>" +
 				"<td>" + format.format(mva) + "</td>" +
 				"</tr>" +
-				
+
 				"<tr>"+
 				"<td colspan=2><b><hr align=\"left\" : width =\"300\" /></b>"+
 				"</td>" +
@@ -160,10 +168,10 @@ public class PrintReceipt extends TheReceipt{
 				format.format(calculateFinalPrize()) + 
 				"</b></td>" +
 				"</tr>" +
-		"</table>");
-		
+				"</table>");
+
 	}
-	
+
 	/**
 	 * This method calculates the final total price of the order.
 	 * of the order

@@ -18,6 +18,7 @@ import com.trolltech.qt.gui.QVBoxLayout;
  *
  */
 public class TheReceipt extends QDialog{
+	
 	private QPrinter printer;
 	private QTextEdit textbox;
 	
@@ -37,6 +38,7 @@ public class TheReceipt extends QDialog{
 	 * print the receipt or cancel the action.
 	 */
 	public void setup(){
+		
 		this.setFixedSize(400, 440);
 		printer = new QPrinter();
 		textbox = new QTextEdit();
@@ -72,11 +74,14 @@ public class TheReceipt extends QDialog{
 	 */
 	@Override
 	public void accept(){
+		
 		QPrintDialog dialog = new QPrintDialog(printer,this);
+		
 		if(dialog.exec() == QDialog.DialogCode.Accepted.value()){
 			textbox.print(printer);
 			super.accept();
 		}
+		
 	}
 	
 	/**
@@ -86,4 +91,5 @@ public class TheReceipt extends QDialog{
 	protected QTextEdit getTextbox(){
 		return textbox;
 	}
+	
 }

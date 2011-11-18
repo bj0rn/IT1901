@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
- * This class creates the connection to the database and have all the methods for 
- * executing queries on the database
+ * This class creates the connection to the database and have all the methods 
+ * for executing queries on the database
  * 
  * @author Everyone
  *
@@ -99,7 +99,7 @@ public class DB {
 			String query1 = sb.toString();
 
 			connect.createStatement().execute(query1);	
-			
+
 		}catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -126,7 +126,8 @@ public class DB {
 
 
 	/**
-	 * Retrieve all rows from table products. The data retrieved are packed inside a list of
+	 * Retrieve all rows from table products. The data retrieved are packed 
+	 * inside a list of
 	 * string arrays. Each string array contain productID, name, price and 
 	 * Ingredients, in the given order. 
 	 * @throws SQLException
@@ -142,20 +143,21 @@ public class DB {
 			rs.first();
 			boolean running = true;
 			while(running){
-				list.add(new String[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)});
+				list.add(new String[]{rs.getString(1), 
+						rs.getString(2), rs.getString(3), rs.getString(4)});
 				running =rs.next();
 			}		
 			return list;
 
 		} catch(SQLException sq) {
 			ErrorMessage.failMenu(null,"Major issue has occured!"+
-		"\nPlease restart the program.");
+					"\nPlease restart the program.");
 			try {
 				wait(3);
 				System.exit(0);
 			} catch (InterruptedException e) {
 			}
-			
+
 			System.exit(0);
 
 		}
@@ -182,7 +184,7 @@ public class DB {
 		String[] tokens = SearchQuery.split(" ");
 		boolean correct = true;
 		if(tokens.length == 1) {
-			
+
 			try {
 				Integer.parseInt(tokens[0]);
 				if(customer) {
@@ -193,15 +195,15 @@ public class DB {
 					sb.append(" phone = '"+tokens[0]+"'");
 					return sb.toString();
 				}
-				
+
 			}catch(NumberFormatException e) {
 				//Silently ignore
 			}
-			
+
 			sb.append(" first_name = '"+tokens[0].toLowerCase()+
 					"' OR last_name = '"+tokens[0].toLowerCase()+"'");
 			return sb.toString();
-			
+
 		}
 		else if(tokens.length == 2) {
 			sb.append(" first_name = '"+tokens[0].toLowerCase()+
@@ -211,25 +213,30 @@ public class DB {
 		else {
 			//to many tokens
 		}
-		
+
 		return "";
 	}
-	
+
 	/**
 	 * Multi purpose search function for the customer table. 
 	 * It uses the determineType function to build the Where
 	 * statement. 
 	 * @param SearchQuery
 	 * @param key Boolean if true retrieves the customerID
-	 * @param customer Boolean if true search a after an customer with the given customerID
-	 * @return ArrayList<String[]> contains the retrieved customers or the customerID
+	 * @param customer Boolean if true search a after an customer with the 
+	 * given customerID
+	 * @return ArrayList<String[]> contains the retrieved customers or the 
+	 * customerID
 	 * @Throws {@link SQLException}
 	 */
-	public ArrayList<String[]> search(String SearchQuery, boolean key, boolean customer) {
+	public ArrayList<String[]> search(String SearchQuery, boolean key,
+			boolean customer) {
 		ArrayList <String[]> list = new ArrayList<String[]>();
-		String query = "SELECT customerID, first_name, last_name, adress, city, "+
-				"zipcode, phone FROM customer "+determineType(SearchQuery, customer)+"";
-		
+		String query = "SELECT customerID, first_name," +
+				" last_name, adress, city, "+
+				"zipcode, phone FROM customer "+
+				determineType(SearchQuery, customer)+"";
+
 		try {
 			ResultSet rs = connect.createStatement().executeQuery(query);
 			if(key) {
@@ -237,7 +244,7 @@ public class DB {
 				list.add(new String[] {rs.getString(1)});
 				return list;
 			}
-			
+
 			//return null if no information is found
 			if (!rs.first()){
 				return null; 
@@ -256,20 +263,21 @@ public class DB {
 				list.add(data);
 				running = rs.next();
 			}
-			
+
 		}catch(SQLException sq ) {
 			sq.printStackTrace();
 		}
 		return list;
 	}
-	
+
 
 
 	/**
 	 * Updates a customer in the customer table by using the customerID.
 	 * 
 	 * @param customer the new customer
-	 * @param CustomerID the old customer(customer id is located at first position)
+	 * @param CustomerID the old customer
+	 * (customerID is located at first position)
 	 * @throws SQLException
 	 */
 	public void update(String[] customer, String customerID){
@@ -278,7 +286,8 @@ public class DB {
 				", adress = '"+customer[2]+"'"+
 				", city = '"+customer[3]+"'"+
 				" , zipcode = '"+customer[4]+"'"+
-				", phone = '"+customer[5]+"' WHERE customerID = '"+customerID+"'";
+				", phone = '"+customer[5]+"' WHERE customerID = '"+
+				customerID+"'";
 
 		try {
 			connect.createStatement().execute(query);
@@ -286,10 +295,11 @@ public class DB {
 			sq.printStackTrace();
 		}
 	}
-	
-	
+
+
 	/**
-	 * Retrieve all orders which is finish and not delivered as a arraylist with String[] arrays
+	 * Retrieve all orders which is finish and not delivered as a 
+	 * arraylist with String[] arrays
 	 * String[] = {orderID, customerID, delivery, finish, 
 	 * delivered, time, currentTime, customerID, firste_name, 
 	 * last_name, address, zipcode, city, phone} 
@@ -298,7 +308,8 @@ public class DB {
 	 * @throws {@link SQLException}
 	 */
 	public ArrayList <String[]> getAllDeliveries(){
-		String query = "SELECT * FROM orders WHERE finish ='1' AND delivered = '0' ORDER BY currentTime ASC";
+		String query = "SELECT * FROM orders WHERE finish ='1' " +
+				"AND delivered = '0' ORDER BY currentTime ASC";
 		ArrayList<String[]> list = new ArrayList<String[]>();
 		boolean running = true;
 		try{
@@ -339,10 +350,11 @@ public class DB {
 
 			for (String[] strings : list) {
 				try {
-					query = "SELECT * FROM customer WHERE customerID = '"+strings[1]+"' ";
+					query = "SELECT * FROM customer WHERE customerID = '"+
+							strings[1]+"' ";
 					ResultSet fu = connect.createStatement().executeQuery(query);
 					if(fu.first() == false) {
-						
+
 					}
 					strings[7] = fu.getString(1);	//customerID
 					strings[8] = fu.getString(2);	//first_name
@@ -353,7 +365,7 @@ public class DB {
 					strings[13] = fu.getString(7);	//phone
 
 				}catch(SQLException sq) {
-					
+
 					sq.printStackTrace();
 				}
 			}
@@ -376,7 +388,8 @@ public class DB {
 	 * @throws SQLException
 	 */
 	public ArrayList <String[]> getAllOrders() {
-		String query = "SELECT * FROM orders WHERE finish = '0' ORDER BY currentTime ASC";
+		String query = "SELECT * FROM orders WHERE finish = '0' " +
+				"ORDER BY currentTime ASC";
 
 		ArrayList<String[]> list = new ArrayList<String[]>();
 		boolean running = true;
@@ -412,14 +425,15 @@ public class DB {
 		return null;
 
 	}
-	
-	
+
+
 	//TODO: Skrive om denne kommentaren 
 	/**
 	 * Retrieves all rows in table receipt where orderID == orderNr. The data
-	 * Retrieved are packed inside string arrays. Each string array contain orderID, 
-	 * productID, comment, size,amount, pizza name, and ingredients. Pizza name and ingridents are
-	 * Retrieved by performing an additional query, and retrieving the name and ingridents from
+	 * Retrieved are packed inside string arrays. Each string array contain 
+	 * orderID, productID, comment, size,amount, pizza name, and ingredients. 
+	 * Pizza name and ingridents are retrieved by performing an additional query,
+	 * and retrieving the name and ingridents from
 	 * products where productID == productID
 	 * @param orderNr
 	 * @return ArrayList<String[]>
@@ -452,7 +466,8 @@ public class DB {
 
 			for (String[] strings : aList) {
 				try {
-					query = "SELECT * FROM product WHERE productID = '"+strings[1]+"' ";
+					query = "SELECT * FROM product WHERE productID = '"+
+							strings[1]+"' ";
 					ResultSet fu = connect.createStatement().executeQuery(query);
 					if(fu.first() == false) {		
 					}
@@ -483,7 +498,8 @@ public class DB {
 	 * @throws SQLException
 	 */
 	public String getPizzaID(String PizzaName) {
-		String  query = "SELECT productID FROM product WHERE name = '"+PizzaName+"'";
+		String query = "SELECT productID FROM product WHERE name = '"+
+				PizzaName+"'";
 		try {
 			ResultSet rs = connect.createStatement().executeQuery(query);
 			rs.first();
@@ -494,7 +510,7 @@ public class DB {
 		}
 		return "";
 	}
-	
+
 	/**
 	 * Updates the order status to finished
 	 * 
@@ -502,23 +518,8 @@ public class DB {
 	 * @throws SQLException
 	 */
 	public void updateFinishStatus(String orderID){
-		String query = "UPDATE orders SET finish = '1' WHERE orderID = '"+orderID+"'";
-		try{
-			connect.createStatement().execute(query);
-		}
-		catch (SQLException e) {
-			// TODO: handle exception
-		}
-	}
-	
-	/**
-	 * Updates the delivered status in order to delivered according to the orderID
-	 *
-	 * @param orderID
-	 * @throws SQLException
-	 */
-	public void updateDeliveredStatus(String orderID){
-		String query = "UPDATE orders SET delivered = '1' WHERE orderID = '"+orderID+"'";
+		String query = "UPDATE orders SET finish = '1' WHERE orderID = '"+
+				orderID+"'";
 		try{
 			connect.createStatement().execute(query);
 		}
@@ -527,7 +528,24 @@ public class DB {
 		}
 	}
 
-	
+	/**
+	 * Updates the delivered status in order to delivered according to the orderID
+	 *
+	 * @param orderID
+	 * @throws SQLException
+	 */
+	public void updateDeliveredStatus(String orderID){
+		String query = "UPDATE orders SET delivered = '1' WHERE orderID = '"+
+				orderID+"'";
+		try{
+			connect.createStatement().execute(query);
+		}
+		catch (SQLException e) {
+			// TODO: handle exception
+		}
+	}
+
+
 
 	/**
 	 * Retrieve the last inserted orderID from table orders
@@ -547,8 +565,8 @@ public class DB {
 		return "";
 	}
 
-	
-	
+
+
 	/**
 	 *  updates the order with time and if the order is going to be delivered
 	 *  
@@ -558,7 +576,8 @@ public class DB {
 	 */
 	public void updateTime(Timestamp time, int delivery, String orderID) {
 		String query = "UPDATE orders SET currentTime = '"+time.toString()+"'"+
-				", delivery = '"+delivery+"'  WHERE orderID = '"+orderID+"'";
+				", delivery = '"+delivery+"'  WHERE orderID = '"+
+				orderID+"'";
 
 		try {
 			connect.createStatement().execute(query);
@@ -568,8 +587,8 @@ public class DB {
 			sq.printStackTrace();
 		}
 	}
-	
-	
+
+
 	/**
 	 * This method receive results from product and receipt tables in 
 	 * the database
@@ -601,10 +620,11 @@ public class DB {
 				products.add(data);
 				running =rs.next();
 			}
-			
+
 			for (String[] strings : products) {
 				try {
-					query = "SELECT * FROM product WHERE productID = '"+strings[1]+"'";
+					query = "SELECT * FROM product WHERE productID = '"+
+							strings[1]+"'";
 					rs = connect.createStatement().executeQuery(query);
 					rs.first();
 					strings[4] = rs.getString(2);	//name
@@ -614,20 +634,12 @@ public class DB {
 				}
 			}
 			return products;
-			
+
 		} catch (SQLException e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
+
 }
-
-
-
-
-
-
-
-

@@ -30,8 +30,8 @@ import com.trolltech.qt.gui.QWidget;
  * 
  * */
 
- public class Pizza extends QWidget{
-	
+public class Pizza extends QWidget{
+
 	private QPixmap image;
 	private QComboBox amount;
 	private QComboBox size;
@@ -49,13 +49,13 @@ import com.trolltech.qt.gui.QWidget;
 	private QLineEdit comments;
 	private QLabel labComments;
 	private QPushButton btnAdd;
-	
+
 	private QHBoxLayout size_layout;
 	private QHBoxLayout amount_layout;
-	
+
 	//Send pizza information to pizzalist
 	public Signal1<String[]> signalPizza = new Signal1<String[]>();
-	
+
 	/**
 	 * The constructor sets up the widget,
 	 * and fetches the information from the database.
@@ -67,26 +67,27 @@ import com.trolltech.qt.gui.QWidget;
 		pizza_name = new QLabel(liste[1]);
 		ingridients = new QLabel(liste[3]);
 		grid = new QGridLayout(this);
-		
+
 		setup();
+		
 	}
-	
-	
+
+
 	/**
 	 * This method sets up the graphical user
 	 * interface, and formatting everything
 	 */
 	private void setup(){
-		
+
 		comments = new QLineEdit();
 		comments.setFixedWidth(150);
 		labComments = new QLabel("Kommentar:");
 		labComments.setFixedWidth(100);
-		
+
 		price_format = new DecimalFormat("00");
 		price_format.format(start_price);
 		price_label = new QLabel("Pris: "+start_price);
-		
+
 		btnAdd = new QPushButton("Legg til");
 		btnAdd.clicked.connect(this, "signalBtnAdd()");
 
@@ -95,7 +96,7 @@ import com.trolltech.qt.gui.QWidget;
 		size_label = new QLabel("Størrelse :");
 		size.addItem("Liten");
 		size.addItem("Stor");
-		
+
 		//
 		amount = new QComboBox();
 		amount_label = new QLabel("Antall :");
@@ -105,28 +106,32 @@ import com.trolltech.qt.gui.QWidget;
 		for (int i = 1; i < 21; i++) {
 			amountList.add(""+i);
 		}
+		
 		amount.addItems(amountList);
 		amount.setCurrentIndex(0);
 		ingridients.setFont(new QFont("Verdana",11));
 		ingridients.setWordWrap(true);
 		labComments.setWordWrap(true);
+
+		pizza_name.setFont(
+				new QFont("Arial",13,QFont.Weight.Bold.value()));
 		
-		pizza_name.setFont(new QFont("Arial",13,QFont.Weight.Bold.value()));
 		pizza_name.setWordWrap(true);
 		price_label.setWordWrap(true);
-		
+
 		amount_layout = new QHBoxLayout();
 		amount_layout.addWidget(amount_label);
 		amount_layout.addWidget(amount);
-		
+
 		size_layout = new QHBoxLayout();
 		size_layout.addWidget(size_label);
 		size_layout.addWidget(size);
-		this.setStyleSheet("QLineEdit { font-size: 11px; }");
 		
+		this.setStyleSheet("QLineEdit { font-size: 11px; }");
+
 		//legge til de forskjellige tingene til griden
 		this.grid.addWidget(pizza_name,1,0);
-		
+
 		this.grid.addWidget(ingridients,2,0);
 		this.grid.addLayout(amount_layout, 2, 5);
 		this.grid.addLayout(size_layout, 3, 5);
@@ -135,29 +140,32 @@ import com.trolltech.qt.gui.QWidget;
 		this.grid.addWidget(comments, 5, 0);
 		this.grid.addWidget(btnAdd, 5, 5);
 		this.grid.setWidgetSpacing(10);
-		
+
 	}
 
-	
+
 	/**
 	 * This method is activated when the user push the add button,
 	 * and adds a pizza order to the orderlist.
 	 */
 	private void signalBtnAdd() {
+		
 		String [] data = {
-			pizza_name.text(),      	 //Pizza name
-			size.currentText(),			//Size
-			amount.currentText(),		//Amount
-			Double.toString(start_price),//start_prize
-			ingridients.text(), 		//ingridients
-			comments.text() 			// comments
+				pizza_name.text(),      	 //Pizza name
+				size.currentText(),			//Size
+				amount.currentText(),		//Amount
+				Double.toString(start_price),//start_prize
+				ingridients.text(), 		//ingridients
+				comments.text() 			// comments
 		};
+		
 		//Send data
 		signalPizza.emit(data);
-		
+
 		comments.clear();
 		size.setCurrentIndex(0);
 		amount.setCurrentIndex(0);
+		
 	}
-	
+
 }

@@ -31,7 +31,10 @@ public class SettingsWidget extends QWidget {
 	
 	//knapper, tekstfelt og labels
 	private QLineEdit txtName, txtContents, txtPrice, txtBorder, txtDelivery;
-	private QLabel labName,labContents,labPrice, labBorder, labDelivery, labLimit;
+	
+	private QLabel labName,labContents,labPrice, labBorder, 
+	labDelivery, labLimit;
+	
 	private QGridLayout pizzaLayout;
 	private QGridLayout borderLayout;
 	private QVBoxLayout box;
@@ -39,6 +42,7 @@ public class SettingsWidget extends QWidget {
 	private QGroupBox groupBoxPizza;
 	private QGroupBox groupBoxPrice;
 	private DB db;
+	
 	public static float DELIVERY_LIMIT = 500.0f;
 	public static float DELIVERY_PRICE = 50.0f;
 	
@@ -75,15 +79,19 @@ public class SettingsWidget extends QWidget {
 		};
 		
 		try{
+			
 			db.insert(new product(data));
+			
 		}catch (RuntimeException e) {
 			
 		}
+		
 		//Send signal indicating change in DB 
-		//System.out.println("Signal emited");
 		singalInsertProduct.emit(true);
 		labLimit.setText("produkt lagt til i database");
+		
 		clearFields();
+		
 	}
 	
 	/**
@@ -96,17 +104,21 @@ public class SettingsWidget extends QWidget {
 		FileInputStream fstream = new FileInputStream("bin/config.txt");
 		DataInputStream in = new DataInputStream(fstream);
 		BufferedReader br = new BufferedReader(new InputStreamReader(in));
+		
 		String strLine;
+		
 		ArrayList<String> lestInn = new ArrayList<String>();
 
 		while ((strLine = br.readLine()) != null)   {
 			lestInn.add(strLine);
 
 		}
+		
 		DELIVERY_LIMIT = Float.valueOf(lestInn.get(0));
 		DELIVERY_PRICE = Float.valueOf(lestInn.get(1));
 
 		in.close();
+		
 	}
 	
 	/**
@@ -115,14 +127,18 @@ public class SettingsWidget extends QWidget {
 	 * If file doesn't exist, a new file is created.
 	 */
 	private void writeToFile(){
+		
 		String ny = DELIVERY_LIMIT + "\n" + DELIVERY_PRICE;
 		try {
-		    BufferedWriter out = new BufferedWriter(new FileWriter("bin/config.txt"));
+		    BufferedWriter out = new BufferedWriter(
+		    		new FileWriter("bin/config.txt"));
 		    out.write(ny);
 		    out.close();
 		} 
 		catch (Exception e) {
+			
 		}
+		
 	}
 	
 	/**
@@ -135,27 +151,35 @@ public class SettingsWidget extends QWidget {
 	private void setDeliveyPrice(){
 		
 		try {
+			
 			Float.parseFloat(txtDelivery.text());
 			String var = txtDelivery.text();
 			
 			if (Float.valueOf(var) < 0){
+				
 				labLimit.setStyleSheet("QLabel { color : red; }");
 				labLimit.setText(" Kan ikke være negativ, pris er "
 				+ DELIVERY_PRICE + " og nåværende grense er " + DELIVERY_LIMIT);
+				
 			}
 			else{
+				
 				DELIVERY_PRICE = Float.valueOf(var);
+				
 				writeToFile();
+				
 				labLimit.setStyleSheet("QLabel { color : black; }");
 				labLimit.setText("Nåværende grense er " +
 				DELIVERY_LIMIT+" og nåværende pris er " +DELIVERY_PRICE);
+				
 			}
 			
 			
 		}catch(NumberFormatException e) {
-			//TODO: Error checking
-			ErrorMessage.invalidInput(this,"Formatet du skrev inn var ikke riktig."+
-			"\nVær så snill å skriv inn et siffer!");
+			ErrorMessage.invalidInput(this,
+					"Formatet du skrev inn var ikke riktig." +
+					"\nVær så snill å skriv inn et siffer!");
+			
 		}
 		
 	}
@@ -168,26 +192,33 @@ public class SettingsWidget extends QWidget {
 	 * is displayed, and no changes are made.
 	 */
 	private void setLimit(){
+		
 		try {
+			
 			Float.parseFloat(txtBorder.text());
 			String var = txtBorder.text();
+			
 			if (Float.valueOf(var) < 0){
+				
 				labLimit.setStyleSheet("QLabel { color : red; }");
 				labLimit.setText("Kan ikke være negativ, grense er "
 				+ DELIVERY_LIMIT + " og nåværende pris er " +DELIVERY_PRICE);
+				
 			}
 			else{
+				
 				DELIVERY_LIMIT = Float.valueOf(var);
 				writeToFile();
 				labLimit.setStyleSheet("QLabel { color : black; }");
 				labLimit.setText("Nåværende grense er " + 
 				DELIVERY_LIMIT+" og nåværende pris er " +DELIVERY_PRICE);
+				
 			}
 		
 		}catch(NumberFormatException e) {
-			//TODO: Error print
-			ErrorMessage.invalidInput(this,"Formatet du skrev inn var ikke riktig."+
-			"\nVær så snill å skriv inn et siffer!");
+			ErrorMessage.invalidInput(this,
+					"Formatet du skrev inn var ikke riktig." +
+					"\nVær så snill å skriv inn et siffer!");
 		}
 		
 		
@@ -221,15 +252,20 @@ public class SettingsWidget extends QWidget {
 		groupBoxPizza.setLayout(pizzaLayout);
 		this.setLayout(box);
 		
-		groupBoxPrice = new QGroupBox("Endre prisgrense for gratis levering og leveringsgebyr");
+		groupBoxPrice = new QGroupBox(
+				"Endre prisgrense for gratis levering og leveringsgebyr");
+		
 		groupBoxPrice.setLayout(borderLayout);
 		
 		labBorder = new QLabel("Ny grense");
 		txtBorder = new QLineEdit();
 		txtBorder.setFixedWidth(200);
+		
 		labDelivery = new QLabel("Ny Leveringspris");
+		
 		txtDelivery = new QLineEdit();
 		txtDelivery.setFixedWidth(200);
+		
 		btnChange = new QPushButton("Endre grensen");
 		btnChangeDelivey = new QPushButton("Endre leveringspris");
 		
@@ -273,5 +309,7 @@ public class SettingsWidget extends QWidget {
 		pizzaLayout.addWidget(txtPrice, 2, 1);		
 		pizzaLayout.addWidget(btnAddpizza, 3, 2);
 		btnAddpizza.clicked.connect(this, "insertIntoDB()");
+		
 	}
+	
 }
