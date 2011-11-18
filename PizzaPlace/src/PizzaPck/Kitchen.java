@@ -18,10 +18,9 @@ public class Kitchen extends QWidget{
 
 	private DB db;
 
-	private QTextBrowser order,orders;
+	private QTextBrowser order;
 	private PrintReceipt print;
 	private QGridLayout layout;
-	private QDateTime dateTime;
 	private QPushButton btnFinish,update;
 	private ArrayList<String[]> mirrorOrderList;
 	public Signal1<Boolean> signalKitchen = new Signal1<Boolean>();
@@ -71,7 +70,7 @@ public class Kitchen extends QWidget{
 	 * element in the over all orders. And displays
 	 * the information about the current order. 
 	 */
-	public void showOrder() {
+	private void showOrder() {
 		row = orderList.currentIndex().row();
 		order.clear();
 		if(orderList == null) {
@@ -164,7 +163,7 @@ public class Kitchen extends QWidget{
 	 *  a signal to the @see Delivery class, that a 
 	 *  order is ready to be picked up or delivered.
 	 */
-	public void finishOrder(){
+	private void finishOrder(){
 		String[] tmp = mirrorOrderList.get(row);
 		String orderID = tmp[0];
 

@@ -112,7 +112,7 @@ public class MainFrame extends QWidget {
 	 * ordering. As a result this will make the user to either decline or finish ordering products before continuing.
 	 * 
 	 */
-	public void setCurrentTab (){
+	private void setCurrentTab (){
 		int index = tabMain.currentIndex();
 		if(index == 0){
 			tabMain.setCurrentIndex(1);

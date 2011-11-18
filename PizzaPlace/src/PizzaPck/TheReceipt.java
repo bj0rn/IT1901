@@ -18,8 +18,8 @@ import com.trolltech.qt.gui.QVBoxLayout;
  *
  */
 public class TheReceipt extends QDialog{
-	protected QPrinter printer;
-	protected QTextEdit textbox;
+	private QPrinter printer;
+	private QTextEdit textbox;
 	
 	//Må evt ta inn DB...
 	
@@ -77,5 +77,13 @@ public class TheReceipt extends QDialog{
 			textbox.print(printer);
 			super.accept();
 		}
+	}
+	
+	/**
+	 * This method returns the textbox encapsulated
+	 * @return
+	 */
+	protected QTextEdit getTextbox(){
+		return textbox;
 	}
 }

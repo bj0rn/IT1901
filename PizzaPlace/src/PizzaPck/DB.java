@@ -622,24 +622,6 @@ public class DB {
 		return null;
 	}
 	
-	/**
-	 * 
-	 * Deletes the order in orders where orders.orderID ='orderID'
-	 * Throws an exception if the orderID doesn't exist 
-	 * 
-	 * @throws SQLException
-	 * @param orderID
-	 */
-	public void deleteOrder(String orderID){
-		String query = "DELETE FROM orders WHERE orderID ='"+orderID+"'";
-		
-		try {
-			connect.createStatement().execute(query);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
 }
 
 

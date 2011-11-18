@@ -4,6 +4,8 @@ package PizzaPck;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import com.trolltech.qt.gui.QTextEdit;
+
 /**
  * This class extends the TheReceipt class,
  * @see: TheReceipt and formats the receipt 
@@ -23,6 +25,7 @@ public class PrintReceipt extends TheReceipt{
 	private DecimalFormat format = new DecimalFormat("0.00");
 	private String deliveryTime;
 	private String[] temp;
+	private QTextEdit textbox;
 	
 	/**
 	 * The Constructor takes a set of parameters
@@ -38,6 +41,7 @@ public class PrintReceipt extends TheReceipt{
 			throws NullPointerException{
 		
 		super();
+		textbox = super.getTextbox();
 		super.setWindowTitle("Kvittering");
 		if (products == null) {
 			throw new NullPointerException();
@@ -47,7 +51,6 @@ public class PrintReceipt extends TheReceipt{
 		this.delivery = tmp[2];
 		this.deliveryTime = tmp[6].substring(0, tmp[6].length()-5);
 		temp = tmp;
-		System.out.println(delivery);
 		print();
 	}
 	
@@ -62,7 +65,7 @@ public class PrintReceipt extends TheReceipt{
 	 * @param product
 	 * @return
 	 */
-	public String calculate(String[] product){
+	private String calculate(String[] product){
 		Float price = Float.parseFloat(product[3])
 					*(product[2].equals("1") ? 1.25f : 1.00f)* 
 					Float.parseFloat(product[5]);
@@ -84,11 +87,12 @@ public class PrintReceipt extends TheReceipt{
 	 * pizza name and price,delivery price, 
 	 * price without mva, with mva and total price.
 	 */
-	public void print(){
+	private void print(){
 		
 		this.textbox.append("<b style=\"font-size:12px\">Ordre nr : "+orderID+"</b>"+
 		"<br style=\"font-size:10px\"><b>Navn : </b>"+temp[8]+ " "+ temp[9]+"</br>"+
 		"<br style=\"font-size:10px\"><b>Adresse : </b>"+temp[10]+"</br>"	+
+		"<br style=\"font-size:10px\"><b>Telefonnummer : </b>"+temp[13]+"</br>"	+
 		"<br style=\"font-size:10px\"><b>Skal være ferdig til : </b>"+deliveryTime+"</br>"+
 		"<br style=\"font-size:10px\"><b>Skal leveres : </b>"+(delivery.equals("1")? "Ja" : "Nei")
 		+"</br>");
@@ -165,7 +169,7 @@ public class PrintReceipt extends TheReceipt{
 	 * of the order
 	 * @return
 	 */
-	public float calculateFinalPrize(){
+	private float calculateFinalPrize(){
 		return tot + delivery_price;
 	}	
 }
