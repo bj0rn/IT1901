@@ -88,6 +88,7 @@ public class Kitchen extends QWidget{
 			"<td width=70><strong>Antall</strong></td>" +
 			"<td width=80><strong>Pizza</strong></td>" +
 			"<td width= 120><strong>Ingredienser</strong></td>" +
+			"<td width= 10></td>" +
 			"<td width= 120><strong>Kommentarer</strong></td>" +
 			"</tr>" +
 			"<tr>" +
@@ -103,6 +104,7 @@ public class Kitchen extends QWidget{
 			   +"</td>"+
 			   "<td>" + strings[5]+"</td>"+
 			   "<td>" + strings[6]+"</td>"+
+			   "<td>"+"</td>"+
 			   "<td>" + strings[2]+"</td>"+
 			   "</tr>" );
 			

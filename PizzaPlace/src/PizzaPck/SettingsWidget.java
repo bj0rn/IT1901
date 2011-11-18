@@ -234,7 +234,7 @@ public class SettingsWidget extends QWidget {
 		btnChangeDelivey = new QPushButton("Endre leveringspris");
 		
 		
-		labName = new QLabel("Navn paa produkt:");
+		labName = new QLabel("Navn på produkt:");
 		txtName = new QLineEdit();
 		txtName.setFixedWidth(200);
 		labContents = new QLabel("Ingredienser");

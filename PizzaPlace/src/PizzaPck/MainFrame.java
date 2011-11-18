@@ -1,5 +1,6 @@
 package PizzaPck;
 
+import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QSizePolicy.Policy;
@@ -142,6 +143,7 @@ public class MainFrame extends QWidget {
         QApplication.initialize(args);
         new MainFrame(); // oppretter seg selv og kjører setUp() gjennom constructoren;
         QApplication.exec();
+
        
     }
     
