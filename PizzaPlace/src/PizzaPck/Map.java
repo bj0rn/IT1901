@@ -16,22 +16,14 @@ import com.trolltech.qt.webkit.QWebView;
 public class Map extends QWebView{
 	private final QUrl url; 
 	protected BufferedImage map;
-
+	
 	/**
 	 * The constructor is setting a default map 
 	 * over Trondheim in the beginning,
 	 * and setting it to be 460x460 pixels i size.
 	 */
 	public Map(){
-		url = new QUrl(/*"http://maps.googleapis.com/"+
-				"maps/api/staticmap?center=Trondheim,NO"+
-				"&size=460x460&scale=3&markers=color:blue|"
-				+encodeUTF8("Bispegata 5  7032 Trondheim")+
-				"&maptype=roadmap&sensor=false"*/
-				
-			"http://folk.ntnu.no/vikre/show?toAddress=Kongsgårdsgata+2+7013+Trondheim"
-			);
-
+		url = getDefaultMap();
 		loadMap(url);
 		this.setFixedSize(460,470);
 	}
@@ -43,38 +35,32 @@ public class Map extends QWebView{
 	public void loadMap(QUrl url){
 		this.setUrl(url);
 	}
-
+	
+	/**
+	 * This methode sets the fixed size of the list
+	 * of deliveries.
+	 * 
+	 * @param listWidget
+	 */
 	public void setSize(QListWidget listWidget){
 		this.setFixedSize(listWidget.width(),listWidget.height());
-	}
-	public BufferedImage getMap(){
-		return map;
 	}
 
 	/**
 	 * Getting a new map which have markers on the start address,
-	 * and the delivery address
+	 * and the delivery address. And the path between the
+	 * addresses.
 	 * 
 	 * @param addressFrom
 	 * @param addressTo
 	 * @return
 	 */
 	public QUrl getMap(String addressFrom, String addressTo){
-
-			/*return new QUrl("http://maps.googleapis.com/"+
-				"maps/api/staticmap?center=Trondheim,NO"+
-				"&size=460x460&scale=3&markers=color:blue|"
-				+encodeUTF8(addressFrom)+"|"+encodeUTF8(addressTo)+
-				"&path=color:red|weight:3|"+encodeUTF8(addressFrom)+"|"
-				+encodeUTF8(addressTo)+"&maptype=roadmap&sensor=false");*/
-
 		addressFrom = addressFrom.replace("æ","ae");
 		addressFrom = addressFrom.replace("ø","oe");
 		addressFrom = addressFrom.replace("å","aa");
 		
 		return new QUrl("http://folk.ntnu.no/vikre/show?toAddress="+addressTo);
-
-		
 	}
 	/**
 	 * This method sets a default map if the 
