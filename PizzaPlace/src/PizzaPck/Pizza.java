@@ -17,16 +17,13 @@ import com.trolltech.qt.gui.QWidget;
 
 /**
  * 
- * This class sets infoamtion about one single
+ * This class sets information about one single
  * pizza together. Like pizzaname, ingridients,
  * the user can choose size and amount. The user 
  * can also make a comment, when ordering if the
  * costumer is alergic.
  * 
- * 
  * @author Everyone
- * 
- * 	
  * 
  * */
 

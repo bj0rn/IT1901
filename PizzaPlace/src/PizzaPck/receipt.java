@@ -1,7 +1,7 @@
 package PizzaPck;
 
 /**
- * this class is similar to receipt table in the database
+ * This class is similar to receipt table in the database
  * @author Everyone
  */
 public class receipt {
@@ -14,7 +14,7 @@ public class receipt {
 	
 
 	/**
-	 * data must be a string[] of length 5 and consists of
+	 * Data must be a string[] of length 5 and consists of
 	 * orderID, productId, comment, size amount
 	 * @param data
 	 */

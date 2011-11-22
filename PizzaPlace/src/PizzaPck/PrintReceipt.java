@@ -8,9 +8,8 @@ import com.trolltech.qt.gui.QTextEdit;
 
 /**
  * This class extends the TheReceipt class,
- * @see: TheReceipt and formats the receipt 
- * depending on the order that is marked 
- * when you click "Skriv ut".
+ * and formats the receipt depending on the order
+ * that is marked when you click "Skriv ut".
  * @author Everyone
  */
 public class PrintReceipt extends TheReceipt{
@@ -33,8 +32,7 @@ public class PrintReceipt extends TheReceipt{
 	 * to get the information it needs to build 
 	 * the receipt. 
 	 * 
-	 * @param orderID
-	 * @param delivery
+	 * @param tmp
 	 * @param products
 	 * @throws NullPointerException
 	 */
@@ -64,7 +62,7 @@ public class PrintReceipt extends TheReceipt{
 	 * size and price for each product,
 	 * and insert each product to the receipt.
 	 * The method returns a String with HTML formated
-	 * text, witch is used to build the receipt in the
+	 * text, which is used to build the receipt in the
 	 * print method. 
 	 * @see print
 	 * @param product
@@ -175,7 +173,7 @@ public class PrintReceipt extends TheReceipt{
 	/**
 	 * This method calculates the final total price of the order.
 	 * of the order
-	 * @return
+	 * @return float
 	 */
 	private float calculateFinalPrize(){
 		return tot + delivery_price;

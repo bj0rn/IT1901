@@ -1,7 +1,7 @@
 package PizzaPck;
 
 /**
- * this class is similar to the product table in the database
+ * This class is similar to the product table in the database
  * @author Everyone
  */
 public class product {
@@ -12,7 +12,7 @@ public class product {
 
 	
 	/**
-	 * data must be a String[] of length 4 and consist of
+	 * Data must be a String[] of length 4 and consist of
 	 * name. price, ingredients, picture
 	 * @param data
 	 */

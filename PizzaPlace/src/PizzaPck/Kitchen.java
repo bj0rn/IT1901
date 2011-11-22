@@ -31,7 +31,7 @@ public class Kitchen extends QWidget{
 
 
 	/**
-	 * takes at DB as input and stores the reference to the databasehandler
+	 * Takes at DB as input and stores the reference to the databasehandler
 	 * @param db
 	 */
 	public Kitchen(DB db){
@@ -121,7 +121,7 @@ public class Kitchen extends QWidget{
 	 * to a list over orders that should be cooked.
 	 * The only information that are shown is the ordernumber
 	 * and when it should be finished. When a order is clicked
-	 * a signal is sent to @see showOrder()
+	 * a signal is sent to showOrder()
 	 * that shows the information about the current order.
 	 * 
 	 */

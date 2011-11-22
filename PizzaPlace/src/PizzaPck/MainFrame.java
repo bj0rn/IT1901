@@ -29,8 +29,8 @@ public class MainFrame extends QWidget {
 	
 	
 	/**
-	 * the constructor calls the setUp method
-	 * @author
+	 * The constructor calls the setUp method
+	 * 
 	 */
 	public MainFrame(){
 		setUp();

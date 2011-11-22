@@ -10,7 +10,7 @@ import com.trolltech.qt.webkit.QWebView;
 
 /**
  * This class displays a map and shows a tag between two addresses.
- * And sets it up in a QWebView, witch it inherit from.
+ * And sets it up in a QWebView, which it inherit from.
  * @author Everyone
  */
 public class Map extends QWebView{
@@ -20,7 +20,7 @@ public class Map extends QWebView{
 	/**
 	 * The constructor is setting a default map 
 	 * over Trondheim in the beginning,
-	 * and setting it to be 460x460 pixels i size.
+	 * and setting it to be 460x470 pixels i size.
 	 */
 	public Map(){
 		url = getDefaultMap();
@@ -53,7 +53,7 @@ public class Map extends QWebView{
 	 * 
 	 * @param addressFrom
 	 * @param addressTo
-	 * @return
+	 * @return QUrl
 	 */
 	public QUrl getMap(String addressFrom, String addressTo){
 		addressFrom = addressFrom.replace("æ","ae");
@@ -65,7 +65,7 @@ public class Map extends QWebView{
 	/**
 	 * This method sets a default map if the 
 	 * costumer pick up the order by itself.
-	 * @return
+	 * @return QUrl
 	 */
 	public QUrl getDefaultMap(){
 		return new QUrl("http://maps.googleapis.com/maps/api/staticmap?" +
@@ -78,7 +78,7 @@ public class Map extends QWebView{
 	/**
 	 * This method is decoding an address.
 	 * @param adress
-	 * @return
+	 * @return String
 	 */
 	public String decodeUTF8(String adress)  {
 		try {
@@ -93,7 +93,7 @@ public class Map extends QWebView{
 	/**
 	 * This method is encoding an address.
 	 * @param adress
-	 * @return
+	 * @return String
 	 */
 	public String encodeUTF8(String adress) {
 		try {

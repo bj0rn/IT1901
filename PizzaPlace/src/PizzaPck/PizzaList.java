@@ -30,7 +30,7 @@ public class PizzaList extends QScrollArea implements Iterable<Pizza>{
 	/**
 	 * 
 	 * @param db
-	 * @see fillList
+	 * 
 	 */
 	public PizzaList(DB db){
 		

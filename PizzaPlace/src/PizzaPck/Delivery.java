@@ -108,7 +108,7 @@ public class Delivery extends QWidget{
 	/**
 	 * This method get all orders from the database
 	 * where the finish status is set to true. And
-	 * sends a signal to the method @see showDeliveries()
+	 * sends a signal to the method showDeliveries()
 	 * which shows the orders that are ready to be delivered/ 
 	 * picked up by costumer.
 	 */

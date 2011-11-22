@@ -15,7 +15,7 @@ public class orders {
 	private String currentTime;
 	
 	/**
-	 * this constructers must recieve values according to 
+	 * This constructers must recieve values according to 
 	 * customerId, delivery, finish, delivered, time and currentTime
 	 * 
 	 * @param data

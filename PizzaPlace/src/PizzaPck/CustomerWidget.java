@@ -53,7 +53,7 @@ public class CustomerWidget extends QWidget {
 	public Signal1<Boolean> changeTab = new Signal1<Boolean>();
 
 	/**
-	 * Creates a new instance of "kundeWidget" and 
+	 * Creates a new instance of "KundeWidget" and 
 	 * @param db
 	 */
 	public CustomerWidget(DB db) {

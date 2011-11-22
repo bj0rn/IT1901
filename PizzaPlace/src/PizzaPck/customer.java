@@ -1,7 +1,7 @@
 package PizzaPck;
 
 /**
- * this class is similar to the customer table in the database 
+ * This class is similar to the customer table in the database 
  * @author Everyone
  */
 public class customer {

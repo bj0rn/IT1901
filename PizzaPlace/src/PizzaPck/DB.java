@@ -28,7 +28,7 @@ public class DB {
 	/**
 	 * Creates a connection to the database
 	 * @throws SQLException
-	 * @Throws {@link ClassNotFoundException}
+	 * @throws {@link ClassNotFoundException}
 	 */
 	public DB() {
 		try {
@@ -227,7 +227,7 @@ public class DB {
 	 * given customerID
 	 * @return ArrayList<String[]> contains the retrieved customers or the 
 	 * customerID
-	 * @Throws {@link SQLException}
+	 * @throws {@link SQLException}
 	 */
 	public ArrayList<String[]> search(String SearchQuery, boolean key,
 			boolean customer) {
@@ -276,7 +276,7 @@ public class DB {
 	 * Updates a customer in the customer table by using the customerID.
 	 * 
 	 * @param customer the new customer
-	 * @param CustomerID the old customer
+	 * @param customerID the old customer
 	 * (customerID is located at first position)
 	 * @throws SQLException
 	 */
@@ -493,13 +493,13 @@ public class DB {
 	/**
 	 * Retrieve productID from product where PizzaName == name. 
 	 * 
-	 * @param string PizzaName
+	 * @param pizzaName
 	 * @return String
 	 * @throws SQLException
 	 */
-	public String getPizzaID(String PizzaName) {
+	public String getPizzaID(String pizzaName) {
 		String query = "SELECT productID FROM product WHERE name = '"+
-				PizzaName+"'";
+				pizzaName+"'";
 		try {
 			ResultSet rs = connect.createStatement().executeQuery(query);
 			rs.first();
@@ -568,7 +568,7 @@ public class DB {
 
 
 	/**
-	 *  updates the order with time and if the order is going to be delivered
+	 *  Updates the order with time and if the order is going to be delivered
 	 *  
 	 * @param time
 	 * @param delivery
@@ -597,7 +597,7 @@ public class DB {
 	 * products.name, products.price}
 	 * 
 	 * @param orderID
-	 * @return
+	 * @return ArrayList
 	 * @throws SQLException
 	 */
 	public ArrayList<String[]> getReceipt(String orderID){
