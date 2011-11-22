@@ -101,7 +101,7 @@ public class SettingsWidget extends QWidget {
 	 */
 	private void readFromFile() throws IOException{
 
-		FileInputStream fstream = new FileInputStream("bin/config.txt");
+		FileInputStream fstream = new FileInputStream("./config.txt");
 		DataInputStream in = new DataInputStream(fstream);
 		BufferedReader br = new BufferedReader(new InputStreamReader(in));
 		
@@ -131,7 +131,7 @@ public class SettingsWidget extends QWidget {
 		String ny = DELIVERY_LIMIT + "\n" + DELIVERY_PRICE;
 		try {
 		    BufferedWriter out = new BufferedWriter(
-		    		new FileWriter("bin/config.txt"));
+		    		new FileWriter("./config.txt"));
 		    out.write(ny);
 		    out.close();
 		} 
