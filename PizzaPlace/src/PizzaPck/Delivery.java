@@ -83,7 +83,7 @@ public class Delivery extends QWidget{
 
 		db.updateDeliveredStatus(orderID);
 		getDeliveries();
-		map.loadMap(new QUrl(map.getMap("Bispegata 5  7032 Trondheim","")));
+		map.loadMap(new QUrl(map.getDefaultMap()));
 	}
 
 
@@ -149,7 +149,7 @@ public class Delivery extends QWidget{
 		toAdress.append(tmp[12]+" ");
 
 		if(tmp[2].equals("1")){
-			map.loadMap(new QUrl(map.getMap("Bispegata 5  7032 Trondheim",
+			map.loadMap(new QUrl(map.getMap("Kongsgårdsgata 2 7013 Trondheim",
 					toAdress.toString())));
 		}
 		else{
